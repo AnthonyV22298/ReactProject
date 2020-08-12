@@ -1,0 +1,35 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "root": true,
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jquery": true
+  },
+  "rules": {
+    "quotes": 0,
+    "no-trailing-spaces": 0,
+    "eol-last": 0,
+    "no-unused-vars": 2,
+    "no-underscore-dangle": 0,
+    "no-alert": 0,
+    "no-lone-blocks": 0,
+    "no-console":0,
+    "react/jsx-uses-vars": ["error"]
+  },
+  "globals": {
+    "jQuery": true,
+    "$": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

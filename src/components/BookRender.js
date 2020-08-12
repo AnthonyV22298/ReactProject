@@ -55,7 +55,7 @@ const BookRender = ({ bookData }) => {
         
     return(
         <div>
-            <h1>Books</h1>
+            <h1>Vehicles</h1>
             {content}
         </div>
     );

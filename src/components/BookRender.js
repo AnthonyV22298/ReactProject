@@ -7,10 +7,10 @@ const BookRender = ({ bookData }) => {
 
     function createBookRow(book){
         return (
-            <tr key={book.book_id}>
-                <td> {book.book_id} </td>
-                <td> {book.title} </td>
-                <td> {book.author} </td>
+            <tr>
+                <td> {book.vehicle_type} </td>
+                <td> {book.name} </td>
+                <td> {book.expiration} </td>
             </tr>
         );
     }
@@ -33,9 +33,9 @@ const BookRender = ({ bookData }) => {
             (<table className="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
+                        <th>Vehicle Type</th>
+                        <th>Name</th>
+                        <th>Expiration Date</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -29,7 +29,7 @@ const Header = () => {
                             <li className="list-inline-item"><Link to="/appointments" replace>Appointments</Link></li>
                             <li className="list-inline-item"><Link to="/fees" replace>Fees</Link></li>
                             <li className="list-inline-item"><Link to="/information" replace>My Info</Link></li>
-                            <li onClick={() => handleLogout()}><Link to="/" replace>Logout</Link></li>
+                            <li className="list-inline-item" onClick={() => handleLogout()}><Link to="/" replace>Logout</Link></li>
                             <li className="list-inline-item"><Link to="/profile" replace>Profile</Link></li>
                             </ul>
                             :

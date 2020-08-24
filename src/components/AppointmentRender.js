@@ -5,16 +5,15 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
-const ContactRender = ({ contacts, handleRefresh }) => {
-  
+const AppointmentRender = ({ appointments, handleRefresh}) => {
   function getTableBodyContent() {
-    return contacts.map(obj => {
+    return appointments.map(obj => {
 
       // Deep Clone object to avoid adding to it while mapping over it during map
       let newObj = JSON.parse(JSON.stringify(obj))
 
       newObj["view"] = (
-        <Button command="View" name={obj.firstname} entity="Contact"
+        <Button command="View" name={obj.firstname} entity="dmv_appointment"
           initialValues={{ ...obj }}>View</Button>
       );
       return newObj;
@@ -55,8 +54,9 @@ const ContactRender = ({ contacts, handleRefresh }) => {
   }
   return (
     <React.Fragment>
-      <h1>Contacts</h1>
+      <h1>Appointments</h1>
       <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
+      
       <MDBDataTable
         striped
         bordered
@@ -64,15 +64,19 @@ const ContactRender = ({ contacts, handleRefresh }) => {
         responsive
         data={data}
       />
+      
+      
     </React.Fragment>
   );
 }
 
-ContactRender.propTypes = {
-  contacts: PropTypes.array,
+AppointmentRender.propTypes = {
+  appointments: PropTypes.array,
   handleView: PropTypes.func,
-  handleRefresh: PropTypes.func
+  handleRefresh: PropTypes.func,
+  handleCreate: PropTypes.func
 };
 
-export default ContactRender;
+
+export default AppointmentRender;
 

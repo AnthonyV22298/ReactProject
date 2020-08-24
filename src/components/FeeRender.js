@@ -5,16 +5,16 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
-const ContactRender = ({ contacts, handleRefresh }) => {
-  
+const FeeRender = ({ fees, handleRefresh }) => {
+
   function getTableBodyContent() {
-    return contacts.map(obj => {
+    return fees.map(obj => {
 
       // Deep Clone object to avoid adding to it while mapping over it during map
       let newObj = JSON.parse(JSON.stringify(obj))
 
       newObj["view"] = (
-        <Button command="View" name={obj.firstname} entity="Contact"
+        <Button command="View" name={obj.firstname} entity="dmv_fee"
           initialValues={{ ...obj }}>View</Button>
       );
       return newObj;
@@ -23,29 +23,30 @@ const ContactRender = ({ contacts, handleRefresh }) => {
   }
   let data = {
     columns: [
-      {
-        label: 'First Name',
-        field: 'firstname',
+              {
+        label: 'Title',
+        field: 'dmv_name',
         sort: 'asc'
       },
       {
-        label: 'Last Name',
-        field: 'lastname',
+        label: 'Fee ID',
+        field: 'dmv_feeid',
         sort: 'asc'
       },
       {
-        label: 'email',
-        field: 'emailaddress1',
+        label: 'Contact Lookup GUID',
+        field: '_dmv_contact_value',
+        sort: 'asc'
+      },
+
+      {
+        label: 'Cost',
+        field: 'dmv_cost',
         sort: 'asc'
       },
       {
-        label: 'U.S. state',
-        field: 'dmv_state@OData.Community.Display.V1.FormattedValue',
-        sort: 'asc'
-      },
-      {
-        label: 'id',
-        field: 'contactid',
+        label: 'Reason',
+        field: 'dmv_purpose@OData.Community.Display.V1.FormattedValue',
         sort: 'asc'
       },
     ],
@@ -55,7 +56,7 @@ const ContactRender = ({ contacts, handleRefresh }) => {
   }
   return (
     <React.Fragment>
-      <h1>Contacts</h1>
+      <h1>Fees</h1>
       <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
       <MDBDataTable
         striped
@@ -68,11 +69,12 @@ const ContactRender = ({ contacts, handleRefresh }) => {
   );
 }
 
-ContactRender.propTypes = {
-  contacts: PropTypes.array,
+FeeRender.propTypes = {
+  fees: PropTypes.array,
   handleView: PropTypes.func,
   handleRefresh: PropTypes.func
 };
 
-export default ContactRender;
+
+export default FeeRender;
 

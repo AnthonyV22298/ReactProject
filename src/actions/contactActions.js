@@ -12,14 +12,14 @@ export const readContacts = () => {
         Accept: 'application/json',
         'Content-Type': 'application/json; charset=utf-8',
         headers: {
-            'Prefer': "odata.include-annotations=*"
+            'Prefer': "odata.include-annotations=\"*\""
         }
     };
 
     return dispatch => {
         dispatch(contactsPending());
 
-        return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts?$select=firstname,lastname&$top=10", config)
+        return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts?$select=firstname,lastname,emailaddress1,contactid,dmv_state&$filter=contains(firstname,'A')", config)
             .then(res => {
                 dispatch(contactsSuccess(res));
             })

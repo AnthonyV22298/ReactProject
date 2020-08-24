@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { authContext } from '../adalConfig';
 
 const Header = () => {
         return(
@@ -17,6 +18,9 @@ const Header = () => {
                         <li className="list-inline-item"><Link to="/vehicles" replace>Vehicles</Link></li>
                         <li className="list-inline-item"><Link to="/appointments" replace>Appointments</Link></li>
                         <li className="list-inline-item"><Link to="/fees" replace>Fees</Link></li>
+                        <li className="list-inline-item"><Link to="/contacts" replace>Contacts</Link></li>
+                        <li className="list-inline-item"><Link to="/information" replace>My Info</Link></li>
+                        <button onClick={() => authContext.logOut()}>Logout</button>
                     </ul>
                 </div>
             </nav>

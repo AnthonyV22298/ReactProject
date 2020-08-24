@@ -1,0 +1,115 @@
+import * as informationActions from '../actions/informationActions';
+import LicenseRender from './LicenseRender';
+import CitationsRender from './CitationsRender';
+import InformationSecondaryNav from './InformationSecondaryNav';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import LoadingIcon from './LoadingIcon';
+import ErrorBanner from './ErrorBanner';
+
+import { INFO_LICENSE, INFO_CITATIONS } from '../constants/viewNames';
+
+const InformationContainer = (props) => {
+    const {actions, information, requestState, infoView} = props;
+
+    const {
+        error,
+        infoPending,
+        infoSuccessful,
+        infoFailed,
+    } = requestState;
+
+    useEffect(() => {
+        console.log(useEffect);
+        if(!infoView) {
+            actions.switchView(INFO_LICENSE);
+            actions.readLicense();
+        }
+    }, []);
+
+    const switchViews = (viewname) => {
+        actions.switchView(viewname);
+        actions.readData(viewname);
+    }
+
+    const renderSuccess = () => {
+        console.log(information)
+        switch(infoView){
+            case INFO_LICENSE:
+                return (
+                    <div className="container info-container">
+                        <InformationSecondaryNav clickFunc={switchViews}/>
+                        <LicenseRender information={information} />
+                    </div>
+                );
+            case INFO_CITATIONS:
+                return (
+                    <div className="container info-container">
+                        <InformationSecondaryNav clickFunc={switchViews}/>
+                        <CitationsRender information={information} />
+                    </div>
+                );
+            default:
+                break;
+        }
+        
+    }
+
+    if (infoPending) {
+        return <LoadingIcon />;
+    } else if (infoFailed) {
+        return (
+            <div>
+                <div className="container info-container">
+                    <InformationSecondaryNav clickFunc={switchViews}/>
+                </div>
+                <ErrorBanner>
+                    Error while loading contacts!
+                </ErrorBanner>
+                
+            </div>
+        );
+    } else if (infoSuccessful) {
+        return renderSuccess();
+    } else {
+        return (
+            <div>
+                <div className="container info-container">
+                    <InformationSecondaryNav clickFunc={switchViews}/>
+                </div>
+                <ErrorBanner>
+                    {error}
+                    Invalid state! This message should never appear.
+                </ErrorBanner>
+            </div>
+        );
+    }
+}
+
+InformationContainer.proptypes = {
+    actions: PropTypes.object,
+    information: PropTypes.object
+}
+
+function mapStateToProps(state) {
+    const { informationReducer } = state;
+    return {
+       information: informationReducer.information,
+       infoView: informationReducer.infoView,
+       requestState: Object.assign({},
+       informationReducer.requestState)
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(informationActions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(InformationContainer);

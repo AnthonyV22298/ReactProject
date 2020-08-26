@@ -12,7 +12,7 @@ import ErrorBanner from './ErrorBanner';
 import { INFO_LICENSE, INFO_CITATIONS } from '../constants/viewNames';
 
 const InformationContainer = (props) => {
-    const {actions, information, requestState, infoView} = props;
+    const {actions, information, infoView, loggedInUserId, requestState} = props;
 
     const {
         error,
@@ -22,20 +22,20 @@ const InformationContainer = (props) => {
     } = requestState;
 
     useEffect(() => {
-        console.log(useEffect);
+        console.log(loggedInUserId + "useEffect");
         if(!infoView) {
             actions.switchView(INFO_LICENSE);
-            actions.readLicense();
+            actions.readLicense(loggedInUserId);
         }
     }, []);
 
     const switchViews = (viewname) => {
         actions.switchView(viewname);
-        actions.readData(viewname);
+        actions.readData(loggedInUserId, viewname);
     }
 
     const renderSuccess = () => {
-        console.log(information)
+        console.log(loggedInUserId)
         switch(infoView){
             case INFO_LICENSE:
                 return (
@@ -94,10 +94,11 @@ InformationContainer.proptypes = {
 }
 
 function mapStateToProps(state) {
-    const { informationReducer } = state;
+    const { informationReducer, loginReducer } = state;
     return {
        information: informationReducer.information,
        infoView: informationReducer.infoView,
+       loggedInUserId: loginReducer.userInfo.contactid,
        requestState: Object.assign({},
        informationReducer.requestState)
     }

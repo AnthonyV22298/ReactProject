@@ -42,7 +42,8 @@ export const postAppointments = (data) => {
             'Prefer' : 'return=representation'
         },
         data: {
-            "dmv_appointment_date": data.date
+            "dmv_appointment_date": data.date,
+            "dmv_app_type": data.type,
         }
     };
     

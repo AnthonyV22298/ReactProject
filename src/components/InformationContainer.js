@@ -22,7 +22,6 @@ const InformationContainer = (props) => {
     } = requestState;
 
     useEffect(() => {
-        console.log(loggedInUserId + "useEffect");
         if(!infoView) {
             actions.switchView(INFO_LICENSE);
             actions.readLicense(loggedInUserId);
@@ -35,7 +34,6 @@ const InformationContainer = (props) => {
     }
 
     const renderSuccess = () => {
-        console.log(loggedInUserId)
         switch(infoView){
             case INFO_LICENSE:
                 return (

@@ -14,16 +14,31 @@ const LicenseRender = ({ information }) => {
     let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"];
     restrictions = restrictions.replace(/;+/g, ',');
 
-    // const generateEndorsementGlossary = (endorsementStr) => {
-    //     let endorsementArr = endorsementStr.split(',');
-    //     console.log(endorsementArr);
-    //     let endorsementGlossary = (
-    //         <ul>
-                
-    //         </ul>
-    //     )
-
-    // }
+    const generateEndorsementGlossary = (endorsementStr) => {
+        let endorsementArr = endorsementStr.split(',');
+        for(var i in endorsementArr) {
+            endorsementArr[i] = endorsementArr[i].trim();
+        }
+        console.log(endorsementArr);
+        let userEndorsements = [];
+        for(var index in endorsementArr) {
+            console.log(ENDORSEMENT_DICT[endorsementArr[index]]);
+            userEndorsements.push(<li><strong>{endorsementArr[index]}: </strong>{ENDORSEMENT_DICT[endorsementArr[index]]}</li>)
+        }
+        userEndorsements.push(<li><strong>Other Endorsements</strong></li>);
+        for(var key in ENDORSEMENT_DICT) {
+            if(endorsementArr.includes(key)) continue;
+            else {
+                userEndorsements.push(<li><strong>{key}: </strong>{ENDORSEMENT_DICT[key]}</li>)
+            }
+        }
+        let endorsementGlossary = (
+            <ul className="no-list-bullet">
+                {userEndorsements}
+            </ul>
+        )
+        return endorsementGlossary;
+    }
 
     const generateFullEndorsementGlossary = () => {
         let endorsements = []
@@ -35,6 +50,32 @@ const LicenseRender = ({ information }) => {
                 {endorsements}
             </ul>
         )
+    }
+
+    const generateRestrictionGLossary = (restrictionStr) => {
+        let restrictionArr = restrictionStr.split(",");
+        let userRestrictions = [];
+        for(var i in restrictionArr){
+            restrictionArr[i] = restrictionArr[i].trim();
+        }
+        for(var index in restrictionArr) {
+            console.log(ENDORSEMENT_DICT[restrictionArr[index]]);
+            userRestrictions.push(<li><strong>{restrictionArr[index]}: </strong>{RESTRICTION_DICT[restrictionArr[index]]}</li>)
+        }
+        userRestrictions.push(<li><strong>Other Endorsements</strong></li>);
+        for(var key in ENDORSEMENT_DICT) {
+            if(restrictionArr.includes(key)) continue;
+            else {
+                userRestrictions.push(<li><strong>{key}: </strong>{ENDORSEMENT_DICT[key]}</li>)
+            }
+        }
+        let endorsementGlossary = (
+            <ul className="no-list-bullet">
+                {userRestrictions}
+            </ul>
+        )
+        return endorsementGlossary;
+
     }
 
     const generateFullRestrictionGlossary = () => {
@@ -78,12 +119,16 @@ const LicenseRender = ({ information }) => {
             <section className="row">
                 <div className="col">
                     <h3>License Endorsement Glossary</h3>
+                    { generateEndorsementGlossary(endorsements)}
+                    Separator
                     { generateFullEndorsementGlossary() }
                 </div>
             </section>
             <section className="row">
                 <div className="col">
                     <h3>License Restriction Glossary</h3>
+                    { generateRestrictionGLossary(restrictions) }
+                    Separator
                     { generateFullRestrictionGlossary() }
                 </div>
             </section>

@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
-const AppointmentRender = ({ appointments, handleRefresh}) => {
+const AppointmentRender = ({ appointments, handleRefresh }) => {
+
   function getTableBodyContent() {
     return appointments.map(obj => {
 
@@ -23,28 +24,18 @@ const AppointmentRender = ({ appointments, handleRefresh}) => {
   let data = {
     columns: [
       {
-        label: 'First Name',
-        field: 'firstname',
+        label: 'Appointment ID',
+        field: 'dmv_appointmentid',
         sort: 'asc'
       },
       {
-        label: 'Last Name',
-        field: 'lastname',
+        label: 'Appointment Date',
+        field: 'dmv_appointment_date',
         sort: 'asc'
       },
       {
-        label: 'email',
-        field: 'emailaddress1',
-        sort: 'asc'
-      },
-      {
-        label: 'U.S. state',
-        field: 'dmv_state@OData.Community.Display.V1.FormattedValue',
-        sort: 'asc'
-      },
-      {
-        label: 'id',
-        field: 'contactid',
+        label: 'Contact ID lookup',
+        field: '_dmv_contactappointmentid_value',
         sort: 'asc'
       },
     ],
@@ -56,7 +47,6 @@ const AppointmentRender = ({ appointments, handleRefresh}) => {
     <React.Fragment>
       <h1>Appointments</h1>
       <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
-      
       <MDBDataTable
         striped
         bordered
@@ -64,8 +54,6 @@ const AppointmentRender = ({ appointments, handleRefresh}) => {
         responsive
         data={data}
       />
-      
-      
     </React.Fragment>
   );
 }
@@ -73,8 +61,7 @@ const AppointmentRender = ({ appointments, handleRefresh}) => {
 AppointmentRender.propTypes = {
   appointments: PropTypes.array,
   handleView: PropTypes.func,
-  handleRefresh: PropTypes.func,
-  handleCreate: PropTypes.func
+  handleRefresh: PropTypes.func
 };
 
 

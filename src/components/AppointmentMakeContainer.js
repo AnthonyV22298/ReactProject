@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIcon from './LoadingIcon';
 import ErrorBanner from './ErrorBanner';
-import {Link} from 'react-router-dom';
 import AppointmentMake from './AppointmentMaker';
 
 const AppointmentMakeContainer = (props) => {

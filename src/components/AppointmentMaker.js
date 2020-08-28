@@ -62,25 +62,7 @@ class AppointmentMake extends Component {
 
     render(){
     return ( 
-        <div style={{ justifyContent: "center", textAlign: "center", background:"white", margin:"5%", padding:"5%", boxShadow: "0 1px 1.5rem rgba(0,0,0,.1)", borderRadius: "1rem", marginTop: "1%", display:"flex" }}>
-
-            <div style={{ width:"30%", justifyContent: "center", textAlign: "left"}}>
-            <h5>1) Select a Date for your appointment</h5>
-            <Calendar 
-                onChange={this.onChange} 
-                calendarType={"US"}
-                tileDisabled={({date }) =>
-                date.getDay()===0 || date.getDay()===6 ||  
-                (date.getMonth() <= this.state.today.getMonth() &&
-                date.getDate() < this.state.today.getDate() &&
-                date.getFullYear() <= this.state.date.getFullYear()) ||
-                (date.getMonth() < this.state.today.getMonth() &&
-                date.getDate() >= this.state.today.getDate() &&
-                date.getFullYear() <= this.state.date.getFullYear())}
-                />
-                <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
-            </div>
-
+        <div className="mainblock" >
                         
             <div>
             <div style={{padding:"10px", paddingBottom:"40px"}}>
@@ -104,6 +86,23 @@ class AppointmentMake extends Component {
 
             
             <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+            </div>
+
+            <div style={{ width:"30%", justifyContent: "center", textAlign: "left", paddingLeft: "10px"}}>
+            <h5>1) Select a Date for your appointment</h5>
+            <Calendar 
+                onChange={this.onChange} 
+                calendarType={"US"}
+                tileDisabled={({date }) =>
+                date.getDay()===0 || date.getDay()===6 ||  
+                (date.getMonth() <= this.state.today.getMonth() &&
+                date.getDate() < this.state.today.getDate() &&
+                date.getFullYear() <= this.state.date.getFullYear()) ||
+                (date.getMonth() < this.state.today.getMonth() &&
+                date.getDate() >= this.state.today.getDate() &&
+                date.getFullYear() <= this.state.date.getFullYear())}
+                />
+                <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>
 
             <div style={{ paddingTop:"10px" }}>

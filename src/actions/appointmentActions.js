@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING} from '../constants/actionTypes';
+import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE} from '../constants/actionTypes';
 
 export const readAppointments = () => {
 
@@ -61,6 +61,20 @@ export const postAppointments = (data) => {
                 dispatch(postAppointmentsFailure(error));
             });
         
+    };
+}
+
+const postAppointmentsSuccess = (res) => {
+    return {
+        type: POST_APPOINTMENTS_SUCCESFUL,
+        data:  res.data
+    };
+}
+
+const postAppointmentsFailure = (error) => {
+    return {
+        type: POST_APPOINTMENTS_FAILURE,
+        error  
     };
 }
 

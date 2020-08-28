@@ -11,6 +11,7 @@ import FeeContainer from './FeeContainer';
 import InformationContainer from './InformationContainer'
 import LoginPage from './Login.js';
 import ProfilePage from './Profile.js';
+import PaypalContainer from './PaypalContainer.js'
 
 
 export class App extends React.Component{
@@ -27,6 +28,7 @@ export class App extends React.Component{
                     <Route path='/CreateAppointment' component={AppointmentMakeContainer}/>
                     <Route path='/fees' component={FeeContainer}/>
                     <Route path='/information' component={InformationContainer}/>
+                    <Route path='/pay' component={PaypalContainer}/>
                 </Switch>
             </div>
         );

@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-const ErrorBanner = (props) => {
+
+const SuccessBanner = (props) => {
 
     const [hidden, setHidden] = useState(true);
-    
+
     return (
         hidden ?
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-success" role="alert">
                 <Button close onClick={() => setHidden(false)} />
                     {props.children}
             </div >
@@ -18,11 +19,11 @@ const ErrorBanner = (props) => {
     );
 }
 
-ErrorBanner.propTypes = {
+SuccessBanner.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node
     ])
 }
 
-export default ErrorBanner;
+export default SuccessBanner;

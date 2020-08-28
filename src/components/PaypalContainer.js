@@ -1,48 +1,44 @@
 "use strict"
-
-
-import * as contactActions from '../actions/contactActions';
-import ContactRender from './ContactRender';
+import React, {useEffect} from 'react';
+import PaypalRender from './PaypalRender';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as paypalActions from '../actions/paypalActions';
 import LoadingIcon from './LoadingIcon';
 import ErrorBanner from './ErrorBanner';
 
-const ContactContainer = (props) => {
-    const { actions, contacts, requestState } = props;
+const PaypalContainer = (props) => {
+    const { actions, payment, requestState } = props;
 
     const {
         error,
-        contactsPending, contactsFailed, contactsSuccess,
+        findPayment, paymentNotFound, paymentFound,
     } = requestState;
 
 
     useEffect(() => {
-        actions.readContacts();
+        actions.findPayment();
     }, []);
+
 
     const renderSuccess = () => {
         return (
-            <div className="reactive-margin">
-                <ContactRender
-                    contacts={contacts}
-                    handleRefresh={() => actions.readContacts()}
-                />
-            </div>
-        );
+            <PaypalRender
+            payment={payment}/>
+        )
+    
     }
 
-    if (contactsPending) {
+    if (findPayment) {
         return <LoadingIcon />;
-    } else if (contactsFailed) {
+    } else if (paymentNotFound) {
         return (
             <ErrorBanner>
-                Error while loading contacts!
+                Error while loading fees!
             </ErrorBanner>
         );
-    } else if (contactsSuccess) {
+    } else if (paymentFound) {
         return renderSuccess();
     } else {
         return (
@@ -52,29 +48,29 @@ const ContactContainer = (props) => {
             </ErrorBanner>
         );
     }
+
 }
 
-ContactContainer.propTypes = {
+PaypalContainer.propTypes = {
     actions: PropTypes.object
 };
 
 function mapStateToProps(state) {
-    const { contactReducer } = state;
+    const { paypalReducer } = state;
     return {
-       contacts: state.contactReducer.contacts,
+       payment: state.paypalReducer.payment,
        requestState: Object.assign({},
-        contactReducer.requestState)
+        paypalReducer.requestState)
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(contactActions, dispatch)
+        actions: bindActionCreators(paypalActions, dispatch)
     }
 }
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ContactContainer);
-
+)(PaypalContainer);

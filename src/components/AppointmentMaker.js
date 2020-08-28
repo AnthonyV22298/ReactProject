@@ -63,46 +63,49 @@ class AppointmentMake extends Component {
     render(){
     return ( 
         <div className="mainblock" >
-                        
-            <div>
-            <div style={{padding:"10px", paddingBottom:"40px"}}>
-            <React.Fragment>
-            <h5>2) Select the appointment type</h5>
-                <select onChange={this.typeChange}>
-                    <option>Select Type</option>
-                    {this.state.items.map((item) => (
-                    <option key={item.dmv_app_type}>
-                        {item["dmv_app_type@OData.Community.Display.V1.FormattedValue"]}
-                    </option>
-                    ))}
-                </select>
-            </React.Fragment>
-            </div>
-            
-            <div style={{padding:"10px", paddingBottom:"40px"}}>
-                <h5>3) Select the location</h5>
-                <LocationsDropdown />
-            </div>
+            <div  style={{display:"flex", justifyContent:"center"}}>
 
+            <div>
+                <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
+                <React.Fragment>
+                <h5>1) Select the appointment type</h5>
+                    <select onChange={this.typeChange}>
+                        <option>Select Type</option>
+                        {this.state.items.map((item) => (
+                        <option key={item.dmv_app_type}>
+                            {item["dmv_app_type@OData.Community.Display.V1.FormattedValue"]}
+                        </option>
+                        ))}
+                    </select>
+                </React.Fragment>
+                </div>
             
-            <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+                <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
+                    <h5>2) Select the location</h5>
+                    <LocationsDropdown />
+                </div>
             </div>
 
             <div style={{ width:"30%", justifyContent: "center", textAlign: "left", paddingLeft: "10px"}}>
-            <h5>1) Select a Date for your appointment</h5>
-            <Calendar 
-                onChange={this.onChange} 
-                calendarType={"US"}
-                tileDisabled={({date }) =>
-                date.getDay()===0 || date.getDay()===6 ||  
-                (date.getMonth() <= this.state.today.getMonth() &&
-                date.getDate() < this.state.today.getDate() &&
-                date.getFullYear() <= this.state.date.getFullYear()) ||
-                (date.getMonth() < this.state.today.getMonth() &&
-                date.getDate() >= this.state.today.getDate() &&
-                date.getFullYear() <= this.state.date.getFullYear())}
-                />
-                <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
+                <h5>3) Select a Date for your appointment</h5>
+                <Calendar 
+                    onChange={this.onChange} 
+                    calendarType={"US"}
+                    tileDisabled={({date }) =>
+                    date.getDay()===0 || date.getDay()===6 ||  
+                    (date.getMonth() <= this.state.today.getMonth() &&
+                    date.getDate() < this.state.today.getDate() &&
+                    date.getFullYear() <= this.state.date.getFullYear()) ||
+                    (date.getMonth() < this.state.today.getMonth() &&
+                    date.getDate() >= this.state.today.getDate() &&
+                    date.getFullYear() <= this.state.date.getFullYear())}
+                    />
+                    <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
+            </div>
+            </div> 
+
+            <div style={{justifyContent:"center", paddingBottom:"20px", display:"flex"}}>
+                <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
             </div>
 
             <div style={{ paddingTop:"10px" }}>

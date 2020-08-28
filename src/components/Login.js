@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAttempt } from '../actions/userActions';
+import ErrorBanner from './ErrorBanner';
 
 
 
 const LoginPage = () => {
+    //declare input variable and initial state of input fields
     const [inputs, setInputs] = useState({
         ssn: '',
-        firstname: ''
+        emailaddress1: ''
     });
     const [submitted, setSubmitted] = useState(false);
-    const { ssn, firstname } = inputs;
-    const loggingIn = useSelector(state => state.loginReducer.loggingIn);
-    const loggedIn = useSelector(state => state.loginReducer.loggedIn);
+    const { ssn, emailaddress1 } = inputs;
+    const user = useSelector(state => state.loginReducer);
     const dispatch = useDispatch();
 
-
-
+    //handles input change and updates the field of the regarding property: value
     const handleChange = (e) => {
         const { name, value } = e.target;
         setInputs(inputs => ({ ...inputs, [name]: value }));
     }
+    //prevent the default action from happening
+    //sets submited to true to if all fields are set before submitting login atempt
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
 
-        if (ssn && firstname) {
+        if (ssn && emailaddress1) {
             dispatch(loginAttempt(inputs));
         }
 
     };
-
+//checks if the user is logged in, redirects home if true
+//verify the input fields are both set before dispatching login
     return (
         <div className="col-lg-8 offset-lg-2">
-        {loggedIn === true
+        {user.loggedIn === true
             ?
             <Redirect to='/'/>
             :
@@ -47,19 +50,24 @@ const LoginPage = () => {
                     }
                 </div>
                 <div className="form-group">
-                    <label>firstname</label>
-                    <input type="text" name="firstname" value={firstname} onChange={handleChange} className={'form-control' + (submitted && !firstname ? ' is-invalid' : '')} />
-                    {submitted && !firstname &&
-                        <div className="invalid-feedback">firstname is required</div>
+                    <label>Email Address</label>
+                    <input type="text" name="emailaddress1" value={emailaddress1} onChange={handleChange} className={'form-control' + (submitted && !emailaddress1 ? ' is-invalid' : '')} />
+                    {submitted && !emailaddress1 &&
+                        <div className="invalid-feedback">Email is required</div>
                     }
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary">
-                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        {user.loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button>
-                    <Link to="/register" className="btn btn-link">Register</Link>
                 </div>
+                {
+                    user.loginFailed &&
+                    <ErrorBanner>
+                        SSN or Password is incorrect!
+                    </ErrorBanner>
+                }
             </form>
         }
         </div>

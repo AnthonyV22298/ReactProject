@@ -1,5 +1,5 @@
 {
-  "name": "LMS",
+  "name": "lms",
   "version": "1.0.0",
   "description": "LMS - Redux",
   "main": "main.js",
@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "lodash": "^4.17.20",
     "mdbreact": "^4.27.0",
     "prop-types": "^15.7.2",
     "react": "^16.2.0",
@@ -28,6 +29,7 @@
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
+    "redux-token-auth": "^0.19.0",
     "vinyl-source-stream": "^2.0.0"
   },
   "devDependencies": {

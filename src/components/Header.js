@@ -5,8 +5,6 @@ import { useDispatch } from 'react-redux';
 import { logoutAttempt } from '../actions/userActions';
 import { Navbar, Nav, NavDropdown, NavLink} from 'react-bootstrap'
 
-
-
 const Header = () => {
     const userInfo = useSelector(state => state.loginReducer.loggedIn);
     const dispatch = useDispatch();
@@ -44,8 +42,6 @@ const Header = () => {
                 
             </Navbar.Collapse>
             </Navbar>
-            
-            
         );
 }
 

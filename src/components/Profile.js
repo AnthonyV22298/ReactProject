@@ -2,25 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateContactAttempt } from '../actions/profileActions';
 import SuccessBanner from './SuccessBanner';
-import DMV_stateDropdown from './DMV_stateDropdown';
-
-
-
 
 const ProfilePage = () => {
-    console.log("token:")
     console.log(JSON.parse(localStorage.getItem('token')));
     //get the users state
     let user = useSelector(state => state.loginReducer.userInfo);
     let loginReducer = useSelector(state => state.loginReducer);
-    console.log("userSelector: ")
-    console.log(user);
-    console.log("dmv_state_text: " + user.dmv_state_text); // TEXT VALUE
-    console.log("dmv_state_value " + user.dmv_state_value); // NUMBER VALUE
-    //console.log("dmv_state typeof: " + typeof(user.dmv_state));
-    //console.log("dmv_state_value typeof: " + typeof(user.dmv_state_value));
-    //console.log("dmv_state_text " + user.dmv_state_text); UNDEFINED
-
+    console.log(JSON.stringify(user));
     //sets the variables initial value to the users current user info state
     const [inputs, setInputs] = useState({
         firstname: user.firstname,
@@ -29,22 +17,15 @@ const ProfilePage = () => {
         address1_line1: user.address1_line1,
         address1_city: user.address1_city,
         address1_postalcode: user.address1_postalcode,
-        mobilephone: user.mobilephone,
-        dmv_state : user.dmv_state
+        mobilephone: user.mobilephone
     });
-    const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state} = inputs;
-
-
-
+    const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone } = inputs;
 
     const dispatch = useDispatch();
     const handleChange = (e) => {
-        alert(e.target.value)
         const { name, value } = e.target;
         setInputs(inputs => ({ ...inputs, [name]: value }));
-        this.setState({value: e.target.value});
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(updateContactAttempt(inputs));
@@ -79,7 +60,7 @@ const ProfilePage = () => {
                 <td> {user.address1_postalcode} </td>
                 <td> {user.mobilephone} </td>
                 <td> {user.dmv_dateofbirth} </td>
-                <td> {user.dmv_state_text} </td>
+                <td> {user.dmv_state} </td>
             </tr>
             </tbody>
         </table>
@@ -112,10 +93,6 @@ const ProfilePage = () => {
                 <div className="form-group">
                     <label>Phone Number</label>
                     <input type="text" name="mobilephone" value={mobilephone} onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>U.S. State</label> 
-                    <DMV_stateDropdown name="dmv_state" value={dmv_state} handleChange={handleChange}/>
                 </div>
                 <button className="btn btn-primary">
                 {loginReducer.updating && <span className="spinner-border spinner-border-sm mr-1"></span>}

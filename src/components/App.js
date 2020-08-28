@@ -1,7 +1,7 @@
 "use strict"
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
-
+//import Logout from './Logout.js';
 import Header from './Header.js';
 import Home from './Home.js';
 import BookContainer from './BookContainer';

@@ -1,6 +1,9 @@
 .activated-license {
     color: #32CD32;
 }
+.no-list-bullet {
+    list-style-type: none;
+}
 .suspended {
     color: #ff0033;
 }

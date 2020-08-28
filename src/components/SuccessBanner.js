@@ -27,3 +27,4 @@ SuccessBanner.propTypes = {
 }
 
 export default SuccessBanner;
+

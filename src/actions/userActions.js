@@ -2,19 +2,21 @@ import { LOGIN_SUCCESS, LOGIN_FAILED, LOGIN_REQUEST, LOGOUT} from '../constants/
 import axios from 'axios';
 import { adalApiFetch } from '../adalConfig.js';
 
+//import { store } from 'redux/store';
+//import { storeAuthToken } from './authTokenConfig';
+//import { store } from '../main.js';
+
+
 export const logoutAttempt = () => {
     // remove user from local storage to log user out
 
     return (dispatch) => {
         dispatch(logout());
-        localStorage.removeItem('token');
+        localStorage.removeItem('guid');
     };
-}
+};
 
 export const loginAttempt = (userInfo) => {
-    console.log("fired")
-    console.log(userInfo)
-
 
     let config = {
         method: 'get',
@@ -27,38 +29,60 @@ export const loginAttempt = (userInfo) => {
         }
     };
     return dispatch => {
-        console.log("pastdispatch");
+
+
+
+
+        //runs a query on contact information
+        //filters information based on user input
             dispatch(loginRequest());
-            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts?$select=contactid,dmv_socialsecuritynumber,firstname,lastname,address1_city,dmv_dateofbirth" +
-            "&$filter=dmv_socialsecuritynumber eq '" + userInfo.ssn + "' " +
-            "and firstname eq '" + userInfo.firstname + "'", config)
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts?$select=contactid,dmv_socialsecuritynumber,firstname,dmv_state,lastname,address1_city,address1_line1,dmv_state,dmv_dateofbirth,address1_postalcode,mobilephone,emailaddress1" +
+           "&$filter=dmv_socialsecuritynumber eq '" + userInfo.ssn + "' " +
+           "and emailaddress1 eq '" + userInfo.emailaddress1 + "'", config)
             .then((res) => {
                 if(res.data.value.length){
-                    const user = res.data.value[0]
-                    console.log("user in userActions" + user.dmv_socialsecuritynumber + user.firstname );
-                    dispatch(loginSuccess(user))
-                    localStorage.setItem('token', JSON.stringify(user));
-                    localStorage.setItem('contactid', user.contactid);
+                    //sets property name and value based on query results
+                    const userInfo = res.data.value[0];
+
+                    const data = {
+                        contactid: userInfo.contactid,
+                        dmv_socialsecuritynumber: userInfo.dmv_socialsecuritynumber,
+                        firstname: userInfo.firstname,
+                        lastname: userInfo.lastname,
+                        emailaddress1: userInfo.emailaddress1,
+                        address1_line1: userInfo.address1_line1,
+                        address1_city: userInfo.address1_city,
+                        address1_postalcode: userInfo.address1_postalcode,
+                        mobilephone: userInfo.mobilephone,
+                        dmv_state: userInfo["dmv_state@OData.Community.Display.V1.FormattedValue"],
+                        dmv_dateofbirth: userInfo["dmv_dateofbirth@OData.Community.Display.V1.FormattedValue"]
+                    }
+
+                    //sets localstoreage token to save user information
+                    //localStorage.setItem('token', JSON.stringify(data));
+                    console.log("this is login data" + data.emailaddress1);
+                    //store.dispatch(storeAuthToken(data));
+                    dispatch(loginSuccess(data));
+                    localStorage.setItem('guid', userInfo.contactid);
+
+
 
                 } else {
-                        console.log(loginFailed())
+                    dispatch(loginFailed());
                 }
             })
+            .catch((error) => {
+                console.log(error);
+            });
         }
     };
 
 const loginSuccess = (userInfo) => {
+
     return {
-      type: LOGIN_SUCCESS,
-      userInfo: {
-        dmv_socialsecuritynumber: userInfo.dmv_socialsecuritynumber,
-        firstname: userInfo.firstname,
-        contactid: userInfo.contactid,
-        lastname: userInfo.lastname,
-        address1_city: userInfo.address1_city,
-        dmv_dateofbirth: userInfo.dmv_dateofbirth
-      },
-  }
+        type: LOGIN_SUCCESS,
+        userInfo: userInfo,
+    }
 }
 
 const loginFailed = () => {

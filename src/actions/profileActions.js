@@ -1,6 +1,7 @@
 import { UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_FAILED, UPDATE_CONTACT_SUCCESS} from '../constants/actionTypes';
 import axios from 'axios';
 import { adalApiFetch } from '../adalConfig.js';
+
 //import { authenticate } from './authenticate';
 
 //takes in user input from the profile page
@@ -60,6 +61,7 @@ export const updateContactAttempt = (userInfo, user) => {
                 dispatch(updateContactFailed(error));
             });
         }
+
 };
 
 
@@ -84,3 +86,4 @@ const updateContactFailed = (error) => {
     error
   };
 };
+

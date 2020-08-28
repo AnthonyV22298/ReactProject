@@ -3,9 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateContactAttempt } from '../actions/profileActions';
 import SuccessBanner from './SuccessBanner';
 
-
-
-
 const ProfilePage = () => {
     console.log(JSON.parse(localStorage.getItem('token')));
     //get the users state
@@ -23,9 +20,6 @@ const ProfilePage = () => {
         mobilephone: user.mobilephone
     });
     const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone } = inputs;
-
-
-
 
     const dispatch = useDispatch();
     const handleChange = (e) => {
@@ -107,7 +101,7 @@ const ProfilePage = () => {
                 {
                     loginReducer.updateSuccess &&
                     <SuccessBanner>
-                        Contact Information Updaed Successfully!
+                        Contact Information Updated Successfully!
                     </SuccessBanner>
                 }
             </form>

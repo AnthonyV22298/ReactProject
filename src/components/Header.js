@@ -24,6 +24,7 @@ const Header = () => {
                     <Nav className="mr-auto">
                     
                         <NavLink href="#/">Home</NavLink>
+                        <NavLink href="#/information">My Info</NavLink>
                         <NavLink href="#/vehicles">Vehicles</NavLink>
                         <NavLink href="#/profile">Profile Page</NavLink>
                         <NavLink href="#/fees">Fees</NavLink>
@@ -33,10 +34,6 @@ const Header = () => {
                             <NavDropdown.Item href="#/CreateAppointment">Create Appointments</NavDropdown.Item>
                         </NavDropdown>
                         
-                        <NavDropdown title="My Info" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#/information">View Appointments</NavDropdown.Item>
-                            <NavDropdown.Item href="#/CreateAppointment">Create Appointments</NavDropdown.Item>
-                        </NavDropdown>
                         <NavLink href="#/" onClick={() => handleLogout()}>Logout</NavLink>
                         
                     </Nav>

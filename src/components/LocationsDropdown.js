@@ -36,7 +36,7 @@ class LocationsDropdown extends Component {
 render(){
     return (
         <React.Fragment>
-            <h2>Select the location</h2>
+            
                 <select>
                     {this.state.items.map((item) => (
                     <option key={item.crefc_locationid} value={item.crefc_locationid}>

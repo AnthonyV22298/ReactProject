@@ -62,9 +62,10 @@ class AppointmentMake extends Component {
 
     render(){
     return ( 
-        <div style={{ justifyContent: "center", textAlign: "center"}}>
+        <div style={{ justifyContent: "center", textAlign: "center", background:"white", margin:"5%", padding:"5%", boxShadow: "0 1px 1.5rem rgba(0,0,0,.1)", borderRadius: "1rem", marginTop: "1%", display:"flex" }}>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ width:"30%", justifyContent: "center", textAlign: "left"}}>
+            <h5>1) Select a Date for your appointment</h5>
             <Calendar 
                 onChange={this.onChange} 
                 calendarType={"US"}
@@ -77,12 +78,14 @@ class AppointmentMake extends Component {
                 date.getDate() >= this.state.today.getDate() &&
                 date.getFullYear() <= this.state.date.getFullYear())}
                 />
+                <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>
 
-            <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>            
-
+                        
+            <div>
+            <div style={{padding:"10px", paddingBottom:"40px"}}>
             <React.Fragment>
-            <h2>Select the appointment type</h2>
+            <h5>2) Select the appointment type</h5>
                 <select onChange={this.typeChange}>
                     <option>Select Type</option>
                     {this.state.items.map((item) => (
@@ -92,10 +95,16 @@ class AppointmentMake extends Component {
                     ))}
                 </select>
             </React.Fragment>
+            </div>
+            
+            <div style={{padding:"10px", paddingBottom:"40px"}}>
+                <h5>3) Select the location</h5>
+                <LocationsDropdown />
+            </div>
 
-            <LocationsDropdown />
-
+            
             <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+            </div>
 
             <div style={{ paddingTop:"10px" }}>
                 {(this.state.type === 174070000 || this.state.type === 174070001) && (
@@ -154,6 +163,7 @@ class AppointmentMake extends Component {
                     </div>
                 )},
             </div>
+            
             
         </div>
         )

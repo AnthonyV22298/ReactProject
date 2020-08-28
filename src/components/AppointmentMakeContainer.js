@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIcon from './LoadingIcon';
 import ErrorBanner from './ErrorBanner';
-import {Link} from 'react-router-dom';
 import AppointmentMake from './AppointmentMaker';
 
 const AppointmentMakeContainer = (props) => {
@@ -27,10 +26,7 @@ const AppointmentMakeContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                <ul>
-                    <li className="list-inline-item"><Link to='/appointments' replace>View Your Appointments</Link></li>
-                    <li className="list-inline-item"><Link to='/CreateAppointment' replace>Create an Appointment</Link></li>
-                </ul>
+                
                 <AppointmentMake
                     appointments={ appointments }
                     handleCreate={(data) => {

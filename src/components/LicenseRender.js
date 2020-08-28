@@ -40,17 +40,17 @@ const LicenseRender = ({ information }) => {
         return endorsementGlossary;
     }
 
-    const generateFullEndorsementGlossary = () => {
-        let endorsements = []
-        for(var key in ENDORSEMENT_DICT) {
-            endorsements.push(<li><strong>{key} </strong>{ENDORSEMENT_DICT[key]} </li>)
-        }
-        return (
-            <ul className="no-list-bullet">
-                {endorsements}
-            </ul>
-        )
-    }
+    // const generateFullEndorsementGlossary = () => {
+    //     let endorsements = []
+    //     for(var key in ENDORSEMENT_DICT) {
+    //         endorsements.push(<li><strong>{key} </strong>{ENDORSEMENT_DICT[key]} </li>)
+    //     }
+    //     return (
+    //         <ul className="no-list-bullet">
+    //             {endorsements}
+    //         </ul>
+    //     )
+    // }
 
     const generateRestrictionGLossary = (restrictionStr) => {
         let restrictionArr = restrictionStr.split(",");
@@ -78,19 +78,19 @@ const LicenseRender = ({ information }) => {
 
     }
 
-    const generateFullRestrictionGlossary = () => {
-        let restrictions = [];
-        for(var key in RESTRICTION_DICT) {
-            if(key === "K_old" || key === "L_old") continue;
-            //Add in logic to create an icon or symbol that can provide a tooltip (Maybe onhover for small modal) to explain the Letterchange for K and L
-            restrictions.push(<li><strong>{key} </strong>{RESTRICTION_DICT[key]} </li>)
-        }
-        return (
-            <ul className="no-list-bullet">
-                {restrictions}
-            </ul>
-        )
-    }
+    // const generateFullRestrictionGlossary = () => {
+    //     let restrictions = [];
+    //     for(var key in RESTRICTION_DICT) {
+    //         if(key === "K_old" || key === "L_old") continue;
+    //         //Add in logic to create an icon or symbol that can provide a tooltip (Maybe onhover for small modal) to explain the Letterchange for K and L
+    //         restrictions.push(<li><strong>{key} </strong>{RESTRICTION_DICT[key]} </li>)
+    //     }
+    //     return (
+    //         <ul className="no-list-bullet">
+    //             {restrictions}
+    //         </ul>
+    //     )
+    // }
 
     return (
         <section className="info-render">
@@ -121,7 +121,7 @@ const LicenseRender = ({ information }) => {
                     <h3>License Endorsement Glossary</h3>
                     { generateEndorsementGlossary(endorsements)}
                     Separator
-                    { generateFullEndorsementGlossary() }
+                    { /*generateFullEndorsementGlossary() */}
                 </div>
             </section>
             <section className="row">
@@ -129,7 +129,7 @@ const LicenseRender = ({ information }) => {
                     <h3>License Restriction Glossary</h3>
                     { generateRestrictionGLossary(restrictions) }
                     Separator
-                    { generateFullRestrictionGlossary() }
+                    { /*generateFullRestrictionGlossary() */}
                 </div>
             </section>
         </section>

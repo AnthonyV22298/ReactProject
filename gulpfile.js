@@ -20,7 +20,7 @@ var config = {
 			'node_modules/bootstrap/dist/css/bootstrap.min.css',
 			'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
 			'./src/css/*.css',
-			'node_modules/react-calendar/dist/Calendar.css'  
+			'node_modules/react-calendar/dist/Calendar.css'
 		],
 		dist: './dist',
 		mainJs: './src/main.js'

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE} from '../constants/actionTypes';
+import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING} from '../constants/actionTypes';
 
 export const readAppointments = () => {
 

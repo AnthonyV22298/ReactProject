@@ -6,7 +6,7 @@ export default function bookReducer(state = {}, action) {
       return {...state, bookData: { books: action.data, requestSucessful: true } };
     case READ_BOOKS_PENDING:
       return {...state, bookData: {requestPending: true } };
-    case READ_BOOKS_FAILURE:  
+    case READ_BOOKS_FAILURE:
       return {...state, bookData: { requestFailed: true } };
     default:
       return state;

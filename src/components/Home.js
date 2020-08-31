@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Home = () => {
     const userInfo = useSelector(state => state.loginReducer);
+
         return(
             <div className="jumbotron">
                 <h1>DMV Custom App</h1>

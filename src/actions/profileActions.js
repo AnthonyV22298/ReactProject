@@ -2,6 +2,7 @@ import { UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_FAILED, UPDATE_CONTACT_SUCCESS} 
 import axios from 'axios';
 import { adalApiFetch } from '../adalConfig.js';
 
+
 //takes in user input from the profile page
 export const updateContactAttempt = (userInfo, user) => {
     //let userToken = localStorage.getItem('guid');
@@ -81,3 +82,4 @@ const updateContactFailed = (error) => {
     error
   };
 };
+

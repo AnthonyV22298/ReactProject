@@ -5,6 +5,7 @@ import appointmentReducer from './appointmentReducer';
 import feeReducer from './feeReducer';
 import informationReducer from './informationReducer'
 import loginReducer from './loginReducer';
+import paypalReducer from './paypalReducer';
 
 
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   feeReducer,
   informationReducer,
   loginReducer,
+  paypalReducer,
 });
 
 

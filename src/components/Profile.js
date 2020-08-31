@@ -4,7 +4,6 @@ import { updateContactAttempt } from '../actions/profileActions';
 import SuccessBanner from './SuccessBanner';
 import DMV_stateDropdown from './DMV_stateDropdown';
 
-
 const ProfilePage = () => {
 
     let user = useSelector(state => state.loginReducer.userInfo);
@@ -20,7 +19,9 @@ const ProfilePage = () => {
         mobilephone: user.mobilephone,
         dmv_state: user.dmv_state,
     });
+
     const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state } = inputs;
+
 
     const dispatch = useDispatch();
     const handleChange = (e) => {
@@ -119,7 +120,6 @@ const ProfilePage = () => {
                 {loginReducer.updating && <span className="spinner-border spinner-border-sm mr-1"></span>}
                     Update
                 </button>
-
             </form>
 
         </div>

@@ -2,13 +2,15 @@
 import React, { Component } from "react";
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
+import PropTypes from 'prop-types';
 
 class DMV_stateDropdown extends Component {
 
 
   constructor(props) {
     super(props)
-    this.state = {optionset: [], value: 0, label: ''};
+
+    this.state = {optionset: [], value: 100};
     this._onChangeHandler = this._onChangeHandler.bind(this);
   }
   componentDidMount() {
@@ -21,10 +23,7 @@ class DMV_stateDropdown extends Component {
     var currlabel = e.nativeEvent.target[index].text;
     this.setState({value: e.target.value, label: currlabel});
     this.props.onChange(e);
-    //this.setState({value: e.target});
-    //this.props.onChange(e.target);
     console.log("label = " + currlabel + ": state = " + e.target.value);
-
   }
   getOptions() {
     let config = {
@@ -40,7 +39,7 @@ class DMV_stateDropdown extends Component {
     //@OData.Community.Display.V1.FormattedValue
     adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
         .then(results => {
-            //console.log(results.data.Options);
+            console.log(results.data.Options);
             this.setState({optionset: results.data.Options});
         },
         function(error) {
@@ -62,5 +61,10 @@ render(){
         );
     }
 }
+
+
+DMV_stateDropdown.propTypes = {
+  handleChange: PropTypes.func
+};
 
 export default DMV_stateDropdown;

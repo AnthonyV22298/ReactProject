@@ -9,7 +9,11 @@ import {App} from './components/App.js';
 import { runWithAdal } from 'react-adal';
 import { authContext } from './adalConfig';
 
+
+
 const store = configureStore();
+
+
 
 
 const DO_NOT_LOGIN = false;
@@ -24,5 +28,4 @@ runWithAdal(authContext, () => {
     </Provider>
   ), document.getElementById('app'));
 
-},DO_NOT_LOGIN);
-  
+}, DO_NOT_LOGIN);

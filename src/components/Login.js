@@ -10,10 +10,10 @@ const LoginPage = () => {
     //declare input variable and initial state of input fields
     const [inputs, setInputs] = useState({
         ssn: '',
-        firstname: ''
+        emailaddress1: ''
     });
     const [submitted, setSubmitted] = useState(false);
-    const { ssn, firstname } = inputs;
+    const { ssn, emailaddress1 } = inputs;
     const user = useSelector(state => state.loginReducer);
     const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
         e.preventDefault();
         setSubmitted(true);
 
-        if (ssn && firstname) {
+        if (ssn && emailaddress1) {
             dispatch(loginAttempt(inputs));
         }
 
@@ -50,10 +50,10 @@ const LoginPage = () => {
                     }
                 </div>
                 <div className="form-group">
-                    <label>firstname</label>
-                    <input type="text" name="firstname" value={firstname} onChange={handleChange} className={'form-control' + (submitted && !firstname ? ' is-invalid' : '')} />
-                    {submitted && !firstname &&
-                        <div className="invalid-feedback">firstname is required</div>
+                    <label>Email Address</label>
+                    <input type="text" name="emailaddress1" value={emailaddress1} onChange={handleChange} className={'form-control' + (submitted && !emailaddress1 ? ' is-invalid' : '')} />
+                    {submitted && !emailaddress1 &&
+                        <div className="invalid-feedback">Email is required</div>
                     }
                 </div>
                 <div className="form-group">

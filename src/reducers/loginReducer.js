@@ -1,9 +1,15 @@
 import {LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, UPDATE_CONTACT_SUCCESS, UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_FAILED} from '../constants/actionTypes';
 
 //gets the info from the local storage token
-let userInfo = JSON.parse(localStorage.getItem('token'));
+//let userInfo = JSON.parse(localStorage.getItem('token'));
+//sets the inital user state to token information if it exists
+//const initialState = userInfo ? { loggedIn: true, userInfo } : {};
+
+
+let userInfo = JSON.parse(localStorage.getItem('userInfo'));
 //sets the inital user state to token information if it exists
 const initialState = userInfo ? { loggedIn: true, userInfo } : {};
+
 
 export default function loginReducer(state = initialState, action){
   switch (action.type){

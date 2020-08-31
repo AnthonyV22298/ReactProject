@@ -1,6 +1,24 @@
 .activated-license {
     color: #32CD32;
 }
+.no-list-bullet {
+    list-style-type: none;
+}
 .suspended {
     color: #ff0033;
+}
+
+.body {
+    background: #92c7e0;
+}
+
+.mainblock {
+    justify-content: center;  
+    background:white; 
+    margin:5%; 
+    padding:5%; 
+    box-shadow: 0 1px 1.5rem rgba(0,0,0,.1); 
+    border-radius: 1rem; 
+    margin-top: 1%; 
+    display:flex;
 }

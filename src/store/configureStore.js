@@ -9,7 +9,7 @@ function configureStore(initialState) {
     reduxImmutableStateInvariant(),
     thunk,
   ];
-
+  
   const store = createStore(
     rootReducer,
     initialState,

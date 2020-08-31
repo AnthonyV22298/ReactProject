@@ -9,6 +9,7 @@ class DMV_stateDropdown extends Component {
 
   constructor(props) {
     super(props)
+
     this.state = {optionset: [], value: 100};
     this._onChangeHandler = this._onChangeHandler.bind(this);
   }
@@ -16,7 +17,13 @@ class DMV_stateDropdown extends Component {
     this.getOptions();
   }
   _onChangeHandler(e) {
-    this.setState({value: e.target.value});
+    e.persist();
+    var index = e.nativeEvent.target.selectedIndex;
+    //console.log("index = " + index);
+    var currlabel = e.nativeEvent.target[index].text;
+    this.setState({value: e.target.value, label: currlabel});
+    this.props.onChange(e);
+    console.log("label = " + currlabel + ": state = " + e.target.value);
   }
   getOptions() {
     let config = {
@@ -24,7 +31,7 @@ class DMV_stateDropdown extends Component {
       'OData-MaxVersion': 4.0,
       'OData-Version': 4.0,
       Accept: 'crefc_locations/json',
-      'Content-Type': 'crefc_locations/json; charset=utf-8', 
+      'Content-Type': 'crefc_locations/json; charset=utf-8',
       headers: {
           'Prefer': "odata.include-annotations=*"
       }
@@ -43,7 +50,8 @@ class DMV_stateDropdown extends Component {
     // {Option.Label.LocalizedLabels[0].Label}
 render(){
     return (
-            <select onChange={this.props.handleChange} value={this.state.value}>
+            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
+                <option value = {0} disabled> Choose a U.S. State </option>
                 {this.state.optionset.map((Option) => (
                 <option key={Option.Value} value={Option.Value}>
                 {Option.Label.UserLocalizedLabel.Label}
@@ -53,6 +61,7 @@ render(){
         );
     }
 }
+
 
 DMV_stateDropdown.propTypes = {
   handleChange: PropTypes.func

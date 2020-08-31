@@ -7,6 +7,9 @@ import informationReducer from './informationReducer'
 import loginReducer from './loginReducer';
 import paypalReducer from './paypalReducer';
 
+
+
+
 const rootReducer = combineReducers({
   bookReducer,
   appointmentReducer,
@@ -16,5 +19,10 @@ const rootReducer = combineReducers({
   loginReducer,
   paypalReducer,
 });
+
+
+
+
+
 
 export default rootReducer;

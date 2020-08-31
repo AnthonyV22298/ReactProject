@@ -12,7 +12,7 @@ export const logoutAttempt = () => {
 
     return (dispatch) => {
         dispatch(logout());
-        localStorage.removeItem('guid');
+        localStorage.removeItem('userInfo');
     };
 };
 
@@ -63,7 +63,8 @@ export const loginAttempt = (userInfo) => {
                     console.log("this is login data" + data.emailaddress1);
                     //store.dispatch(storeAuthToken(data));
                     dispatch(loginSuccess(data));
-                    localStorage.setItem('guid', userInfo.contactid);
+                    localStorage.setItem('userInfo', JSON.stringify(data));
+
 
 
 

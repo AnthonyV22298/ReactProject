@@ -1,15 +1,15 @@
-import * as informationActions from '../actions/informationActions';
+import * as informationActions from '../../actions/informationActions';
 import LicenseRender from './LicenseRender';
 import CitationsRender from './CitationsRender';
-import InformationSecondaryNav from './InformationSecondaryNav';
+import InformationSecondaryNav from '../InformationSecondaryNav';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
 
-import { INFO_LICENSE, INFO_CITATIONS } from '../constants/viewNames';
+import { INFO_LICENSE, INFO_CITATIONS } from '../../constants/viewNames';
 
 const InformationContainer = (props) => {
     const {actions, information, infoView, loggedInUserId, requestState} = props;

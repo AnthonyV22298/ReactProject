@@ -32,7 +32,6 @@ export const updateContactAttempt = (userInfo, user) => {
             return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts(" + guid + ")", updateConfig(userInfo))
             .then((res) => {
                 console.log("this is res data: " + JSON.stringify(res));
-
                 const data = {
                     contactid: guid,
                     dmv_socialsecuritynumber: user.dmv_socialsecuritynumber,

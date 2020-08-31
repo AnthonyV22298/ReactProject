@@ -4,9 +4,9 @@ import PaypalRender from './PaypalRender';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as paypalActions from '../actions/paypalActions';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
+import * as paypalActions from '../../actions/paypalActions';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
 
 const PaypalContainer = (props) => {
     const { actions, payment, requestState } = props;

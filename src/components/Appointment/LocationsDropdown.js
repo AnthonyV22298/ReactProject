@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import axios from 'axios'
-import { adalApiFetch } from '../adalConfig.js';
+import { adalApiFetch } from '../../adalConfig.js';
 
 class LocationsDropdown extends Component {
 

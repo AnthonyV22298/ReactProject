@@ -8,17 +8,12 @@ import configureStore from './store/configureStore';
 import {App} from './components/App.js';
 import { runWithAdal } from 'react-adal';
 import { authContext } from './adalConfig';
-import { saveState, loadState } from './actions/authTokenConfig.js'
+
 
 
 const store = configureStore();
 
-store.subscribe(() => {
-    loadState();
-    saveState({
-        userInfo: store.getState().loginReducer.userInfo
-    });
-});
+
 
 
 const DO_NOT_LOGIN = false;

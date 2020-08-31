@@ -1,7 +1,6 @@
 import { UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_FAILED, UPDATE_CONTACT_SUCCESS} from '../constants/actionTypes';
 import axios from 'axios';
 import { adalApiFetch } from '../adalConfig.js';
-//import { authenticate } from './authenticate';
 
 //takes in user input from the profile page
 export const updateContactAttempt = (userInfo, user) => {
@@ -32,9 +31,6 @@ export const updateContactAttempt = (userInfo, user) => {
             return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts(" + guid + ")", updateConfig(userInfo))
             .then((res) => {
                 console.log("this is res data: " + JSON.stringify(res));
-                //sets data for values for current state
-                //const userInfo = res.data;
-                console.log("this is state" + userInfo["dmv_dateofbirth@OData.Community.Display.V1.FormattedValue"]);
 
                 const data = {
                     contactid: guid,
@@ -46,13 +42,13 @@ export const updateContactAttempt = (userInfo, user) => {
                     address1_city: userInfo.address1_city,
                     address1_postalcode: userInfo.address1_postalcode,
                     mobilephone: userInfo.mobilephone,
-                    dmv_state: user.dmv_state,
+                    dmv_state: userInfo.dmv_state,
                     dmv_dateofbirth: user.dmv_dateofbirth
                 };
                 console.log("this is state" + data.dmv_state);
 
                 //update local storage token and current user state
-                //localStorage.setItem('guid', JSON.stringify(data));
+                localStorage.setItem('userInfo', JSON.stringify(data));
                 dispatch(updateContactSuccess(data));
             })
             .catch((error) => {
@@ -60,6 +56,7 @@ export const updateContactAttempt = (userInfo, user) => {
                 dispatch(updateContactFailed(error));
             });
         }
+
 };
 
 

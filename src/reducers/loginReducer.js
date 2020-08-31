@@ -6,7 +6,7 @@ import {LOGIN_FAILED, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, UPDATE_CONTACT_SUCCE
 //const initialState = userInfo ? { loggedIn: true, userInfo } : {};
 
 
-let userInfo = localStorage.getItem('guid');
+let userInfo = JSON.parse(localStorage.getItem('userInfo'));
 //sets the inital user state to token information if it exists
 const initialState = userInfo ? { loggedIn: true, userInfo } : {};
 

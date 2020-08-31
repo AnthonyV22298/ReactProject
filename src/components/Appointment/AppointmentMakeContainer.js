@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
-import AppointmentMake from '../AppointmentMaker';
+import AppointmentMake from './AppointmentMaker';
 
 const AppointmentMakeContainer = (props) => {
     const { actions, appointments, requestState } = props;
@@ -15,7 +15,7 @@ const AppointmentMakeContainer = (props) => {
     const {
         error,
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
-        postAppointmentsSuccess, postAppointmentsFailed, 
+        postAppointmentsSuccess, postAppointmentsFailed,
     } = requestState;
 
 
@@ -26,7 +26,7 @@ const AppointmentMakeContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                
+
                 <AppointmentMake
                     appointments={ appointments }
                     handleCreate={(data) => {

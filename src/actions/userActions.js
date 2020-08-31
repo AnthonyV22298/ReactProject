@@ -60,7 +60,7 @@ export const loginAttempt = (userInfo) => {
 
                     //sets localstoreage token to save user information
                     //localStorage.setItem('token', JSON.stringify(data));
-                    console.log("this is login data" + data.emailaddress1);
+                    console.log("this is login data" + JSON.stringify(data));
                     //store.dispatch(storeAuthToken(data));
                     dispatch(loginSuccess(data));
                     localStorage.setItem('userInfo', JSON.stringify(data));

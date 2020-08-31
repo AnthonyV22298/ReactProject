@@ -1,7 +1,7 @@
 import * as informationActions from '../../actions/informationActions';
 import LicenseRender from './LicenseRender';
 import CitationsRender from './CitationsRender';
-import InformationSecondaryNav from '../InformationSecondaryNav';
+import InformationSecondaryNav from './InformationSecondaryNav';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -52,7 +52,7 @@ const InformationContainer = (props) => {
             default:
                 break;
         }
-        
+
     }
 
     if (infoPending) {
@@ -66,7 +66,7 @@ const InformationContainer = (props) => {
                 <ErrorBanner>
                     Error while loading contacts!
                 </ErrorBanner>
-                
+
             </div>
         );
     } else if (infoSuccessful) {
@@ -93,6 +93,8 @@ InformationContainer.proptypes = {
 
 function mapStateToProps(state) {
     const { informationReducer, loginReducer } = state;
+    console.log("this is state" + state)
+    console.log("this is loginReducer Info" + loginReducer.userInfo)
     return {
        information: informationReducer.information,
        infoView: informationReducer.infoView,

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { INFO_LICENSE, INFO_CITATIONS } from '../constants/viewNames';
+import { INFO_LICENSE, INFO_CITATIONS } from '../../constants/viewNames';
 
 const InformationSecondaryNav = ({ clickFunc }) => {
     return (

@@ -151,7 +151,7 @@ class AppointmentMake extends Component {
                         <ul>
                             <li>Letter from commanding officer on official letterhead with an original signature stating that the applicant resides onboard a ship docked in Virginia or in a barracks located in Virginia</li>
                             <li>Orders from the U.S. military assigning the applicant to a military unit with a Virginia address</li>
-                            <li>Leave and Earnings Statement (LES) showing Virginia as the applicant's home of record</li>
+                            <li>Leave and Earnings Statement (LES) showing Virginia as the applicant&apos;s home of record</li>
                         </ul>
 
                         <h4>3) You are required to provide one document as proof of your social security number (SSN) if you have been issued one. Your document must display all nine digits. Select one document that you will bring to DMV.</h4>

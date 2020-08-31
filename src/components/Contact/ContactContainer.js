@@ -1,14 +1,14 @@
 "use strict"
 
 
-import * as contactActions from '../actions/contactActions';
+import * as contactActions from '../../actions/contactActions';
 import ContactRender from './ContactRender';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
 
 const ContactContainer = (props) => {
     const { actions, contacts, requestState } = props;

@@ -36,7 +36,8 @@ export const updateContactAttempt = (userInfo, user) => {
                 //sets data for values for current state
                 //const userInfo = res.data;
                 console.log("this is state" + userInfo["dmv_dateofbirth@OData.Community.Display.V1.FormattedValue"]);
-
+                console.log(userInfo);
+                console.log(user.dmv_socialsecuritynumber);
                 const data = {
                     contactid: guid,
                     dmv_socialsecuritynumber: user.dmv_socialsecuritynumber,

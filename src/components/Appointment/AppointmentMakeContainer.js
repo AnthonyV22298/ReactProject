@@ -1,13 +1,13 @@
 "use strict"
 
-import * as appointmentActions from '../actions/appointmentActions';
+import * as appointmentActions from '../../actions/appointmentActions';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
-import AppointmentMake from './AppointmentMaker';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
+import AppointmentMake from '../AppointmentMaker';
 
 const AppointmentMakeContainer = (props) => {
     const { actions, appointments, requestState } = props;

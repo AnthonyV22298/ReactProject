@@ -3,9 +3,7 @@ import React, { Component } from "react";
 import axios from 'axios'
 import { adalApiFetch } from '../../adalConfig.js';
 import PropTypes from 'prop-types';
-
 class DMV_stateDropdown extends Component {
-
 
   constructor(props) {
     super(props)
@@ -19,11 +17,11 @@ class DMV_stateDropdown extends Component {
   _onChangeHandler(e) {
     e.persist();
     var index = e.nativeEvent.target.selectedIndex;
-    //console.log("index = " + index);
+    console.log("index = " + index);
     var currlabel = e.nativeEvent.target[index].text;
     this.setState({value: e.target.value, label: currlabel});
     this.props.onChange(e);
-    //console.log("label = " + currlabel + ": state = " + e.target.value);
+    console.log("label = " + currlabel + ": state = " + e.target.value);
   }
   getOptions() {
     let config = {

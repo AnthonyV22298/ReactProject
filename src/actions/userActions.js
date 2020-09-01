@@ -13,6 +13,7 @@ export const logoutAttempt = () => {
     return (dispatch) => {
         dispatch(logout());
         localStorage.removeItem('userInfo');
+
     };
 };
 

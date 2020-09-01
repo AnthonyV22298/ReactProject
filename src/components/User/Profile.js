@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateContactAttempt } from '../../actions/profileActions';
 import SuccessBanner from '../Helper/SuccessBanner';
 import DMV_stateDropdown from './DMV_stateDropdown';
-import axios from 'axios'
+import axios from 'axios';
 import { adalApiFetch } from '../../adalConfig.js';
 
 const ProfilePage = () => {
@@ -11,8 +11,7 @@ const ProfilePage = () => {
     let loginReducer = useSelector(state => state.loginReducer);
 
     const [dmvstate, setFormat] = useState({});
-    console.log("this is dmv state: " + JSON.stringify(dmvstate));
-    console.log("this is dmvstate text" + dmv_state_text);
+
     const { dmv_state_text } = dmvstate;
 
     //sets the variables initial value to the users current user info state
@@ -28,7 +27,7 @@ const ProfilePage = () => {
     });
 
     const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state} = inputs;
-    console.log('this is dmv state value: ' + dmv_state);
+    console.log("this is dmv_state: " + dmv_state)
     //get request for formatted value
     function getFormatted(inputCompare) {
       let config = {
@@ -44,11 +43,9 @@ const ProfilePage = () => {
       //@OData.Community.Display.V1.FormattedValue
       adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
           .then(results => {
-              console.log("this is results passed in dmv_state" + dmv_state)
               for (let i = 0; i < results.data.Options.length; i++) {
 
                 let stateValue = results.data.Options[i].Value
-                console.log("this is the first stateValue inside the func" + stateValue)
                 if(inputCompare == stateValue) {
                     setFormat(dmvstate => ({ ...dmvstate, dmv_state_text: results.data.Options[i].Label.LocalizedLabels[0].Label }));
                 }
@@ -82,7 +79,6 @@ const ProfilePage = () => {
 //sets a table for the users current Information
 //handles change and submits user input
     return (
-
         <div className="col-lg-8 offset-lg-2">
         <h1>Current Contanct Details</h1>
         <table className="table">
@@ -152,14 +148,13 @@ const ProfilePage = () => {
                 </div>
                 <div className="form-group">
                     <label>U.S. State</label>
-                    <DMV_stateDropdown name="dmv_state" value={dmv_state} onChange={handleDropdown}/>
+                    <DMV_stateDropdown name="dmv_state" value={dmv_state} onChange={handleDropdown} />
                 </div>
                 <button className="btn btn-primary">
                 {loginReducer.updating && <span className="spinner-border spinner-border-sm mr-1"></span>}
                     Update
                 </button>
             </form>
-
         </div>
     );
 }

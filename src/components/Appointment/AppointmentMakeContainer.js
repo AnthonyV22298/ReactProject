@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
-import AppointmentMake from '../AppointmentMaker';
+import AppointmentMake from './AppointmentMaker';
 
 const AppointmentMakeContainer = (props) => {
     const { actions, appointments, requestState } = props;

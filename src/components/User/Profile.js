@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateContactAttempt } from '../../actions/profileActions';
-import SuccessBanner from './SuccessBanner';
+import SuccessBanner from '../Helper/SuccessBanner';
 import DMV_stateDropdown from './DMV_stateDropdown';
 
 const ProfilePage = () => {

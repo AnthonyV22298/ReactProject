@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from "react-calendar";
 import LocationsDropdown from "./LocationsDropdown"
-import { adalApiFetch } from '../adalConfig.js';
+import { adalApiFetch } from '../../adalConfig.js';
 import axios from 'axios'
 
 class AppointmentMake extends Component {

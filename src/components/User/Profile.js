@@ -3,12 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateContactAttempt } from '../../actions/profileActions';
 import SuccessBanner from '../Helper/SuccessBanner';
 import DMV_stateDropdown from './DMV_stateDropdown';
+import axios from 'axios'
+import { adalApiFetch } from '../../adalConfig.js';
 
 const ProfilePage = () => {
-
     let user = useSelector(state => state.loginReducer.userInfo);
     let loginReducer = useSelector(state => state.loginReducer);
-    console.log("this is login data" + user.contactid);
+
+    const [dmvstate, setFormat] = useState({});
+    console.log("this is dmv state: " + JSON.stringify(dmvstate));
+    console.log("this is dmvstate text" + dmv_state_text);
+    const { dmv_state_text } = dmvstate;
+
     //sets the variables initial value to the users current user info state
     const [inputs, setInputs] = useState({
         firstname: user.firstname,
@@ -21,9 +27,38 @@ const ProfilePage = () => {
         dmv_state: user.dmv_state,
     });
 
-    const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state } = inputs;
+    const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state} = inputs;
+    console.log('this is dmv state value: ' + dmv_state);
+    //get request for formatted value
+    function getFormatted(inputCompare) {
+      let config = {
+        method: 'get',
+        'OData-MaxVersion': 4.0,
+        'OData-Version': 4.0,
+        Accept: 'crefc_locations/json',
+        'Content-Type': 'crefc_locations/json; charset=utf-8',
+        headers: {
+            'Prefer': "odata.include-annotations=*"
+        }
+      }
+      //@OData.Community.Display.V1.FormattedValue
+      adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
+          .then(results => {
+              console.log("this is results passed in dmv_state" + dmv_state)
+              for (let i = 0; i < results.data.Options.length; i++) {
 
-
+                let stateValue = results.data.Options[i].Value
+                console.log("this is the first stateValue inside the func" + stateValue)
+                if(inputCompare == stateValue) {
+                    setFormat(dmvstate => ({ ...dmvstate, dmv_state_text: results.data.Options[i].Label.LocalizedLabels[0].Label }));
+                }
+            }
+          },
+          function(error) {
+              console.log(error.message);
+          }
+              )
+      }
     const dispatch = useDispatch();
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,17 +66,17 @@ const ProfilePage = () => {
     }
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        dispatch(updateContactAttempt(inputs, user));
+        dispatch(updateContactAttempt(inputs, user, dmvstate));
+
     };
 
     const handleDropdown = (e) => {
     console.log("handle dropdown");
-    //console.log(e); // html
-    //const {dmv_state, value} = e;
     setInputs(inputs => ({ ...inputs, ["dmv_state"]: e.target.value}));
-    console.log("this is e target: " + e.target);
-    //console.log("value = " + e.target.value + " : label = " + e.target.label);
+    let inputCompare = {["dmv_state"]: e.target.value}.dmv_state;
+    getFormatted(inputCompare);
 }
 
 //sets a table for the users current Information
@@ -61,6 +96,7 @@ const ProfilePage = () => {
                     <th>Zip</th>
                     <th>Phone Number</th>
                     <th>Date of Birth</th>
+                    <th>State ID</th>
                     <th>State</th>
                 </tr>
             </thead>
@@ -75,6 +111,7 @@ const ProfilePage = () => {
                 <td> {user.mobilephone} </td>
                 <td> {user.dmv_dateofbirth} </td>
                 <td> {user.dmv_state} </td>
+                <td> {user.dmv_state_text} </td>
             </tr>
             </tbody>
         </table>

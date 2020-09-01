@@ -23,7 +23,7 @@ class DMV_stateDropdown extends Component {
     var currlabel = e.nativeEvent.target[index].text;
     this.setState({value: e.target.value, label: currlabel});
     this.props.onChange(e);
-    console.log("label = " + currlabel + ": state = " + e.target.value);
+    //console.log("label = " + currlabel + ": state = " + e.target.value);
   }
   getOptions() {
     let config = {
@@ -39,7 +39,7 @@ class DMV_stateDropdown extends Component {
     //@OData.Community.Display.V1.FormattedValue
     adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
         .then(results => {
-            console.log(results.data.Options);
+            //console.log("this is results from optionset" + JSON.stringify(results.data.Options[0].Label.LocalizedLabels[0].Label))
             this.setState({optionset: results.data.Options});
         },
         function(error) {

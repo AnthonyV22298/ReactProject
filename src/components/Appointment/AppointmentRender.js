@@ -24,18 +24,18 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
   let data = {
     columns: [
       {
-        label: 'Appointment ID',
-        field: 'dmv_appointmentid',
+        label: 'Appointment Type',
+        field: 'dmv_app_type@OData.Community.Display.V1.FormattedValue',
         sort: 'asc'
       },
       {
-        label: 'Appointment Date',
+        label: 'Date',
         field: 'dmv_appointment_date',
         sort: 'asc'
       },
       {
-        label: 'Contact ID lookup',
-        field: '_dmv_contactappointmentid_value',
+        label: 'Approved',
+        field: 'dmv_approved@OData.Community.Display.V1.FormattedValue',
         sort: 'asc'
       },
     ],

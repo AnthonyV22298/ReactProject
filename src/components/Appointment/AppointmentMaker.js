@@ -105,7 +105,7 @@ class AppointmentMake extends Component {
             </div> 
 
             <div style={{justifyContent:"center", paddingBottom:"20px", display:"flex"}}>
-                <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+                <button className="button" onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
             </div>
 
             <div style={{ paddingTop:"10px" }}>

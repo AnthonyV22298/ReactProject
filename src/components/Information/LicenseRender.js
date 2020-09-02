@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Accordion, Card } from 'react-bootstrap';
 
 const LicenseRender = ({ information }) => {
     console.log(information);
@@ -8,89 +9,119 @@ const LicenseRender = ({ information }) => {
     licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
     let isSuspendedText = (license.statecode) ? (<span className="suspended">(Suspended)</span>)
         : (<span className="activated-license">(Active)</span>);//statecode = 0 is falsy and means active in this case
-    //let reActivationDate = (license.statecode) ? (<p><strong>Reactivation Date:</strong>{license["dmv_reactivationdate@OData.Community.Display.V1.FormattedValue"]}</p>)
-    let endorsements = license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"];
-    endorsements = endorsements.replace(/;+/g, ',');
-    let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"];
+    let endorsements = license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"] ? 
+        license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
+    let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"] ? 
+    license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
     restrictions = restrictions.replace(/;+/g, ',');
 
     const generateEndorsementGlossary = (endorsementStr) => {
-        let endorsementArr = endorsementStr.split(',');
-        for(var i in endorsementArr) {
-            endorsementArr[i] = endorsementArr[i].trim();
+        let endorsementArr;
+        let userEndorsementsJSX = [];
+        let nonHeldEndorsementJSX = [];
+        if(endorsementStr) {
+            endorsementArr = endorsementStr.split(',');
+            for(var i in endorsementArr) {
+                endorsementArr[i] = endorsementArr[i].trim();
+            }
+            console.log(endorsementArr);
+            for(var index in endorsementArr) {
+                userEndorsementsJSX.push(<li className="list-group-item" key={endorsementArr[index]+ "end"}>
+                    <strong>{endorsementArr[index]}: </strong>{ENDORSEMENT_DICT[endorsementArr[index]]}
+                </li>)
+            }
         }
-        console.log(endorsementArr);
-        let userEndorsements = [];
-        for(var index in endorsementArr) {
-            console.log(ENDORSEMENT_DICT[endorsementArr[index]]);
-            userEndorsements.push(<li key={endorsementArr[index]+ "end"}><strong>{endorsementArr[index]}: </strong>{ENDORSEMENT_DICT[endorsementArr[index]]}</li>)
-        }
-        userEndorsements.push(<li><strong>Other Endorsements</strong></li>);
         for(var key in ENDORSEMENT_DICT) {
-            if(endorsementArr.includes(key)) continue;
+            if(endorsementArr && endorsementArr.includes(key)) continue;
             else {
-                userEndorsements.push(<li key={key + "end"}><strong>{key}: </strong>{ENDORSEMENT_DICT[key]}</li>)
+                nonHeldEndorsementJSX.push(<li className="list-group-item" key={key + "end"}>
+                    <strong>{key}: </strong>{ENDORSEMENT_DICT[key]}
+                </li>)
             }
         }
         let endorsementGlossary = (
-            <ul className="no-list-bullet">
-                {userEndorsements}
-            </ul>
+            <Accordion defaultActiveKey="0" id="endorsementsGlossary">
+                {endorsementArr && 
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                        Your Endorsements
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <ul className="card-body list-group list-group-flush">
+                            {userEndorsementsJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+                }
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                        Other Endorsements
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="1">
+                        <ul className="card-body list-group list-group-flush">
+                            {nonHeldEndorsementJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
+            
         )
         return endorsementGlossary;
     }
-
-    // const generateFullEndorsementGlossary = () => {
-    //     let endorsements = []
-    //     for(var key in ENDORSEMENT_DICT) {
-    //         endorsements.push(<li><strong>{key} </strong>{ENDORSEMENT_DICT[key]} </li>)
-    //     }
-    //     return (
-    //         <ul className="no-list-bullet">
-    //             {endorsements}
-    //         </ul>
-    //     )
-    // }
 
     const generateRestrictionGLossary = (restrictionStr) => {
-        let restrictionArr = restrictionStr.split(",");
-        let userRestrictions = [];
-        for(var i in restrictionArr){
-            restrictionArr[i] = restrictionArr[i].trim();
-        }
-        for(var index in restrictionArr) {
-            console.log(ENDORSEMENT_DICT[restrictionArr[index]]);
-            userRestrictions.push(<li key={restrictionArr[index] + "res"}><strong>{restrictionArr[index]}: </strong>{RESTRICTION_DICT[restrictionArr[index]]}</li>)
-        }
-        userRestrictions.push(<li><strong>Other Endorsements</strong></li>);
-        for(var key in ENDORSEMENT_DICT) {
-            if(restrictionArr.includes(key)) continue;
-            else {
-                userRestrictions.push(<li key={key + "res"}><strong>{key}: </strong>{ENDORSEMENT_DICT[key]}</li>)
+        let restrictionArr;
+        let userRestrictionsJSX = [];
+        let nonHeldRestrictionsJSX = [];
+        if(restrictionStr) {
+            restrictionArr = restrictionStr.split(',');
+            for(var i in restrictionArr){
+                restrictionArr[i] = restrictionArr[i].trim();
+            }
+            for(var index in restrictionArr) {
+                userRestrictionsJSX.push(<li className="list-group-item" key={restrictionArr[index] + "res"}>
+                    <strong>{restrictionArr[index]}: </strong>{RESTRICTION_DICT[restrictionArr[index]]}
+                </li>)
             }
         }
-        let endorsementGlossary = (
-            <ul className="no-list-bullet">
-                {userRestrictions}
-            </ul>
+        for(var key in RESTRICTION_DICT) {
+            if(restrictionArr && restrictionArr.includes(key)) continue;
+            if(key === "K_old" || key === "L_old") continue;//manage adding the tooltip for K and L can be added later
+            else {
+                nonHeldRestrictionsJSX.push(<li className="list-group-item" key={key + "res"}>
+                    <strong>{key}: </strong>{RESTRICTION_DICT[key]}
+                </li>)
+            }
+        }
+        let restrictionGlossary = (
+            <Accordion defaultActiveKey="0">
+                {restrictionArr && 
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                        Your Restrictions
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <ul className="card-body list-group list-group-flush">
+                            {userRestrictionsJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+                }
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                    Other Restrictions
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="1">
+                        <ul className="card-body list-group list-group-flush">
+                            {nonHeldRestrictionsJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
         )
-        return endorsementGlossary;
+        return restrictionGlossary;
 
     }
-
-    // const generateFullRestrictionGlossary = () => {
-    //     let restrictions = [];
-    //     for(var key in RESTRICTION_DICT) {
-    //         if(key === "K_old" || key === "L_old") continue;
-    //         //Add in logic to create an icon or symbol that can provide a tooltip (Maybe onhover for small modal) to explain the Letterchange for K and L
-    //         restrictions.push(<li><strong>{key} </strong>{RESTRICTION_DICT[key]} </li>)
-    //     }
-    //     return (
-    //         <ul className="no-list-bullet">
-    //             {restrictions}
-    //         </ul>
-    //     )
-    // }
 
     return (
         <section className="info-render">
@@ -119,15 +150,13 @@ const LicenseRender = ({ information }) => {
             <section className="row">
                 <div className="col">
                     <h3>License Endorsement Glossary</h3>
-                    { generateEndorsementGlossary(endorsements)}
-                    { /*generateFullEndorsementGlossary() */}
+                    { generateEndorsementGlossary(endorsements) }
                 </div>
             </section>
             <section className="row">
                 <div className="col">
                     <h3>License Restriction Glossary</h3>
                     { generateRestrictionGLossary(restrictions) }
-                    { /*generateFullRestrictionGlossary() */}
                 </div>
             </section>
         </section>

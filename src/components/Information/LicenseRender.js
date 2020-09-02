@@ -93,6 +93,7 @@ const LicenseRender = ({ information }) => {
     // }
 
     return (
+        <div className="mainblock">
         <section className="info-render">
             <h3 className="display-3">License Information</h3>
             <div className="row">
@@ -131,6 +132,7 @@ const LicenseRender = ({ information }) => {
                 </div>
             </section>
         </section>
+        </div>
     );
 }
 

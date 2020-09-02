@@ -45,6 +45,7 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
   }
   return (
     <React.Fragment>
+      <div className="mainblock">
       <h1>Appointments</h1>
       <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
       <MDBDataTable
@@ -54,6 +55,7 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         responsive
         data={data}
       />
+      </div>
     </React.Fragment>
   );
 }

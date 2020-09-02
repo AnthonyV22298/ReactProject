@@ -46,7 +46,7 @@ const ProfilePage = () => {
 //sets a table for the users current Information
 //handles change and submits user input
     return (
-
+        <div className="mainblock">
         <div className="col-lg-8 offset-lg-2">
         <h1>Current Contanct Details</h1>
         <table className="table">
@@ -122,6 +122,7 @@ const ProfilePage = () => {
                 </button>
             </form>
 
+        </div>
         </div>
     );
 }

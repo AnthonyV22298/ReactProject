@@ -8,14 +8,14 @@
     color: #ff0033;
 }
 
-.body {
-    background: #92c7e0;
+body {
+    background-color: #71def7;
 }
 
 .mainblock {
     justify-content: center;  
     background:white; 
-    margin:5%; 
+    margin:15%; 
     padding:5%; 
     box-shadow: 0 1px 1.5rem rgba(0,0,0,.1); 
     border-radius: 1rem; 

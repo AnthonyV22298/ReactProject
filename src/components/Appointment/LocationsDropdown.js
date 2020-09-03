@@ -2,16 +2,30 @@
 import React, { Component } from "react";
 import axios from 'axios'
 import { adalApiFetch } from '../../adalConfig.js';
+import PropTypes from 'prop-types';
+
 
 class LocationsDropdown extends Component {
 
 
   constructor(props) {
     super(props)
-    this.state = {items: []};
+    this.state = {items: [],value: 0};
+    this._onChangeHandler = this._onChangeHandler.bind(this);
   }
   componentDidMount() {
     this.getItems();
+  }
+  componentWillUnmount() {
+  }
+
+  _onChangeHandler(e) {
+    e.persist();
+    console.log(e.target.value);
+    this.setState({value: e.target.value});
+    this.props.onChange(e);
+
+    console.log("location = " + e.target.value);
   }
 
   getItems() {
@@ -37,7 +51,7 @@ render(){
     return (
         <React.Fragment>
             
-                <select>
+                <select onChange={this._onChangeHandler} value={this.state.value}>
                     {this.state.items.map((item) => (
                     <option key={item.crefc_locationid} value={item.crefc_locationid}>
                         {item.crefc_locationname + ": " + item.crefc_addressline1 + ", " + item["crefc_state@OData.Community.Display.V1.FormattedValue"]}
@@ -48,5 +62,8 @@ render(){
         );
     }
 }
-
+LocationsDropdown.propTypes = {
+  handleChange: PropTypes.func,
+  onChange: PropTypes.func
+};
 export default LocationsDropdown;

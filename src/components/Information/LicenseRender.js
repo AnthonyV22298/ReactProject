@@ -1,136 +1,190 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const LicenseRender = ({ information }) => {
     console.log(information);
-    const { license } = information;
-    let licenseClass = license["dmv_licenseclassupdated@OData.Community.Display.V1.FormattedValue"];
-    licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
-    let isSuspendedText = (license.statecode) ? (<span className="suspended">(Suspended)</span>)
-        : (<span className="activated-license">(Active)</span>);//statecode = 0 is falsy and means active in this case
-    //let reActivationDate = (license.statecode) ? (<p><strong>Reactivation Date:</strong>{license["dmv_reactivationdate@OData.Community.Display.V1.FormattedValue"]}</p>)
-    let endorsements = license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"];
-    endorsements = endorsements.replace(/;+/g, ',');
-    let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"];
-    restrictions = restrictions.replace(/;+/g, ',');
-
+    const { licenses } = information;
     const generateEndorsementGlossary = (endorsementStr) => {
-        let endorsementArr = endorsementStr.split(',');
-        for(var i in endorsementArr) {
-            endorsementArr[i] = endorsementArr[i].trim();
+        let endorsementArr;
+        let userEndorsementsJSX = [];
+        let nonHeldEndorsementJSX = [];
+        if(endorsementStr) {
+            endorsementArr = endorsementStr.split(',');
+            for(var i in endorsementArr) {
+                endorsementArr[i] = endorsementArr[i].trim();
+            }
+            console.log(endorsementArr);
+            for(var index in endorsementArr) {
+                userEndorsementsJSX.push(<li className="list-group-item" key={endorsementArr[index]+ "end"}>
+                    <strong>{endorsementArr[index]}: </strong>{ENDORSEMENT_DICT[endorsementArr[index]]}
+                </li>)
+            }
         }
-        console.log(endorsementArr);
-        let userEndorsements = [];
-        for(var index in endorsementArr) {
-            console.log(ENDORSEMENT_DICT[endorsementArr[index]]);
-            userEndorsements.push(<li key={endorsementArr[index]+ "end"}><strong>{endorsementArr[index]}: </strong>{ENDORSEMENT_DICT[endorsementArr[index]]}</li>)
-        }
-        userEndorsements.push(<li><strong>Other Endorsements</strong></li>);
         for(var key in ENDORSEMENT_DICT) {
-            if(endorsementArr.includes(key)) continue;
+            if(endorsementArr && endorsementArr.includes(key)) continue;
             else {
-                userEndorsements.push(<li key={key + "end"}><strong>{key}: </strong>{ENDORSEMENT_DICT[key]}</li>)
+                nonHeldEndorsementJSX.push(<li className="list-group-item" key={key + "end"}>
+                    <strong>{key}: </strong>{ENDORSEMENT_DICT[key]}
+                </li>)
             }
         }
         let endorsementGlossary = (
-            <ul className="no-list-bullet">
-                {userEndorsements}
-            </ul>
+            <Accordion defaultActiveKey="0" id="endorsementsGlossary">
+                {endorsementArr && 
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                        Your Endorsements
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <ul className="card-body list-group list-group-flush">
+                            {userEndorsementsJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+                }
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                        Other Endorsements
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="1">
+                        <ul className="card-body list-group list-group-flush">
+                            {nonHeldEndorsementJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
+            
         )
         return endorsementGlossary;
     }
-
-    // const generateFullEndorsementGlossary = () => {
-    //     let endorsements = []
-    //     for(var key in ENDORSEMENT_DICT) {
-    //         endorsements.push(<li><strong>{key} </strong>{ENDORSEMENT_DICT[key]} </li>)
-    //     }
-    //     return (
-    //         <ul className="no-list-bullet">
-    //             {endorsements}
-    //         </ul>
-    //     )
-    // }
 
     const generateRestrictionGLossary = (restrictionStr) => {
-        let restrictionArr = restrictionStr.split(",");
-        let userRestrictions = [];
-        for(var i in restrictionArr){
-            restrictionArr[i] = restrictionArr[i].trim();
-        }
-        for(var index in restrictionArr) {
-            console.log(ENDORSEMENT_DICT[restrictionArr[index]]);
-            userRestrictions.push(<li key={restrictionArr[index] + "res"}><strong>{restrictionArr[index]}: </strong>{RESTRICTION_DICT[restrictionArr[index]]}</li>)
-        }
-        userRestrictions.push(<li><strong>Other Endorsements</strong></li>);
-        for(var key in ENDORSEMENT_DICT) {
-            if(restrictionArr.includes(key)) continue;
-            else {
-                userRestrictions.push(<li key={key + "res"}><strong>{key}: </strong>{ENDORSEMENT_DICT[key]}</li>)
+        let restrictionArr;
+        let userRestrictionsJSX = [];
+        let nonHeldRestrictionsJSX = [];
+        if(restrictionStr) {
+            restrictionArr = restrictionStr.split(',');
+            for(var i in restrictionArr){
+                restrictionArr[i] = restrictionArr[i].trim();
+            }
+            for(var index in restrictionArr) {
+                userRestrictionsJSX.push(<li className="list-group-item" key={restrictionArr[index] + "res"}>
+                    <strong>{restrictionArr[index]}: </strong>{RESTRICTION_DICT[restrictionArr[index]]}
+                </li>)
             }
         }
-        let endorsementGlossary = (
-            <ul className="no-list-bullet">
-                {userRestrictions}
-            </ul>
+        for(var key in RESTRICTION_DICT) {
+            if(restrictionArr && restrictionArr.includes(key)) continue;
+            if(key === "K_old" || key === "L_old") continue;//manage adding the tooltip for K and L can be added later
+            else {
+                nonHeldRestrictionsJSX.push(<li className="list-group-item" key={key + "res"}>
+                    <strong>{key}: </strong>{RESTRICTION_DICT[key]}
+                </li>)
+            }
+        }
+        let restrictionGlossary = (
+            <Accordion defaultActiveKey="0">
+                {restrictionArr && 
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                        Your Restrictions
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <ul className="card-body list-group list-group-flush">
+                            {userRestrictionsJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+                }
+                <Card>
+                    <Accordion.Toggle as={Card.Header} eventKey="1">
+                    Other Restrictions
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="1">
+                        <ul className="card-body list-group list-group-flush">
+                            {nonHeldRestrictionsJSX}
+                        </ul>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
         )
-        return endorsementGlossary;
+        return restrictionGlossary;
 
     }
 
-    // const generateFullRestrictionGlossary = () => {
-    //     let restrictions = [];
-    //     for(var key in RESTRICTION_DICT) {
-    //         if(key === "K_old" || key === "L_old") continue;
-    //         //Add in logic to create an icon or symbol that can provide a tooltip (Maybe onhover for small modal) to explain the Letterchange for K and L
-    //         restrictions.push(<li><strong>{key} </strong>{RESTRICTION_DICT[key]} </li>)
-    //     }
-    //     return (
-    //         <ul className="no-list-bullet">
-    //             {restrictions}
-    //         </ul>
-    //     )
-    // }
+    const generateLicenseTabs = (licenses) => {
+        console.log(licenses);
+        let licenseTabs = [];
+        licenses.map((license)=> {
+            let licenseClass = license["dmv_licenseclassupdated@OData.Community.Display.V1.FormattedValue"];
+            licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
+            let isSuspendedText = (license.statecode) ? (<span className="suspended">(Suspended)</span>)
+                : (<span className="activated-license">(Active)</span>);//statecode = 0 is falsy and means active in this case
+            let endorsements = license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"] ? 
+                license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
+            let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"] ? 
+            license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
+            restrictions = restrictions.replace(/;+/g, ',');
+            licenseTabs.push(
+                <Tab eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
+                    <div className="row">
+                        <div className="col">
+                            <h4>License Details</h4>
+                            <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
+                            <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>License Class: </strong>{licenseClass}</p>
+                            <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>License Endorsements: </strong>{endorsements}</p>
+                            <p><strong>License Restrictions: </strong>{restrictions}</p>
 
+                        </div>
+                        <div className="col">
+                            <h4>Driver Details</h4>
+                            <p><strong>Height (in.): </strong>{license.dmv_licenseheight}</p>
+                            <p><strong>Weight (lbs.): </strong>{license.dmv_licenseweight}</p>
+                            <p><strong>Eye Color: </strong>{license.dmv_licenseeye}</p>
+                            <p><strong>Hair Color: </strong>{license.dmv_licensehair}</p>
+                            <p><strong>Issuing State: </strong>{license["dmv_usstates@OData.Community.Display.V1.FormattedValue"]}</p>
+                        </div>
+                    </div>
+                    <section className="row">
+                        <div className="col">
+                            <h3>License Endorsement Glossary</h3>
+                            { generateEndorsementGlossary(endorsements) }
+                        </div>
+                    </section>
+                    <section className="row">
+                        <div className="col">
+                            <h3>License Restriction Glossary</h3>
+                            { generateRestrictionGLossary(restrictions) }
+                        </div>
+                    </section>
+                    
+                </Tab>
+            )
+        })
+        return (
+            <Card>
+                <Card.Body>
+                    <Tabs defaultActiveKey={licenseTabs[0].eventKey}>
+                        {licenseTabs}
+                    </Tabs>
+                </Card.Body>
+            </Card>
+        )
+    }
     return (
+        <div className="mainblock">
         <section className="info-render">
             <h3 className="display-3">License Information</h3>
-            <div className="row">
-                <div className="col">
-                    <h4>License Details</h4>
-                    <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
-                    <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>License Class: </strong>{licenseClass}</p>
-                    <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>License Endorsements: </strong>{endorsements}</p>
-                    <p><strong>License Restrictions: </strong>{restrictions}</p>
-
-                </div>
-                <div className="col">
-                    <h4>Driver Details</h4>
-                    <p><strong>Height (in.): </strong>{license.dmv_licenseheight}</p>
-                    <p><strong>Weight (lbs.): </strong>{license.dmv_licenseweight}</p>
-                    <p><strong>Eye Color: </strong>{license.dmv_licenseeye}</p>
-                    <p><strong>Hair Color: </strong>{license.dmv_licensehair}</p>
-                    <p><strong>Issuing State: </strong>{license["dmv_usstates@OData.Community.Display.V1.FormattedValue"]}</p>
-                </div>
-            </div>
-            <section className="row">
-                <div className="col">
-                    <h3>License Endorsement Glossary</h3>
-                    { generateEndorsementGlossary(endorsements)}
-                    { /*generateFullEndorsementGlossary() */}
-                </div>
-            </section>
-            <section className="row">
-                <div className="col">
-                    <h3>License Restriction Glossary</h3>
-                    { generateRestrictionGLossary(restrictions) }
-                    { /*generateFullRestrictionGlossary() */}
-                </div>
-            </section>
+            {generateLicenseTabs(licenses)}
         </section>
+        </div>
     );
 }
 

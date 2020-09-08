@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAttempt } from '../../actions/userActions';
-import ErrorBanner from '../Helper/ErrorBanner';
+import ErrorBanner from '../../actions/ErrorBanner';
 
 
 
@@ -33,42 +33,54 @@ const LoginPage = () => {
         }
 
     };
+    //
 //checks if the user is logged in, redirects home if true
 //verify the input fields are both set before dispatching login
     return (
-        <div className="col-lg-8 offset-lg-2">
+        <div className="container loginContainer col-lg-8 offset-lg-2">
         {user.loggedIn === true
             ?
             <Redirect to='/'/>
             :
-            <form name="form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>SSN</label>
-                    <input type="text" name="ssn" value={ssn} onChange={handleChange} className={'form-control' + (submitted && !ssn ? ' is-invalid' : '')} />
-                    {submitted && !ssn &&
-                        <div className="invalid-feedback">SSN is required</div>
-                    }
+            <div className="row">
+                <div className="col loginImage">
                 </div>
-                <div className="form-group">
-                    <label>Email Address</label>
-                    <input type="text" name="emailaddress1" value={emailaddress1} onChange={handleChange} className={'form-control' + (submitted && !emailaddress1 ? ' is-invalid' : '')} />
-                    {submitted && !emailaddress1 &&
-                        <div className="invalid-feedback">Email is required</div>
-                    }
+                <div className="col inputCol">
+                <div className="loginFormm">
+                <p className="display-4 loginTitle">Account Login</p>
+                <div className="inputColDiv">
+                    <div className="loginInputForm">
+                        <form className="loginForm" name="form" onSubmit={handleSubmit}>
+                            <div className="form-group loginColDiv">
+                                <input type="text" name="ssn" value={ssn} onChange={handleChange} className={'loginInputCol form-control' + (submitted && !ssn ? ' is-invalid' : '')} placeholder="Social Security Number"/>
+                                {submitted && !ssn &&
+                                    <div className="invalid-feedback">SSN is required</div>
+                                }
+                            </div>
+                            <div className="form-group loginColDiv">
+                                <input type="text" name="emailaddress1" value={emailaddress1} onChange={handleChange} className={'loginInputCol form-control' + (submitted && !emailaddress1 ? ' is-invalid' : '')} placeholder="Email Address"/>
+                                {submitted && !emailaddress1 &&
+                                    <div className="invalid-feedback">Email is required</div>
+                                }
+                            </div>
+                            <div className="colInput form-group loginColDiv">
+                                <button className="btn btn-primary submitButton">
+                                    {user.loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                    Login
+                                </button>
+                            </div>
+                            {
+                                user.loginFailed &&
+                                <ErrorBanner>
+                                    SSN or Password is incorrect!
+                                </ErrorBanner>
+                            }
+                        </form>
+                    </div>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">
-                        {user.loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                        Login
-                    </button>
                 </div>
-                {
-                    user.loginFailed &&
-                    <ErrorBanner>
-                        SSN or Password is incorrect!
-                    </ErrorBanner>
-                }
-            </form>
+            </div>
         }
         </div>
     );

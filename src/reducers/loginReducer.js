@@ -27,7 +27,10 @@ export default function loginReducer(state = initialState, action){
               loginFailed:true,
               loggingIn: false};
       case LOGOUT:
-          return {};
+          return {
+              loggedIn: false,
+              userInfo: {...action.userInfo}
+          };
       case UPDATE_CONTACT_REQUEST:
           return {...state,
               updating: true};

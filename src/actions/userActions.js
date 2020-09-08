@@ -13,6 +13,7 @@ export const logoutAttempt = () => {
     return (dispatch) => {
         dispatch(logout());
         localStorage.removeItem('userInfo');
+
     };
 };
 
@@ -54,15 +55,17 @@ export const loginAttempt = (userInfo) => {
                         address1_city: userInfo.address1_city,
                         address1_postalcode: userInfo.address1_postalcode,
                         mobilephone: userInfo.mobilephone,
-                        dmv_state: userInfo["dmv_state@OData.Community.Display.V1.FormattedValue"],
+                        dmv_state: userInfo.dmv_state,
+                        dmv_state_text: userInfo["dmv_state@OData.Community.Display.V1.FormattedValue"] || "Fatal Error",
                         dmv_dateofbirth: userInfo["dmv_dateofbirth@OData.Community.Display.V1.FormattedValue"]
                     }
 
                     //sets localstoreage token to save user information
                     //localStorage.setItem('token', JSON.stringify(data));
-                    console.log("this is login data" + data.emailaddress1);
+                    console.log("this is login data" + JSON.stringify(data));
                     //store.dispatch(storeAuthToken(data));
                     dispatch(loginSuccess(data));
+                    localStorage.clear();
                     localStorage.setItem('userInfo', JSON.stringify(data));
 
 

@@ -28,6 +28,7 @@ export class App extends React.Component{
                     <Route path='/CreateAppointment' component={AppointmentMakeContainer}/>
                     <Route path='/fees' component={FeeContainer}/>
                     <Route path='/information' component={InformationContainer}/>
+                    <Route path='/insurance' component={InsuranceContainer}/>
                     <Route path='/pay' component={PaypalContainer}/>
                 </Switch>
             </div>

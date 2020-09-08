@@ -21,7 +21,7 @@ export const readFees = () => {
         // using contact GUID 03879a5c-3aaf-ea11-a812-000d3a8e4ace (Contact "A Test")
         return adalApiFetch(axios, 
         "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_fees" +
-        "?$select=dmv_feeid,_dmv_contact_value,dmv_name,dmv_cost,dmv_purpose" + 
+        "?$select=dmv_feeid,_dmv_contact_value,dmv_name,dmv_cost,dmv_purpose,dmv_ispaid" + 
         "&$filter=_dmv_contact_value eq 03879a5c-3aaf-ea11-a812-000d3a8e4ace", config)
             .then(res => {
                 dispatch(feesSuccess(res));

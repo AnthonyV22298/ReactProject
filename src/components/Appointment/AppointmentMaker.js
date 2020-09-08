@@ -6,6 +6,7 @@ import Calendar from "react-calendar";
 import LocationsDropdown from "./LocationsDropdown"
 import { adalApiFetch } from '../../adalConfig.js';
 import axios from 'axios'
+import SuccessBanner from '../Helper/SuccessBanner';
 
 class AppointmentMake extends Component {
     constructor(props){ 
@@ -105,7 +106,15 @@ class AppointmentMake extends Component {
             </div> 
 
             <div style={{justifyContent:"center", paddingBottom:"20px", display:"flex"}}>
-                <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+                <button className="button" onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+            </div>
+
+            <div>
+                {(this.props.postSuccess === true) && (
+                    <SuccessBanner>
+                        Appointment Request Created!
+                    </SuccessBanner>
+                )}
             </div>
 
             <div style={{ paddingTop:"10px" }}>
@@ -174,7 +183,8 @@ class AppointmentMake extends Component {
 
 AppointmentMake.propTypes = {
     appointments: PropTypes.array,
-    handleCreate: PropTypes.func
+    handleCreate: PropTypes.func,
+    postSuccess: PropTypes.bool
 };
 
 export default AppointmentMake;

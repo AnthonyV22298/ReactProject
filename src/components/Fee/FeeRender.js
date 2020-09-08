@@ -56,6 +56,7 @@ const FeeRender = ({ fees, handleRefresh }) => {
   }
   return (
     <React.Fragment>
+      <div className="mainblock">
       <h1>Fees</h1>
       <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
       <MDBDataTable
@@ -65,6 +66,7 @@ const FeeRender = ({ fees, handleRefresh }) => {
         responsive
         data={data}
       />
+      </div>
     </React.Fragment>
   );
 }

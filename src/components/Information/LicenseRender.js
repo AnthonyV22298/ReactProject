@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion, Card } from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 const LicenseRender = ({ information }) => {
     console.log(information);
-    const { license } = information;
-    let licenseClass = license["dmv_licenseclassupdated@OData.Community.Display.V1.FormattedValue"];
-    licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
-    let isSuspendedText = (license.statecode) ? (<span className="suspended">(Suspended)</span>)
-        : (<span className="activated-license">(Active)</span>);//statecode = 0 is falsy and means active in this case
-    let endorsements = license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"] ? 
-        license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
-    let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"] ? 
-    license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
-    restrictions = restrictions.replace(/;+/g, ',');
+    const { licenses } = information;
 
     const generateEndorsementGlossary = (endorsementStr) => {
         let endorsementArr;
@@ -123,42 +117,72 @@ const LicenseRender = ({ information }) => {
 
     }
 
+    const generateLicenseTabs = (licenses) => {
+        console.log(licenses);
+        let licenseTabs = [];
+        licenses.map((license)=> {
+            let licenseClass = license["dmv_licenseclassupdated@OData.Community.Display.V1.FormattedValue"];
+            licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
+            let isSuspendedText = (license.statecode) ? (<span className="suspended">(Suspended)</span>)
+                : (<span className="activated-license">(Active)</span>);//statecode = 0 is falsy and means active in this case
+            let endorsements = license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"] ? 
+                license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
+            let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"] ? 
+            license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
+            restrictions = restrictions.replace(/;+/g, ',');
+            licenseTabs.push(
+                <Tab eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
+                    <div className="row">
+                        <div className="col">
+                            <h4>License Details</h4>
+                            <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
+                            <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>License Class: </strong>{licenseClass}</p>
+                            <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>License Endorsements: </strong>{endorsements}</p>
+                            <p><strong>License Restrictions: </strong>{restrictions}</p>
+
+                        </div>
+                        <div className="col">
+                            <h4>Driver Details</h4>
+                            <p><strong>Height (in.): </strong>{license.dmv_licenseheight}</p>
+                            <p><strong>Weight (lbs.): </strong>{license.dmv_licenseweight}</p>
+                            <p><strong>Eye Color: </strong>{license.dmv_licenseeye}</p>
+                            <p><strong>Hair Color: </strong>{license.dmv_licensehair}</p>
+                            <p><strong>Issuing State: </strong>{license["dmv_usstates@OData.Community.Display.V1.FormattedValue"]}</p>
+                        </div>
+                    </div>
+                    <section className="row">
+                        <div className="col">
+                            <h3>License Endorsement Glossary</h3>
+                            { generateEndorsementGlossary(endorsements) }
+                        </div>
+                    </section>
+                    <section className="row">
+                        <div className="col">
+                            <h3>License Restriction Glossary</h3>
+                            { generateRestrictionGLossary(restrictions) }
+                        </div>
+                    </section>
+                    
+                </Tab>
+            )
+        })
+        return (
+            <Card>
+                <Card.Body>
+                    <Tabs defaultActiveKey={licenseTabs[0].eventKey}>
+                        {licenseTabs}
+                    </Tabs>
+                </Card.Body>
+            </Card>
+        )
+    }
     return (
         <section className="info-render">
             <h3 className="display-3">License Information</h3>
-            <div className="row">
-                <div className="col">
-                    <h4>License Details</h4>
-                    <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
-                    <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>License Class: </strong>{licenseClass}</p>
-                    <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>License Endorsements: </strong>{endorsements}</p>
-                    <p><strong>License Restrictions: </strong>{restrictions}</p>
-
-                </div>
-                <div className="col">
-                    <h4>Driver Details</h4>
-                    <p><strong>Height (in.): </strong>{license.dmv_licenseheight}</p>
-                    <p><strong>Weight (lbs.): </strong>{license.dmv_licenseweight}</p>
-                    <p><strong>Eye Color: </strong>{license.dmv_licenseeye}</p>
-                    <p><strong>Hair Color: </strong>{license.dmv_licensehair}</p>
-                    <p><strong>Issuing State: </strong>{license["dmv_usstates@OData.Community.Display.V1.FormattedValue"]}</p>
-                </div>
-            </div>
-            <section className="row">
-                <div className="col">
-                    <h3>License Endorsement Glossary</h3>
-                    { generateEndorsementGlossary(endorsements) }
-                </div>
-            </section>
-            <section className="row">
-                <div className="col">
-                    <h3>License Restriction Glossary</h3>
-                    { generateRestrictionGLossary(restrictions) }
-                </div>
-            </section>
+            {generateLicenseTabs(licenses)}
         </section>
     );
 }

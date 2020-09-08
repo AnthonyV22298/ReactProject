@@ -17,10 +17,12 @@ class AppointmentMake extends Component {
             date: new Date(),
             today: new Date(),
             type: "Driver's Test",
+            location: '',
             items: [],
         }
-        this.onChange = this.onChange.bind(this);
-        this.typeChange = this.typeChange.bind(this);
+        this.onChange = this.onChange.bind(this); 
+        this.typeChange = this.typeChange.bind(this); 
+        this.locationChange = this.locationChange.bind(this);
     }
 
     componentDidMount() {
@@ -61,6 +63,12 @@ class AppointmentMake extends Component {
     {
         this.setState({ date : newdate })
     }
+    
+    locationChange(e) {
+        console.log("location changed");
+        console.log(e.target.value);
+        this.setState({ location : e.target.value })
+    }
 
     render(){
     return (
@@ -84,7 +92,7 @@ class AppointmentMake extends Component {
 
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
                     <h5>2) Select the location</h5>
-                    <LocationsDropdown />
+                    <LocationsDropdown onChange={this.locationChange} />
                 </div>
 
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>

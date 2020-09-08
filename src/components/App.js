@@ -7,11 +7,11 @@ import Home from './Home.js';
 import AppointmentMakeContainer from './Appointment/AppointmentMakeContainer';
 import AppointmentContainer from './Appointment/AppointmentContainer';
 import FeeContainer from './Fee/FeeContainer';
-import InformationContainer from './Information/InformationContainer';
-import LoginPage from './User/Login';
-import ProfilePage from './User/Profile';
-import PaypalContainer from './Paypal/PaypalContainer';
-import InsuranceContainer from './Insurance/InsuranceContainer';
+import InformationContainer from './Information/InformationContainer'
+import LoginPage from './User/Login.js';
+import ProfilePage from './User/Profile.js';
+import PaypalContainer from './Paypal/PaypalContainer.js'
+import VehicleDetailsContainer from './Vehicle/VehicleDetailsContainer.js';
 
 
 export class App extends React.Component{
@@ -23,6 +23,7 @@ export class App extends React.Component{
                     <Route exact path='/' component={Home}/>
                     <Route path='/login' component={LoginPage}/>
                     <Route path='/profile'component={ProfilePage}/>
+                    <Route path='/vehicles' component={VehicleDetailsContainer}/>
                     <Route path='/appointments' component={AppointmentContainer}/>
                     <Route path='/CreateAppointment' component={AppointmentMakeContainer}/>
                     <Route path='/fees' component={FeeContainer}/>

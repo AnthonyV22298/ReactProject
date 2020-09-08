@@ -48,7 +48,7 @@ class DMV_stateDropdown extends Component {
     // {Option.Label.LocalizedLabels[0].Label}
 render(){
     return (
-            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
+            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0} className="stateDropdown">
                 <option value = {0} disabled> Choose a U.S. State </option>
                 {this.state.optionset.map((Option) => (
                 <option key={Option.Value} value={Option.Value}>

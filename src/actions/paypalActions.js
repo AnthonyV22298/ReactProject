@@ -18,7 +18,6 @@ export const findPayment = () => {
 
     return dispatch => {
         dispatch(findingPayment());
-        // using contact GUID 03879a5c-3aaf-ea11-a812-000d3a8e4ace (Contact "A Test")
         return adalApiFetch(axios, 
         "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_fees" +
         "?$select=dmv_cost" + 

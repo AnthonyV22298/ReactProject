@@ -9,6 +9,10 @@ import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import NavLink from 'react-bootstrap/NavLink';
+
 import { INFO_LICENSE, INFO_CITATIONS } from '../../constants/viewNames';
 
 const InformationContainer = (props) => {
@@ -33,13 +37,35 @@ const InformationContainer = (props) => {
         actions.readData(loggedInUserId, viewname);
     }
 
+    const createRedirectModal = () => {
+        return (
+            <Modal aria-labelledby="contained-modal-title-vcenter" backdrop='static' centered show="true">
+                <Modal.Header>
+                    <Modal.Title>Sign up for a Learner&apos;s Permit!</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <p>We do not have any licenses for you in our system. Please click the button below to make an appointment for a learner&apos;s permit.</p>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <NavLink href="#/CreateAppointment"><Button variant="primary">Create Appointment</Button></NavLink>
+                </Modal.Footer>
+            </Modal>
+        )   
+    }
+
     const renderSuccess = () => {
         switch(infoView){
             case INFO_LICENSE:
                 return (
                     <div className="container info-container">
                         <InformationSecondaryNav clickFunc={switchViews}/>
-                        <LicenseRender information={information} />
+                        {information.licenses ? 
+                            <LicenseRender information={information} />
+                            : createRedirectModal()
+                        }
+                        
                     </div>
                 );
             case INFO_CITATIONS:
@@ -52,7 +78,7 @@ const InformationContainer = (props) => {
             default:
                 break;
         }
-        
+
     }
 
     if (infoPending) {
@@ -66,7 +92,7 @@ const InformationContainer = (props) => {
                 <ErrorBanner>
                     Error while loading contacts!
                 </ErrorBanner>
-                
+
             </div>
         );
     } else if (infoSuccessful) {
@@ -93,6 +119,8 @@ InformationContainer.proptypes = {
 
 function mapStateToProps(state) {
     const { informationReducer, loginReducer } = state;
+    console.log("this is state" + state)
+    console.log("this is loginReducer Info" + loginReducer.userInfo)
     return {
        information: informationReducer.information,
        infoView: informationReducer.infoView,

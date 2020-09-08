@@ -10,7 +10,7 @@ const InformationSecondaryNav = ({ clickFunc }) => {
         </nav>
     )
 }
-InformationSecondaryNav.propTypes={
+InformationSecondaryNav.propTypes = {
     clickFunc: PropTypes.func,
 }
 export default InformationSecondaryNav;

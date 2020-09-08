@@ -3,9 +3,7 @@ import React, { Component } from "react";
 import axios from 'axios'
 import { adalApiFetch } from '../../adalConfig.js';
 import PropTypes from 'prop-types';
-
 class DMV_stateDropdown extends Component {
-
 
   constructor(props) {
     super(props)
@@ -19,7 +17,7 @@ class DMV_stateDropdown extends Component {
   _onChangeHandler(e) {
     e.persist();
     var index = e.nativeEvent.target.selectedIndex;
-    //console.log("index = " + index);
+    console.log("index = " + index);
     var currlabel = e.nativeEvent.target[index].text;
     this.setState({value: e.target.value, label: currlabel});
     this.props.onChange(e);
@@ -39,7 +37,7 @@ class DMV_stateDropdown extends Component {
     //@OData.Community.Display.V1.FormattedValue
     adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
         .then(results => {
-            console.log(results.data.Options);
+            //console.log("this is results from optionset" + JSON.stringify(results.data.Options[0].Label.LocalizedLabels[0].Label))
             this.setState({optionset: results.data.Options});
         },
         function(error) {
@@ -50,7 +48,7 @@ class DMV_stateDropdown extends Component {
     // {Option.Label.LocalizedLabels[0].Label}
 render(){
     return (
-            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
+            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0} className="stateDropdown">
                 <option value = {0} disabled> Choose a U.S. State </option>
                 {this.state.optionset.map((Option) => (
                 <option key={Option.Value} value={Option.Value}>

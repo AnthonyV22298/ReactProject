@@ -47,7 +47,7 @@ export default function informationReducer(state= {}, action) {
         case INFO_LICENSE_SUCCESSFUL:
             return {...state, 
                 information: {...state.information,
-                    license: action.data,
+                    licenses: action.data,
                 },
                 requestState: {
                     infoPending: false,

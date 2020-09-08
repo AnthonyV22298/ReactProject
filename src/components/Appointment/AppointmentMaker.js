@@ -10,30 +10,30 @@ import SuccessBanner from '../Helper/SuccessBanner';
 import TimeDropdown from './TimeDropdown'
 
 class AppointmentMake extends Component {
-    constructor(props){ 
+    constructor(props){
         super(props)
-        
+
         this.state = {
             date: new Date(),
             today: new Date(),
             type: "Driver's Test",
             items: [],
         }
-        this.onChange = this.onChange.bind(this); 
-        this.typeChange = this.typeChange.bind(this);   
+        this.onChange = this.onChange.bind(this);
+        this.typeChange = this.typeChange.bind(this);
     }
 
     componentDidMount() {
         this.getItems();
     }
-    
+
     getItems() {
         let config = {
         method: 'get',
         'OData-MaxVersion': 4.0,
         'OData-Version': 4.0,
         Accept: 'crefc_locations/json',
-        'Content-Type': 'dmv_appointment/json; charset=utf-8', 
+        'Content-Type': 'dmv_appointment/json; charset=utf-8',
         headers: {
             'Prefer': "odata.include-annotations=*"
         }
@@ -63,7 +63,7 @@ class AppointmentMake extends Component {
     }
 
     render(){
-    return ( 
+    return (
         <div className="mainblock" >
             <div  style={{display:"flex", justifyContent:"center"}}>
 
@@ -81,7 +81,7 @@ class AppointmentMake extends Component {
                     </select>
                 </React.Fragment>
                 </div>
-            
+
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
                     <h5>2) Select the location</h5>
                     <LocationsDropdown />
@@ -99,7 +99,7 @@ class AppointmentMake extends Component {
                     onChange={this.onChange} 
                     calendarType={"US"}
                     tileDisabled={({date }) =>
-                    date.getDay()===0 || date.getDay()===6 ||  
+                    date.getDay()===0 || date.getDay()===6 ||
                     (date.getMonth() <= this.state.today.getMonth() &&
                     date.getDate() < this.state.today.getDate() &&
                     date.getFullYear() <= this.state.date.getFullYear()) ||
@@ -109,7 +109,7 @@ class AppointmentMake extends Component {
                     />
                     <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>
-            </div> 
+            </div>
 
             <div style={{justifyContent:"center", paddingBottom:"20px", display:"flex"}}>
                 <button className="button" onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
@@ -180,8 +180,8 @@ class AppointmentMake extends Component {
                     </div>
                 )},
             </div>
-            
-            
+
+
         </div>
         )
     }

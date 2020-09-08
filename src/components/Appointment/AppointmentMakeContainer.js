@@ -15,7 +15,7 @@ const AppointmentMakeContainer = (props) => {
     const {
         error,
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
-        postAppointmentsSuccess, postAppointmentsFailed, 
+        postAppointmentsSuccess, postAppointmentsFailed,
     } = requestState;
 
 
@@ -26,7 +26,7 @@ const AppointmentMakeContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                
+
                 <AppointmentMake
                     appointments={ appointments }
                     handleCreate={(data) => {

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const LicenseRender = ({ information }) => {
     console.log(information);
     const { license } = information;
-    let licenseClass = license["dmv_licenseclassupdated@OData.Community.Display.V1.FormattedValue"];
-    licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
+    //let licenseClass = license["dmv_licenseclassupdated@OData.Community.Display.V1.FormattedValue"];
+    //licenseClass = (license.dmv_ispermit) ? licenseClass + " (Permit)" : licenseClass;
     let isSuspendedText = (license.statecode) ? (<span className="suspended">(Suspended)</span>)
         : (<span className="activated-license">(Active)</span>);//statecode = 0 is falsy and means active in this case
     //let reActivationDate = (license.statecode) ? (<p><strong>Reactivation Date:</strong>{license["dmv_reactivationdate@OData.Community.Display.V1.FormattedValue"]}</p>)
@@ -100,7 +100,7 @@ const LicenseRender = ({ information }) => {
                     <h4>License Details</h4>
                     <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
                     <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
-                    <p><strong>License Class: </strong>{licenseClass}</p>
+                    <p><strong>License Class: </strong>{    }</p>
                     <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
                     <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
                     <p><strong>License Endorsements: </strong>{endorsements}</p>

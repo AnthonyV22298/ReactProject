@@ -5,7 +5,8 @@ import SuccessBanner from '../Helper/SuccessBanner';
 import DMV_stateDropdown from './DMV_stateDropdown';
 
 const ProfilePage = () => {
-
+    console.log(JSON.parse(localStorage.getItem('userInfo')));
+    console.log(JSON.parse(localStorage.getItem('userInfo')).dmv_state_text);
     let user = useSelector(state => state.loginReducer.userInfo);
     let loginReducer = useSelector(state => state.loginReducer);
     //sets the variables initial value to the users current user info state
@@ -35,12 +36,8 @@ const ProfilePage = () => {
     };
 
     const handleDropdown = (e) => {
-    console.log("handle dropdown");
-    //console.log(e); // html
-    //const {dmv_state, value} = e;
     setInputs(inputs => ({ ...inputs, ["dmv_state"]: e.target.value}));
     console.log("this is e target: " + e.target);
-    //console.log("value = " + e.target.value + " : label = " + e.target.label);
 }
 
 //sets a table for the users current Information
@@ -48,7 +45,7 @@ const ProfilePage = () => {
     return (
 
         <div className="col-lg-8 offset-lg-2">
-        <h1>Current Contanct Details</h1>
+        <h1>Current Contact Details</h1>
         <table className="table">
             <thead>
                 <tr>
@@ -73,6 +70,7 @@ const ProfilePage = () => {
                 <td> {user.address1_postalcode} </td>
                 <td> {user.mobilephone} </td>
                 <td> {user.dmv_dateofbirth} </td>
+                <td> {user.dmv_state_text}</td>
                 <td> {user.dmv_state} </td>
             </tr>
             </tbody>
@@ -81,7 +79,7 @@ const ProfilePage = () => {
             {
                 loginReducer.updateSuccess &&
                 <SuccessBanner>
-                    Contact Information Updaed Successfully!
+                    Contact Information Updated Successfully!
                 </SuccessBanner>
             }
                 <div className="form-group">

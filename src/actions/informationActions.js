@@ -78,7 +78,7 @@ const infoCitationsSuccessful = (res = {}) => {
 const infoLicenseSuccessful = (res = {}) => {
     return {
         type: INFO_LICENSE_SUCCESSFUL,
-        data: res.data.value[0]
+        data: res.data.value
     }
 }
 

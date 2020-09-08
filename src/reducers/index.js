@@ -7,6 +7,7 @@ import informationReducer from './informationReducer'
 import loginReducer from './loginReducer';
 import paypalReducer from './paypalReducer';
 import insuranceReducer from './insuranceReducer';
+import modalReducer from './modalReducer';
 
 
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   loginReducer,
   paypalReducer,
   insuranceReducer,
+  modalReducer,
 });
 
 

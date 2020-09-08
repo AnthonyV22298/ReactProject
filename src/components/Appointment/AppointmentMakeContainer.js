@@ -15,7 +15,7 @@ const AppointmentMakeContainer = (props) => {
     const {
         error,
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
-        postAppointmentsSuccess, postAppointmentsFailed, 
+        postAppointmentsSuccess, postAppointmentsFailed,
     } = requestState;
 
 
@@ -26,12 +26,28 @@ const AppointmentMakeContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                
+
                 <AppointmentMake
                     appointments={ appointments }
                     handleCreate={(data) => {
                         actions.postAppointments(data)
                     }}
+                    postSuccess={ false }
+                />
+            </div>
+        );
+    }
+
+    const postSuccess = () => {
+        return (
+            <div className="reactive-margin">
+                
+                <AppointmentMake
+                    appointments={ appointments }
+                    handleCreate={(data) => {
+                        actions.postAppointments(data)
+                    }} 
+                    postSuccess={ true }
                 />
             </div>
         );
@@ -45,9 +61,12 @@ const AppointmentMakeContainer = (props) => {
                 Error while loading appointments!
             </ErrorBanner>
         );
-    } else if (appointmentsSuccess || postAppointmentsSuccess) {
+    } else if (appointmentsSuccess) {
         return renderSuccess();
-    } else {
+    } else if(postAppointmentsSuccess){
+        return postSuccess();
+    }
+    else {
         return (
             <ErrorBanner>
                 {error}
@@ -55,6 +74,7 @@ const AppointmentMakeContainer = (props) => {
             </ErrorBanner>
         );
     }
+
 }
 
 AppointmentMakeContainer.propTypes = {

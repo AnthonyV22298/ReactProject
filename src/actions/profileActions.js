@@ -2,12 +2,13 @@ import { UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_FAILED, UPDATE_CONTACT_SUCCESS} 
 import axios from 'axios';
 import { adalApiFetch } from '../adalConfig.js';
 
-
 //takes in user input from the profile page
-export const updateContactAttempt = (userInfo, user) => {
+export const updateContactAttempt = (userInfo, user, dmvstate) => {
     //let userToken = localStorage.getItem('guid');
     //let tes = authenticate();
     let guid = user.contactid;
+    console.log("this is the dmv state text inside the update contact function: " + JSON.stringify(dmvstate));
+    //let dmvstate = userInfo.dmv_state;
     console.log(guid)
     //let guid = useSelector(state => state.loginReducer.userInfo.contactid);
 
@@ -48,7 +49,7 @@ export const updateContactAttempt = (userInfo, user) => {
                     address1_postalcode: userInfo.address1_postalcode,
                     mobilephone: userInfo.mobilephone,
                     dmv_state: userInfo.dmv_state,
-                    dmv_state_text : userInfo["dmv_state@OData.Community.Display.V1.FormattedValue"] || "Update Error",// TEST
+                    dmv_state_text: dmvstate.dmv_state_text,
                     dmv_dateofbirth: user.dmv_dateofbirth
                 };
                 console.log("this is state" + data.dmv_state);
@@ -88,4 +89,3 @@ const updateContactFailed = (error) => {
     error
   };
 };
-

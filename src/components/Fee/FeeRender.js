@@ -1,10 +1,11 @@
-"use strict"
+//"use strict"
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
-
+//import { Link } from 'react-router-dom';
+import ModalRender from '../Modal/ModalRender';
 const FeeRender = ({ fees, handleRefresh }) => {
 
   function getTableBodyContent() {
@@ -17,6 +18,11 @@ const FeeRender = ({ fees, handleRefresh }) => {
         <Button command="View" name={obj.firstname} entity="dmv_fee"
           initialValues={{ ...obj }}>View</Button>
       );
+      newObj.pay = <div>
+        <ModalRender buttonLabel="Pay"/>
+        </div>
+        
+      console.log("newobj ", newObj);
       return newObj;
     });
 
@@ -49,6 +55,11 @@ const FeeRender = ({ fees, handleRefresh }) => {
         field: 'dmv_purpose@OData.Community.Display.V1.FormattedValue',
         sort: 'asc'
       },
+      {
+        label: 'Pay',
+        field: 'pay',
+        sort: 'asc'
+      },
     ],
     rows: getTableBodyContent()
 
@@ -74,7 +85,8 @@ const FeeRender = ({ fees, handleRefresh }) => {
 FeeRender.propTypes = {
   fees: PropTypes.array,
   handleView: PropTypes.func,
-  handleRefresh: PropTypes.func
+  handleRefresh: PropTypes.func,
+  name: PropTypes.string
 };
 
 

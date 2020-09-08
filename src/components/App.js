@@ -7,10 +7,11 @@ import Home from './Home.js';
 import AppointmentMakeContainer from './Appointment/AppointmentMakeContainer';
 import AppointmentContainer from './Appointment/AppointmentContainer';
 import FeeContainer from './Fee/FeeContainer';
-import InformationContainer from './Information/InformationContainer'
+import InformationContainer from './Information/InformationContainer';
+import InsuranceContainer from './Insurance/InsuranceContainer';
 import LoginPage from './User/Login.js';
 import ProfilePage from './User/Profile.js';
-import PaypalContainer from './Paypal/PaypalContainer.js'
+import PaypalContainer from './Paypal/PaypalContainer.js';
 import VehicleDetailsContainer from './Vehicle/VehicleDetailsContainer.js';
 
 

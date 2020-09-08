@@ -22,7 +22,6 @@ export class App extends React.Component{
                     <Route exact path='/' component={Home}/>
                     <Route path='/login' component={LoginPage}/>
                     <Route path='/profile'component={ProfilePage}/>
-                    {/*<Route path='/vehicles' component={BookContainer}/>*/}
                     <Route path='/appointments' component={AppointmentContainer}/>
                     <Route path='/CreateAppointment' component={AppointmentMakeContainer}/>
                     <Route path='/fees' component={FeeContainer}/>

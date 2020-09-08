@@ -3,11 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateContactAttempt } from '../../actions/profileActions';
 import SuccessBanner from '../Helper/SuccessBanner';
 import DMV_stateDropdown from './DMV_stateDropdown';
+import axios from 'axios';
+import { adalApiFetch } from '../../adalConfig.js';
+import Scroll from "./Scroll";
 
 const ProfilePage = () => {
-
     let user = useSelector(state => state.loginReducer.userInfo);
     let loginReducer = useSelector(state => state.loginReducer);
+
+    const [dmvstate, setFormat] = useState({});
+
+    const { dmv_state_text } = dmvstate;
+    console.log(dmv_state_text);
+
     //sets the variables initial value to the users current user info state
     const [inputs, setInputs] = useState({
         firstname: user.firstname,
@@ -18,11 +26,39 @@ const ProfilePage = () => {
         address1_postalcode: user.address1_postalcode,
         mobilephone: user.mobilephone,
         dmv_state: user.dmv_state,
+        dmv_reactappedited: true,
     });
 
-    const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state } = inputs;
+    const { firstname, lastname, emailaddress1, address1_line1, address1_city, address1_postalcode, mobilephone, dmv_state, dmv_reactappedited } = inputs;
+    console.log(dmv_reactappedited);
+    //get request for formatted value
+    function getFormatted(inputCompare) {
+      let config = {
+        method: 'get',
+        'OData-MaxVersion': 4.0,
+        'OData-Version': 4.0,
+        Accept: 'crefc_locations/json',
+        'Content-Type': 'crefc_locations/json; charset=utf-8',
+        headers: {
+            'Prefer': "odata.include-annotations=*"
+        }
+      }
+      //@OData.Community.Display.V1.FormattedValue
+      adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
+          .then(results => {
+              for (let i = 0; i < results.data.Options.length; i++) {
 
-
+                let stateValue = results.data.Options[i].Value
+                if(inputCompare == stateValue) {
+                    setFormat(dmvstate => ({ ...dmvstate, dmv_state_text: results.data.Options[i].Label.LocalizedLabels[0].Label }));
+                }
+            }
+          },
+          function(error) {
+              console.log(error.message);
+          }
+              )
+      }
     const dispatch = useDispatch();
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,100 +66,114 @@ const ProfilePage = () => {
     }
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
-        dispatch(updateContactAttempt(inputs, user));
+        dispatch(updateContactAttempt(inputs, user, dmvstate));
+
     };
 
     const handleDropdown = (e) => {
-    console.log("handle dropdown");
-    //console.log(e); // html
-    //const {dmv_state, value} = e;
     setInputs(inputs => ({ ...inputs, ["dmv_state"]: e.target.value}));
-    console.log("this is e target: " + e.target);
-    //console.log("value = " + e.target.value + " : label = " + e.target.label);
+    let inputCompare = {["dmv_state"]: e.target.value}.dmv_state;
+    getFormatted(inputCompare);
 }
 
 //sets a table for the users current Information
 //handles change and submits user input
     return (
-        <div className="mainblock">
-        <div className="col-lg-8 offset-lg-2">
-        <h1>Current Contanct Details</h1>
-        <table className="table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>City</th>
-                    <th>Zip</th>
-                    <th>Phone Number</th>
-                    <th>Date of Birth</th>
-                    <th>State</th>
-                </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td> {user.firstname} </td>
-                <td> {user.lastname} </td>
-                <td> {user.emailaddress1} </td>
-                <td> {user.address1_line1} </td>
-                <td> {user.address1_city} </td>
-                <td> {user.address1_postalcode} </td>
-                <td> {user.mobilephone} </td>
-                <td> {user.dmv_dateofbirth} </td>
-                <td> {user.dmv_state} </td>
-            </tr>
-            </tbody>
-        </table>
-            <form name="form" onSubmit={handleSubmit}>
+        <div className="container-fluid">
+                <h1 className="display-4 profileTitle">Contact Details</h1>
+        <div className="container">
+                <div className="container currentInfoTable">
+                <div className="row">
+                    <div className="col-12 col-md-8  tableCol">
+                    <label className="tableLabel">First Name</label>
+                    <p className="colInfo">{user.firstname}</p>
+                    </div>
+                    <div className="col-6 col-md-4 tableCol">
+                    <label className="tableLabel">Last Name</label>
+                    <p className="colInfo">{user.lastname}</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col tableCol">
+                    <label className="tableLabel">City</label>
+                    <p className="colInfo">{user.address1_city}</p>
+                    </div>
+                    <div className="col tableCol">
+                    <label className="tableLabel">State</label>
+                    <p className="colInfo">{user.dmv_state_text}</p>
+                    </div>
+                    <div className="col tableCol">
+                    <label className="tableLabel">Postal Code</label>
+                    <p className="colInfo">{user.address1_postalcode}</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col tableCol">
+                    <label className="tableLabel">Email Address</label>
+                    <p className="colInfo">{user.emailaddress1}</p>
+                    </div>
+                    <div className="col tableCol">
+                    <label className="tableLabel">Phone Number</label>
+                    <p className="colInfo">{user.mobilephone}</p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-6 col-md-4  tableCol">
+                    <label className="tableLabel">Date of Birth</label>
+                    <p className="colInfo">{user.dmv_dateofbirth}</p>
+                    </div>
+                    <div className="col-12 col-md-8 tableCol">
+                    <label className="tableLabel">Street Address</label>
+                    <p className="colInfo">{user.address1_line1}</p>
+                    </div>
+                </div>
+            </div>
+            <Scroll />
+            <form className="inputForm" name="form" onSubmit={handleSubmit}>
             {
                 loginReducer.updateSuccess &&
                 <SuccessBanner>
-                    Contact Information Updaed Successfully!
+                    Contact Information Updated Successfully!
                 </SuccessBanner>
             }
-                <div className="form-group">
-                    <label>First Name</label>
-                    <input type="text" name="firstname" value={firstname} onChange={handleChange} className="form-control" />
+                <div id="updateSection" className="container inputContainer" >
+                    <p className="display-4 inputTitle">Edit</p>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="firstname" value={firstname} onChange={handleChange} placeholder="First Name" className="colInput" />
+                        </div>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="lastname" value={lastname} onChange={handleChange} placeholder="Last Name" className="colInput" />
+                        </div>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="emailaddress1" value={emailaddress1} onChange={handleChange} placeholder="Email Address" className="colInput" />
+                        </div>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="mobilephone" value={mobilephone} onChange={handleChange} placeholder="Phone Number" className="colInput"/>
+                        </div>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="address1_city" value={address1_city} onChange={handleChange} placeholder="City" className="colInput" />
+                        </div>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="address1_postalcode" value={address1_postalcode} onChange={handleChange} placeholder="Postal Code" className="colInput" />
+                        </div>
+                        <div className="form-group col inputColDiv">
+                            <input type="text" name="address1_line1" value={address1_line1} onChange={handleChange} placeholder="Street Address" className="colInput" />
+                        </div>
+                        <div className="form-group inputColDiv">
+                            <DMV_stateDropdown name="dmv_state" value={dmv_state} onChange={handleDropdown} />
+                        </div>
+                        <button className="btn btn-primary submitButton">
+                        {loginReducer.updating && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                            Update
+                        </button>
                 </div>
-                <div className="form-group">
-                    <label>Last Name</label>
-                    <input type="text" name="lastname" value={lastname} onChange={handleChange} className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="text" name="emailaddress1" value={emailaddress1} onChange={handleChange} className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label>Address</label>
-                    <input type="text" name="address1_line1" value={address1_line1} onChange={handleChange} className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label>City</label>
-                    <input type="text" name="address1_city" value={address1_city} onChange={handleChange} className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label>Zip Code</label>
-                    <input type="text" name="address1_postalcode" value={address1_postalcode} onChange={handleChange} className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" name="mobilephone" value={mobilephone} onChange={handleChange} className="form-control"/>
-                </div>
-                <div className="form-group">
-                    <label>U.S. State</label>
-                    <DMV_stateDropdown name="dmv_state" value={dmv_state} onChange={handleDropdown}/>
-                </div>
-                <button className="btn btn-primary">
-                {loginReducer.updating && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                    Update
-                </button>
             </form>
+        </div>
+    </div>
 
-        </div>
-        </div>
     );
+
 }
 export default ProfilePage;

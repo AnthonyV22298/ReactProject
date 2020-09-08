@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING} from '../constants/actionTypes';
+import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE } from '../constants/actionTypes';
 
 export const readAppointments = () => {
 
@@ -21,7 +21,7 @@ export const readAppointments = () => {
         // using contact GUID 03879a5c-3aaf-ea11-a812-000d3a8e4ace (Contact "A Test")
         return adalApiFetch(axios, 
         "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments" +
-        "?$select=dmv_appointmentid,dmv_appointment_date,_dmv_contactappointmentid_value" + 
+        "?$select=dmv_app_type,dmv_appointment_date,dmv_approved" + 
         "&$filter=_dmv_contactappointmentid_value eq 03879a5c-3aaf-ea11-a812-000d3a8e4ace", config)
             .then(res => {
                 dispatch(appointmentsSuccess(res));

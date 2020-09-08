@@ -62,7 +62,8 @@ render(){
 
 
 DMV_stateDropdown.propTypes = {
-  handleChange: PropTypes.func
+  handleChange: PropTypes.func,
+  onChange: PropTypes.func
 };
 
 export default DMV_stateDropdown;

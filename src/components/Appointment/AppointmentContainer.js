@@ -28,10 +28,6 @@ const AppointmentContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                <ul>
-                    <li className="list-inline-item"><Link to='/appointments' replace>View Your Appointments</Link></li>
-                    <li className="list-inline-item"><Link to='/CreateAppointment' replace>Create an Appointment</Link></li>
-                </ul>
                 <AppointmentRender
                     appointments={ appointments }
                     handleRefresh={() => actions.readAppointments()}

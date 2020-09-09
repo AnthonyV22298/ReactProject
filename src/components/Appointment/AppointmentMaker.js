@@ -7,6 +7,7 @@ import LocationsDropdown from "./LocationsDropdown"
 import { adalApiFetch } from '../../adalConfig.js';
 import axios from 'axios'
 import SuccessBanner from '../Helper/SuccessBanner';
+import TimeDropdown from './TimeDropdown'
 
 class AppointmentMake extends Component {
     constructor(props){
@@ -16,10 +17,12 @@ class AppointmentMake extends Component {
             date: new Date(),
             today: new Date(),
             type: "Driver's Test",
+            location: '',
             items: [],
         }
-        this.onChange = this.onChange.bind(this);
-        this.typeChange = this.typeChange.bind(this);
+        this.onChange = this.onChange.bind(this); 
+        this.typeChange = this.typeChange.bind(this); 
+        this.locationChange = this.locationChange.bind(this);
     }
 
     componentDidMount() {
@@ -36,7 +39,7 @@ class AppointmentMake extends Component {
         headers: {
             'Prefer': "odata.include-annotations=*"
         }
-        }
+    }
         //@OData.Community.Display.V1.FormattedValue
         adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments?$apply=groupby((dmv_app_type))",config)
             .then(results => {
@@ -59,6 +62,12 @@ class AppointmentMake extends Component {
     onChange(newdate)
     {
         this.setState({ date : newdate })
+    }
+    
+    locationChange(e) {
+        console.log("location changed");
+        console.log(e.target.value);
+        this.setState({ location : e.target.value })
     }
 
     render(){
@@ -83,14 +92,19 @@ class AppointmentMake extends Component {
 
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
                     <h5>2) Select the location</h5>
-                    <LocationsDropdown />
+                    <LocationsDropdown onChange={this.locationChange} />
+                </div>
+
+                <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
+                    <h5>3) Select the time</h5>
+                    <TimeDropdown />
                 </div>
             </div>
 
             <div style={{ width:"30%", justifyContent: "center", textAlign: "left", paddingLeft: "10px"}}>
-                <h5>3) Select a Date for your appointment</h5>
-                <Calendar
-                    onChange={this.onChange}
+                <h5>4) Select a Date for your appointment</h5>
+                <Calendar 
+                    onChange={this.onChange} 
                     calendarType={"US"}
                     tileDisabled={({date }) =>
                     date.getDay()===0 || date.getDay()===6 ||

@@ -8,7 +8,6 @@ import Tabs from 'react-bootstrap/Tabs';
 const LicenseRender = ({ information }) => {
     console.log(information);
     const { licenses } = information;
-
     const generateEndorsementGlossary = (endorsementStr) => {
         let endorsementArr;
         let userEndorsementsJSX = [];

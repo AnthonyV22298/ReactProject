@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
-import ModalRender from '../Modal/ModalRender';
+import ModalUpdate from '../Modal/ModalUpdate';
 
 const AppointmentRender = ({ appointments, handleRefresh }) => {
 
@@ -19,7 +19,7 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
           initialValues={{ ...obj }}>View</Button>
       );
       newObj.update = <div>
-        <ModalRender buttonLabel="Update"/>
+        <ModalUpdate buttonLabel="Update"/>
         </div>
 
       return newObj;

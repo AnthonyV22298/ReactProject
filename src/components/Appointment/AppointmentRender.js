@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
+import ModalRender from '../Modal/ModalRender';
 
 const AppointmentRender = ({ appointments, handleRefresh }) => {
 
@@ -17,6 +18,10 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         <Button command="View" name={obj.firstname} entity="dmv_appointment"
           initialValues={{ ...obj }}>View</Button>
       );
+      newObj.update = <div>
+        <ModalRender buttonLabel="Update"/>
+        </div>
+
       return newObj;
     });
 
@@ -34,8 +39,18 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         sort: 'asc'
       },
       {
+        label: 'Location',
+        field: '_dmv_appointmentlocation_value@OData.Community.Display.V1.FormattedValue',
+        sort: 'asc'
+      },
+      {
         label: 'Approved',
         field: 'dmv_approved@OData.Community.Display.V1.FormattedValue',
+        sort: 'asc'
+      },
+      {
+        label: 'Update',
+        field: 'update',
         sort: 'asc'
       },
     ],

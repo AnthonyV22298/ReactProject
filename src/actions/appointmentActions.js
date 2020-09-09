@@ -21,7 +21,7 @@ export const readAppointments = () => {
         let guid = JSON.parse(localStorage.getItem('userInfo')).contactid;
         return adalApiFetch(axios, 
         "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments" +
-        "?$select=dmv_appointmentid,dmv_appointment_date,_dmv_contactappointmentid_value" + 
+        "?$select=dmv_appointmentid,dmv_app_type,dmv_approved,_dmv_appointmentlocation_value,dmv_appointment_date,_dmv_contactappointmentid_value" + 
         "&$filter=_dmv_contactappointmentid_value eq '" + guid + "'", config)
             .then(res => {
                 dispatch(appointmentsSuccess(res));

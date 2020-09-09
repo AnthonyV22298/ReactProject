@@ -39,6 +39,11 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         sort: 'asc'
       },
       {
+        label: 'Time',
+        field: 'dmv_time@OData.Community.Display.V1.FormattedValue',
+        sort: 'asc'
+      },
+      {
         label: 'Location',
         field: '_dmv_appointmentlocation_value@OData.Community.Display.V1.FormattedValue',
         sort: 'asc'

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
-import AppointmentMake from '../Appointment/AppointmentMaker';
+import LocationsDropdown from '../Appointment/LocationsDropdown';
+import TimeDropdown from '../Appointment/TimeDropdown';
+import TypeDropdown from '../Appointment/TypeDropdown';
 import PropTypes from 'prop-types';
 
 const ModalUpdate = (props) => {
@@ -20,7 +22,11 @@ const ModalUpdate = (props) => {
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
         <ModalHeader toggle={toggle}>Payment</ModalHeader>
         <ModalBody>
-          <AppointmentMake/>
+          <div>
+            <TypeDropdown/>
+            <LocationsDropdown/>
+            <TimeDropdown/>
+          </div>
         </ModalBody>
       </Modal>
     </div>

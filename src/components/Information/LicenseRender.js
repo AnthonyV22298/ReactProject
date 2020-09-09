@@ -130,7 +130,7 @@ const LicenseRender = ({ information }) => {
             license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
             restrictions = restrictions.replace(/;+/g, ',');
             licenseTabs.push(
-                <Tab eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
+                <Tab className="tab-padding" eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
                     <div className="row">
                         <div className="col">
                             <h4>License Details</h4>
@@ -169,22 +169,16 @@ const LicenseRender = ({ information }) => {
             )
         })
         return (
-            <Card>
-                <Card.Body>
-                    <Tabs defaultActiveKey={licenseTabs[0].eventKey}>
-                        {licenseTabs}
-                    </Tabs>
-                </Card.Body>
-            </Card>
+            <Tabs defaultActiveKey={licenseTabs[0].eventKey}>
+                {licenseTabs}
+            </Tabs>
         )
     }
     return (
-        <div className="mainblock">
-        <section className="info-render">
+        <section className="info-render main-block">
             <h3 className="display-3">License Information</h3>
             {generateLicenseTabs(licenses)}
         </section>
-        </div>
     );
 }
 

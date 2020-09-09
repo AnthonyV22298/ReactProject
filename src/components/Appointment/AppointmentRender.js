@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 import ModalUpdate from '../Modal/ModalUpdate';
+import ModalDelete from '../Modal/ModalDelete';
 
 const AppointmentRender = ({ appointments, handleRefresh }) => {
 
@@ -22,6 +23,9 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         <ModalUpdate buttonLabel="Update"/>
         </div>
 
+      newObj.delete = <div>
+        <ModalDelete buttonLabel="Delete"/>
+        </div>
       return newObj;
     });
 
@@ -56,6 +60,11 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
       {
         label: 'Update',
         field: 'update',
+        sort: 'asc'
+      },
+      {
+        label: 'Delete',
+        field: 'delete',
         sort: 'asc'
       },
     ],

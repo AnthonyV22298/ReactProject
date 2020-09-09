@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
-import LocationsDropdown from '../Appointment/LocationsDropdown';
-import TimeDropdown from '../Appointment/TimeDropdown';
-import TypeDropdown from '../Appointment/TypeDropdown';
 import PropTypes from 'prop-types';
 
-const ModalUpdate = (props) => {
-  const {
+const ModalDelete = (props) => {
+    const {
     buttonLabel,
     className,
     targetfee
@@ -18,24 +15,22 @@ const ModalUpdate = (props) => {
 
   return (
     <div>
-      <Button color="#87CEFA" onClick={toggle}>{buttonLabel}</Button>
+      <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
-        <ModalHeader toggle={toggle}>Update Appointment</ModalHeader>
+        <ModalHeader toggle={toggle}>Are you sure you want to cancel the appointment</ModalHeader>
         <ModalBody>
-            <TypeDropdown />
-            <TimeDropdown />
-            <LocationsDropdown />
-            <button className="button">Update</button>
+            <button>Yes</button>
+            <button>No</button>
         </ModalBody>
       </Modal>
     </div>
   );
 }
 
-ModalUpdate.propTypes = {
+ModalDelete.propTypes = {
     buttonLabel: PropTypes.string,
     className: PropTypes.string,
     targetfee: PropTypes.string
 };
 
-export default ModalUpdate;
+export default ModalDelete;

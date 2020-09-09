@@ -4,8 +4,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from "react-calendar";
 import LocationsDropdown from "./LocationsDropdown"
-import { adalApiFetch } from '../../adalConfig.js';
-import axios from 'axios'
 import SuccessBanner from '../Helper/SuccessBanner';
 import TimeDropdown from './TimeDropdown'
 import TypeDropdown from './TypeDropdown'
@@ -26,30 +24,6 @@ class AppointmentMake extends Component {
         this.typeChange = this.typeChange.bind(this); 
         this.locationChange = this.locationChange.bind(this);
         this.timeChange = this.timeChange.bind(this);
-    }
-
-    componentDidMount() {
-        this.getItems();
-    }
-
-    getItems() {
-        let config = {
-        method: 'get',
-        'OData-MaxVersion': 4.0,
-        'OData-Version': 4.0,
-        Accept: 'crefc_locations/json',
-        'Content-Type': 'dmv_appointment/json; charset=utf-8',
-        headers: {
-            'Prefer': "odata.include-annotations=*"
-        }
-    }
-        //@OData.Community.Display.V1.FormattedValue
-        adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments?$apply=groupby((dmv_app_type))",config)
-            .then(results => {
-                this.setState({items: results.data.value}),
-                console.log(results.data.value)
-            }
-                )
     }
 
     typeChange(e)

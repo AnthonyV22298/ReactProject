@@ -72,7 +72,7 @@ export const postAppointments = (data) => {
     };
 }
 
-export const cancelAppointment = (data) =>{
+export const cancelAppointment = () =>{
 
     let cancelConfig = {
         method: 'patch',
@@ -88,9 +88,9 @@ export const cancelAppointment = (data) =>{
     
     return dispatch => {
             dispatch(cancelAppointmentRequest());
-            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments("+guid+")?$select=dmv_isactive" , cancelConfig)
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments?$select=dmv_isactive" , cancelConfig)
             .then((res) => {
-                dispatch(cancelAppointmentSuccess(data));
+                dispatch(cancelAppointmentSuccess(res));
             })
             .catch((error) => {
                 console.log(error);

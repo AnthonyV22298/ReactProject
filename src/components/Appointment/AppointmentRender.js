@@ -23,8 +23,8 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         <ModalUpdate buttonLabel="Update"/>
         </div>
 
-      newObj.delete = <div>
-        <ModalDelete buttonLabel="Delete"/>
+      newObj.cancel = <div>
+        <ModalDelete buttonLabel="Cancel"/>
         </div>
       return newObj;
     });
@@ -63,8 +63,8 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         sort: 'asc'
       },
       {
-        label: 'Delete',
-        field: 'delete',
+        label: 'Cancel',
+        field: 'cancel',
         sort: 'asc'
       },
     ],

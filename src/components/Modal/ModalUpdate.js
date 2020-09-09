@@ -18,7 +18,7 @@ const ModalUpdate = (props) => {
 
   return (
     <div>
-      <Button color="#87CEFA" onClick={toggle}>{buttonLabel}</Button>
+      <Button color="primary" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
         <ModalHeader toggle={toggle}>Update Appointment</ModalHeader>
         <ModalBody>

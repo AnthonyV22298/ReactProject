@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE} from '../constants/actionTypes';
+import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE, CANCEL_APPOINTMENT_REQUEST, CANCEL_APPOINTMENT_SUCCESS, CANCEL_APPOINTMENT_FAILED} from '../constants/actionTypes';
 
 export const readAppointments = () => {
 
@@ -72,6 +72,34 @@ export const postAppointments = (data) => {
     };
 }
 
+export const cancelAppointment = (data) =>{
+
+    let cancelConfig = {
+        method: 'patch',
+        'OData-MaxVersion': 4.0,
+        'OData-Version': 4.0,
+        Accept: 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+        headers: {
+            'Prefer': "odata.include-annotations=*"
+        },
+        data: {"dmv_isactive" : 174070001}
+    }
+    
+    return dispatch => {
+            dispatch(cancelAppointmentRequest());
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments("+guid+")?$select=dmv_isactive" , cancelConfig)
+            .then((res) => {
+                dispatch(cancelAppointmentSuccess(data));
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(cancelAppointmentFailed(error));
+            });
+        }
+
+}
+
 const postAppointmentsSuccess = (res) => {
     return {
         type: POST_APPOINTMENTS_SUCCESFUL,
@@ -82,6 +110,26 @@ const postAppointmentsSuccess = (res) => {
 const postAppointmentsFailure = (error) => {
     return {
         type: POST_APPOINTMENTS_FAILURE,
+        error  
+    };
+}
+
+const cancelAppointmentRequest = () => {
+    return {
+        type: CANCEL_APPOINTMENT_REQUEST,
+    };
+}
+
+const cancelAppointmentSuccess = (res) => {
+    return {
+        type: CANCEL_APPOINTMENT_SUCCESS,
+        data:  res.data
+    };
+}
+
+const cancelAppointmentFailed = (error) => {
+    return {
+        type: CANCEL_APPOINTMENT_FAILED,
         error  
     };
 }

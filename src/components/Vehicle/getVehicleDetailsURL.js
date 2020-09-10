@@ -47,9 +47,10 @@ export const getVehicleDetailsURL = () => {
                 urlArray.push(urlBase2.concat(vRecordsArr[i]));   
             }		//ONE FOR LOOP
              
-            /*
+            
             let today = new Date();   
-            console.log(typeof today);
+            console.log(today);
+            /*    
             for (let i = 0; i < vRecordsArrLen; i++){
                 console.log(typeof results.data.value[i].dmv_expiration_date);
                 if (results.data.value[i].dmv_expiration_date > today){
@@ -86,4 +87,4 @@ const vehicleDetailsPending = () => {
     };
 }
 
-export default VehicleDetailsRender;
+export default getVehicleDetailsURL;

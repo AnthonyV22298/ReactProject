@@ -3,6 +3,10 @@ import { adalApiFetch } from '../adalConfig.js';
 import {getVehicleDetailsURL} from './getVehicleDetailsURL';
 import { VEHICLEDETAILS_SUCCESSFUL, VEHICLEDETAILS_FAILURE, VEHICLEDETAILS_PENDING} from '../constants/actionTypes';
 
+
+let today = new Date();   
+console.log(today);
+
 export const readVehicleDetails = () => {
     let config1 = {
         method: 'get',

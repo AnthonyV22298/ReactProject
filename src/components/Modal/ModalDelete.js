@@ -6,7 +6,9 @@ const ModalDelete = (props) => {
     const {
     buttonLabel,
     className,
-    targetfee
+    targetfee,
+    handleCancel,
+    guid,
   } = props;
 
   const [modal, setModal] = useState(false);
@@ -19,7 +21,7 @@ const ModalDelete = (props) => {
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
         <ModalHeader toggle={toggle}>Are you sure you want to cancel the appointment</ModalHeader>
         <ModalBody>
-            <button>Yes</button>
+            <button onClick={() => handleCancel(guid)}>Yes</button>
             <button>No</button>
         </ModalBody>
       </Modal>
@@ -30,7 +32,9 @@ const ModalDelete = (props) => {
 ModalDelete.propTypes = {
     buttonLabel: PropTypes.string,
     className: PropTypes.string,
-    targetfee: PropTypes.string
+    targetfee: PropTypes.string,
+    handleCancel: PropTypes.func,
+    guid: PropTypes.string
 };
 
 export default ModalDelete;

@@ -22,7 +22,7 @@ export const readAppointments = () => {
         return adalApiFetch(axios, 
         "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments" +
         "?$select=dmv_appointmentid,dmv_app_type,dmv_time,dmv_approved,_dmv_appointmentlocation_value,dmv_appointment_date,_dmv_contactappointmentid_value" + 
-        "&$filter=_dmv_contactappointmentid_value eq '" + guid + "'", config)
+        "&$filter=_dmv_contactappointmentid_value eq '" + guid + "' and dmv_isactive ne 174070001", config)
             .then(res => {
                 dispatch(appointmentsSuccess(res));
             })
@@ -72,8 +72,7 @@ export const postAppointments = (data) => {
     };
 }
 
-export const cancelAppointment = () =>{
-
+export const cancelAppointment = (guid) =>{
     let cancelConfig = {
         method: 'patch',
         'OData-MaxVersion': 4.0,
@@ -88,7 +87,7 @@ export const cancelAppointment = () =>{
     
     return dispatch => {
             dispatch(cancelAppointmentRequest());
-            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments?$select=dmv_isactive" , cancelConfig)
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments("+guid+")?$select=dmv_isactive" , cancelConfig)
             .then((res) => {
                 dispatch(cancelAppointmentSuccess(res));
             })
@@ -97,7 +96,6 @@ export const cancelAppointment = () =>{
                 dispatch(cancelAppointmentFailed(error));
             });
         }
-
 }
 
 const postAppointmentsSuccess = (res) => {

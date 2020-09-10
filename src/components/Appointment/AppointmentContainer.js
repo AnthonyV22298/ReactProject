@@ -17,7 +17,8 @@ const AppointmentContainer = (props) => {
     const {
         error,
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
-        postAppointmentsSuccess, postAppointmentsFailed, 
+        postAppointmentsSuccess, postAppointmentsFailed,
+        cancelAppointmentRequest, cancelAppointmentSuccess, cancelAppointmentFailed,
     } = requestState;
 
 
@@ -31,20 +32,21 @@ const AppointmentContainer = (props) => {
                 <AppointmentRender
                     appointments={ appointments }
                     handleRefresh={() => actions.readAppointments()}
+                    handleCancel={(guid) => actions.cancelAppointment(guid)}
                 />
             </div>
         );
     }
 
-    if (appointmentsPending) {
+    if (appointmentsPending || cancelAppointmentRequest) {
         return <LoadingIcon />;
-    } else if (appointmentsFailed || postAppointmentsFailed) {
+    } else if (appointmentsFailed || postAppointmentsFailed || cancelAppointmentFailed) {
         return (
             <ErrorBanner>
                 Error while loading appointments!
             </ErrorBanner>
         );
-    } else if (appointmentsSuccess || postAppointmentsSuccess) {
+    } else if (appointmentsSuccess || postAppointmentsSuccess || cancelAppointmentSuccess) {
         return renderSuccess();
     } else {
         return (

@@ -7,7 +7,7 @@ import { MDBDataTable } from 'mdbreact';
 import ModalUpdate from '../Modal/ModalUpdate';
 import ModalDelete from '../Modal/ModalDelete';
 
-const AppointmentRender = ({ appointments, handleRefresh }) => {
+const AppointmentRender = ({ appointments, handleRefresh, handleCancel}) => {
 
   function getTableBodyContent() {
     return appointments.map(obj => {
@@ -24,7 +24,7 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
         </div>
 
       newObj.cancel = <div>
-        <ModalDelete buttonLabel="Cancel"/>
+        <ModalDelete buttonLabel="Cancel" handleCancel={handleCancel} guid={newObj.dmv_appointmentid}/>
         </div>
       return newObj;
     });
@@ -92,7 +92,8 @@ const AppointmentRender = ({ appointments, handleRefresh }) => {
 AppointmentRender.propTypes = {
   appointments: PropTypes.array,
   handleView: PropTypes.func,
-  handleRefresh: PropTypes.func
+  handleRefresh: PropTypes.func,
+  handleCancel: PropTypes.func
 };
 
 

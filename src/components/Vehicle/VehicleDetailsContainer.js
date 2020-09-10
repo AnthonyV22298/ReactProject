@@ -39,6 +39,7 @@ const VehicleDetailsContainer = (props) => {
     console.log("after vDetRender div");
 
     if (vehicleDetailsPending) {
+        console.log("loadingicon returned");
         return <LoadingIcon />;
     } else if (vehicleDetailsFailed) {
         return (

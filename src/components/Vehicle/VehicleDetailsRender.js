@@ -89,6 +89,7 @@ VehicleDetailsRender.propTypes = {
   handleRefresh: PropTypes.func
 };
 
+console.log("vDetRender.js proptypesafter details");
 
 export default VehicleDetailsRender;
 

@@ -6,8 +6,7 @@ import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
 const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
-  console.log("start of vDetRender.js");
-
+  
   function getTableBodyContent() {
     return vehicleDetails.map(obj => {
 
@@ -67,7 +66,8 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
   console.log("before react fragment vDetRender.js");
 
   return (
-    <React.Fragment>
+    <React.Fragment>      
+      <div className="mainblock">
       <h1>VehicleDetails</h1>
       <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
       <MDBDataTable
@@ -77,6 +77,7 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
         responsive
         data={data}
       />
+      </div>
     </React.Fragment>
   );
 }
@@ -88,8 +89,6 @@ VehicleDetailsRender.propTypes = {
   handleView: PropTypes.func,
   handleRefresh: PropTypes.func
 };
-
-console.log("vDetRender.js proptypesafter details");
 
 export default VehicleDetailsRender;
 

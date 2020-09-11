@@ -4,9 +4,6 @@ import {getVehicleDetailsURL} from './getVehicleDetailsURL';
 import { VEHICLEDETAILS_SUCCESSFUL, VEHICLEDETAILS_FAILURE, VEHICLEDETAILS_PENDING} from '../constants/actionTypes';
 
 
-let today = new Date();   
-console.log(today);
-
 export const readVehicleDetails = () => {
     let config1 = {
         method: 'get',
@@ -21,12 +18,15 @@ export const readVehicleDetails = () => {
     return dispatch => {
         dispatch(vehicleDetailsPending());
         console.log("LOOKATME");
-        return adalApiFetch(axios, getVehicleDetailsURL(), config1)
-        /*
-        return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/" + 
+        let temp = getVehicleDetailsURL();
+        console.log("temp is " + temp);
+        console.log("guid is" + JSON.parse(localStorage.getItem('userInfo')).contactid);
+        if (temp == undefined){
+            console.log("tempcheck");
+            //return adalApiFetch(axios, temp, config1)            
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/" + 
                         "dmv_vehicles?$select=dmv_color,dmv_make,dmv_model,dmv_vin_number,dmv_vehicleid&$" + 
-                        "filter=dmv_vehicleid%20eq%20ab0a1a76-a901-41c4-9e16-40592ede9d8e", config1)
-                        */
+                        "filter=dmv_vehicleid%20eq%20ab0a1a76-a901-41c4-9e16-40592ede9d8e", config1)                        
             .then(res => {
                 dispatch(vehicleDetailsSuccess(res));
             })
@@ -34,6 +34,17 @@ export const readVehicleDetails = () => {
                 console.log(error);
                 dispatch(vehicleDetailsFailure(error));
             });
+        }else{
+            return adalApiFetch(axios, temp, config1)
+            .then(res => {
+                dispatch(vehicleDetailsSuccess(res));
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(vehicleDetailsFailure(error));
+            });
+        }
+        
     };
 }
 

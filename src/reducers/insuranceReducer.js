@@ -4,7 +4,7 @@ export default function insuranceReducer(state= {}, action) {
     switch (action.type) {
         case INFO_REQUEST_FAILURE:
             return {...state, 
-                information: null,
+                //information: null,
                 requestState: {
                     infoPending: false,
                     infoSuccessful: false,
@@ -14,7 +14,7 @@ export default function insuranceReducer(state= {}, action) {
             }
         case INFO_REQUEST_PENDING:
             return {...state, 
-                information: null,
+                //information: null,
                 requestState: {
                     infoPending: true,
                     infoSuccessful: false,

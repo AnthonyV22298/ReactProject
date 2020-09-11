@@ -37,6 +37,8 @@ const Header = () => {
                             <NavDropdown.Item href="#/CreateAppointment">Create Appointments</NavDropdown.Item>
                         </NavDropdown>
                         
+                        <NavLink href="#/locations">DMV Locations</NavLink>
+
                         <NavLink href="#/" onClick={() => handleLogout()}>Logout</NavLink>
                         
                     </Nav>

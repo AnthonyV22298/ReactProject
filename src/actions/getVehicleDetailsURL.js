@@ -71,29 +71,10 @@ export const getVehicleDetailsURL = () => {
                 }
                 console.log("reaches first return");
                 console.log(godURL);
-                let apiFetch = adalApiFetch(axios, godURL, config1)
-                .then(results => {                          
-                    let today = new Date();
-                    let loopflag = 1;
-                    for (let i = 0; i < vRecordsArrLen; i++){      
-                        if (results.data.value[i].dmv_expiration_date != null){
-                            let tempYear = results.data.value[i].dmv_expiration_date.slice(0, 4);                         
-                            let tempMonth = results.data.value[i].dmv_expiration_date.slice(5, 7);                                                  
-                            let tempDay = results.data.value[i].dmv_expiration_date.slice(8, 10);    
-                            let parsedDate = new Date(tempYear, tempMonth, tempDay);
-                            if (parsedDate > today && loopflag == 1){
-                                loopflag = 0;
-                                alert("You have an expired registration!");
-                            }                        
-                            //console.log(tempYear + " " + tempMonth + " " + tempDay);
-                            //console.log(results.data.value[i].dmv_expiration_date);  
-                        }                      
-                    }                         	
-                })          
-                .catch((error) => {
-                    console.log(error);
-                }); 
-                window.value = godURL;
+                VRegCheckAdal(results, vRecordsArrLen, godURL, config1);
+                
+
+                window.value = godURL; //using window value due to this value being within an adal fetch
                 //return "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_vehicles?$select=dmv_color,dmv_make,dmv_model,dmv_vin_number&$filter=dmv_vehicleid%20eq%2047b4a301-4b78-4d60-a6e0-cefc91970b52+or+dmv_vehicleid%20eq%20ee27cd1b-2eac-ea11-a812-000d3a8e4ace+or+dmv_vehicleid%20eq%20e097a0c3-eaaf-ea11-a812-000d3a53014b";      
                 //return godURL;
             //})
@@ -101,6 +82,7 @@ export const getVehicleDetailsURL = () => {
             //    console.log(error);
             //});         
         //}
+        return godURL;
     })
     .catch((error) => {
         console.log(error);
@@ -111,5 +93,34 @@ export const getVehicleDetailsURL = () => {
     console.log("window value = " + window.value);
     return window.value;
 }
+
+//let apiFetch = adalApiFetch(axios, godURL, config1)
+function VRegCheckAdal (r, arrayLen, URL, config) {
+
+    let apiFetch = adalApiFetch(axios, URL, config)
+    .then(r => {  
+
+        var today = new Date();
+        var loopflag = 1;
+    
+        for (var i = 0; i < arrayLen; i++) {
+            if (r.data.value[i].dmv_expiration_date != null) {
+                var tempYear = r.data.value[i].dmv_expiration_date.slice(0, 4);
+                var tempMonth = r.data.value[i].dmv_expiration_date.slice(5, 7);
+                var tempDay = r.data.value[i].dmv_expiration_date.slice(8, 10);
+                var parsedDate = new Date(tempYear, tempMonth, tempDay);
+        
+                if (parsedDate > today && loopflag == 1) {
+                loopflag = 0;
+                alert("You have an expired registration!");
+                }   
+            }
+        }
+    })
+    .catch((error) => {
+        console.log(error);
+    }); 
+}
+
 
 export default getVehicleDetailsURL;

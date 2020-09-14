@@ -16,14 +16,15 @@ export const readVehicleDetails = () => {
         }
     };
     return dispatch => {
-        dispatch(vehicleDetailsPending());
+        //dispatch(vehicleDetailsPending());/
         console.log("LOOKATME");
         let temp = getVehicleDetailsURL();
         console.log("temp is " + temp);
         console.log("guid is" + JSON.parse(localStorage.getItem('userInfo')).contactid);
+        console.log(window.value);        
         if (temp == undefined){
-            console.log("tempcheck");
-            //return adalApiFetch(axios, temp, config1)            
+            console.log("tempcheck");             
+            dispatch(vehicleDetailsPending());  
             return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/" + 
                         "dmv_vehicles?$select=dmv_color,dmv_make,dmv_model,dmv_vin_number,dmv_vehicleid&$" + 
                         "filter=dmv_vehicleid%20eq%20ab0a1a76-a901-41c4-9e16-40592ede9d8e", config1)                        
@@ -35,6 +36,7 @@ export const readVehicleDetails = () => {
                 dispatch(vehicleDetailsFailure(error));
             });
         }else{
+            dispatch(vehicleDetailsPending());
             return adalApiFetch(axios, temp, config1)
             .then(res => {
                 dispatch(vehicleDetailsSuccess(res));

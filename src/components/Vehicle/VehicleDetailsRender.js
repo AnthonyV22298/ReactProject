@@ -6,7 +6,7 @@ import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 
 const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
-  
+  console.log(localStorage);
   function getTableBodyContent() {
     return vehicleDetails.map(obj => {
 
@@ -63,21 +63,19 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
       getTableBodyContent(),  
   }
 
-  console.log("before react fragment vDetRender.js");
-
   return (
-    <React.Fragment>      
-      <div className="mainblock">
-      <h1>VehicleDetails</h1>
-      <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
-      <MDBDataTable
-        striped
-        bordered
-        small
-        responsive
-        data={data}
-      />
-      </div>
+    <React.Fragment>
+        <div className="mainblock">
+        <h1>VehicleDetails</h1>
+        <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
+        <MDBDataTable
+          striped
+          bordered
+          small
+          responsive
+          data={data}
+        />
+        </div>
     </React.Fragment>
   );
 }

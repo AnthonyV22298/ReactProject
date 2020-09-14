@@ -1,7 +1,8 @@
 "use strict"
 
-import * as vehicleDetailsActions from '../../actions/vehicleDetailsActions';
-import VehicleDetailsRender from './VehicleDetailsRender';
+
+import * as infoDMVActions from '../../actions/infoDMVActions';
+import InfoDMVRender from './InfoDMVRender';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -9,40 +10,39 @@ import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
 
-const VehicleDetailsContainer = (props) => {
-    const { actions, vehicleDetails, requestState } = props;
+const InfoDMVContainer = (props) => {
+    const { actions, infoDMV, requestState } = props;
 
     const {
         error,
-        vehicleDetailsPending, vehicleDetailsFailed, vehicleDetailsSuccess,
+        infoDMVPending, infoDMVFailed, infoDMVSuccess,
     } = requestState;
 
 
     useEffect(() => {
-        actions.readVehicleDetails();
+        actions.readInfoDMV();
     }, []);
 
     const renderSuccess = () => {
-        console.log("before vDetRender div");
         return (
             <div className="reactive-margin">
-                <VehicleDetailsRender
-                    vehicleDetails={vehicleDetails}
-                    handleRefresh={() => actions.readVehicleDetails()}
+                <InfoDMVRender
+                    infoDMV={infoDMV}
+                    handleRefresh={() => actions.readInfoDMV()}
                 />
             </div>
         );
     }
 
-    if (vehicleDetailsPending) {
+    if (infoDMVPending) {
         return <LoadingIcon />;
-    } else if (vehicleDetailsFailed) {
+    } else if (infoDMVFailed) {
         return (
             <ErrorBanner>
-                Error while loading vehicleDetails!
+                Error while loading infoDMV!
             </ErrorBanner>
         );
-    } else if (vehicleDetailsSuccess) {
+    } else if (infoDMVSuccess) {
         return renderSuccess();
     } else {
         return (
@@ -54,27 +54,27 @@ const VehicleDetailsContainer = (props) => {
     }
 }
 
-VehicleDetailsContainer.propTypes = {
+InfoDMVContainer.propTypes = {
     actions: PropTypes.object
 };
 
 function mapStateToProps(state) {
-    const { vehicleDetailsReducer } = state;    
+    const { infoDMVReducer } = state;    
     return {
-        vehicleDetails: state.vehicleDetailsReducer.vehicleDetails,
+        infoDMV: state.infoDMVReducer.infoDMV,
         requestState: Object.assign({},
-            vehicleDetailsReducer.requestState)
-    }    
+            infoDMVReducer.requestState)
+    }  
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(vehicleDetailsActions, dispatch)
+        actions: bindActionCreators(infoDMVActions, dispatch)
     }
 }
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(VehicleDetailsContainer);
+)(InfoDMVContainer);
 

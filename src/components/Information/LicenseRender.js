@@ -167,6 +167,15 @@ const LicenseRender = ({ information }) => {
                     
                 </Tab>
             )
+            // AK : this needs a better implementation location
+            let today = new Date();
+            let licExpDate = license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"];
+            let licExpDateConvert = new Date(licExpDate);
+            //console.log(licExpDate + " " + licExpDateConvert);
+            if (licExpDateConvert < today){
+                alert("You have an expired license!");
+            }
+            // AK
         })
         return (
             <Card>

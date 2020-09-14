@@ -10,7 +10,7 @@ const InsuranceRender = (information) => {
         return ( <h3> ERROR - NO PROVIDER</h3>)
     } else {
         return (
-            <section className="info-render">
+            <div className="mainblock">
                 <h3 className="display-3">Insurance Information</h3>
                     <div className="row">
                     <div className="col">
@@ -23,7 +23,7 @@ const InsuranceRender = (information) => {
                         <p><strong>Description: </strong>{insurance["dmv_description"]} </p>
                     </div>
                 </div>
-            </section>
+            </div>
         );
     }
 }

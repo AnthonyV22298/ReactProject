@@ -9,7 +9,8 @@ const ModalUpdate = (props) => {
   const {
     buttonLabel,
     className,
-    targetfee
+    targetfee,
+    handleRefresh,
   } = props;
 
   const [modal, setModal] = useState(false);
@@ -25,7 +26,8 @@ const ModalUpdate = (props) => {
             <TypeDropdown />
             <TimeDropdown />
             <LocationsDropdown />
-            <button className="button">Update</button>
+            <Button color="primary" className="twobuttons">Update</Button>
+            <Button color="danger" className="twobuttons" onClick={() => handleRefresh()}>Cancel</Button>
         </ModalBody>
       </Modal>
     </div>
@@ -35,7 +37,8 @@ const ModalUpdate = (props) => {
 ModalUpdate.propTypes = {
     buttonLabel: PropTypes.string,
     className: PropTypes.string,
-    targetfee: PropTypes.string
+    targetfee: PropTypes.string,
+    handleRefresh: PropTypes.string,
 };
 
 export default ModalUpdate;

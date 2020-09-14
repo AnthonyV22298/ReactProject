@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
-import {Link} from 'react-router-dom';
 
 const AppointmentContainer = (props) => {
     const { actions, appointments, requestState } = props;

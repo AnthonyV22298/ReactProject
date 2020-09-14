@@ -3,15 +3,21 @@ import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 const ModalDelete = (props) => {
-    const {
+  const {
     buttonLabel,
     className,
     targetfee,
     handleCancel,
+    handleRefresh,
     guid,
   } = props;
 
   const [modal, setModal] = useState(false);
+
+  function cancel(guid) {
+      handleCancel(guid)
+      handleRefresh()
+  }
 
   const toggle = () => setModal(!modal);
 
@@ -21,8 +27,8 @@ const ModalDelete = (props) => {
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
         <ModalHeader toggle={toggle}>Are you sure you want to cancel the appointment</ModalHeader>
         <ModalBody>
-            <button onClick={() => handleCancel(guid)}>Yes</button>
-            <button>No</button>
+            <Button color="primary" className="twobuttons" onClick={() => cancel(guid)}>Yes</Button>
+            <Button color="danger" className="twobuttons" onClick={() => handleRefresh()}>No</Button>
         </ModalBody>
       </Modal>
     </div>
@@ -34,6 +40,7 @@ ModalDelete.propTypes = {
     className: PropTypes.string,
     targetfee: PropTypes.string,
     handleCancel: PropTypes.func,
+    handleRefresh: PropTypes.func,
     guid: PropTypes.string
 };
 

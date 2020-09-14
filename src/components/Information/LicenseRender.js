@@ -132,7 +132,6 @@ const LicenseRender = ({ information }) => {
                 license["dmv_licenseendorsements@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
             let restrictions = license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"] ? 
             license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
-            restrictions = restrictions.replace(/;+/g, ',');
             licenseTabs.push(
                 <Tab className="tab-padding" eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
                     <div className="row">

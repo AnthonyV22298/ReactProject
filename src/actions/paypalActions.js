@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { PAYMENT_FOUND, PAYMENT_NOT_FOUND, FINDING_PAYMENT } from "../constants/actionTypes";
+import { PAYMENT_FOUND, PAYMENT_NOT_FOUND, FINDING_PAYMENT, MAKING_PAYMENT, PAYMENT_FAILED, PAYMENT_SUCCESSFUL } from "../constants/actionTypes";
 
 export const findPayment = () => {
 

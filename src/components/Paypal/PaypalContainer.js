@@ -14,6 +14,7 @@ const PaypalContainer = (props) => {
     const {
         error,
         findPayment, paymentNotFound, paymentFound,
+        paymentPending, 
     } = requestState;
 
 

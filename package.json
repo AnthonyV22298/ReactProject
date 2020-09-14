@@ -35,7 +35,9 @@
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
     "redux-token-auth": "^0.19.0",
-    "vinyl-source-stream": "^2.0.0"
+    "sass": "^1.26.10",
+    "vinyl-source-stream": "^2.0.0",
+    "webpack": "^4.44.1"
   },
   "devDependencies": {
     "babel": "^6.23.0",

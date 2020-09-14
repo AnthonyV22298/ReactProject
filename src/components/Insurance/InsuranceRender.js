@@ -25,7 +25,7 @@ const InsuranceRender = (information) => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         );
     }
 }

@@ -119,7 +119,7 @@ function LicExpCheckAdal (URL, config) {
             var tempDay = res.data.value[i].dmv_licenseexpdate.slice(8, 10);
             var parsedDate = new Date(tempYear, tempMonth, tempDay);
 
-            if (parsedDate > today && loopflag == 1) {
+            if (parsedDate < today && loopflag == 1) {
                 loopflag = 0;
                 alert("You have an expired license!");
             }   

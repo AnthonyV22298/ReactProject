@@ -22,7 +22,12 @@ export const readLicense = (userId) => {
             + userId;
         adalApiFetch(axios, apiCall, config).then(res => {
             //Eventually Read the HoldingContact In order to display their name (May be uneccesary once we have logged in Contacts)
+            //console.log("info results" + res.data.value[0].dmv_licenseexpdate);
             dispatch(infoLicenseSuccessful(res));
+            //AK
+            LicExpCheckAdal(apiCall, config); //Allows for alert popup to not  
+                                            //interrupt page loading
+            //AK
         }).catch(err => {
             dispatch(infoRequestFailure(err));
         })
@@ -99,3 +104,30 @@ const switchViewAction = (viewname) => {
         newView: viewname,
     }
 }
+
+
+function LicExpCheckAdal (URL, config) {
+    adalApiFetch(axios, URL, config)
+    .then(res => {  
+        let today = new Date();
+        let loopflag = 1;            
+        let recordsArrLen = res.data.value.length;
+        for (var i = 0; i < recordsArrLen; i++) {
+            if (res.data.value[i].dmv_licenseexpdate != null) {
+            var tempYear = res.data.value[i].dmv_licenseexpdate.slice(0, 4);
+            var tempMonth = res.data.value[i].dmv_licenseexpdate.slice(5, 7);
+            var tempDay = res.data.value[i].dmv_licenseexpdate.slice(8, 10);
+            var parsedDate = new Date(tempYear, tempMonth, tempDay);
+
+            if (parsedDate > today && loopflag == 1) {
+                loopflag = 0;
+                alert("You have an expired license!");
+            }   
+        }
+    }
+    })
+    .catch((error) => {
+        console.log(error);
+    }); 
+}
+

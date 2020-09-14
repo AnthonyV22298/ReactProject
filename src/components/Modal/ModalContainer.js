@@ -12,4 +12,8 @@ const ModalContainer = (props) => {
     const { actions, target, requestState } = props;
 
     const {showModal, hideModal} = requestState;
+
+    return (
+        <ModalRender />
+    )
 } */

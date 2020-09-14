@@ -1,6 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import LicenseRenewalModal from './LicenseRenewalModal';
+
 import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
@@ -130,17 +134,23 @@ const LicenseRender = ({ information }) => {
             license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
             restrictions = restrictions.replace(/;+/g, ',');
             licenseTabs.push(
-                <Tab eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
+                <Tab className="tab-padding" eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
                     <div className="row">
                         <div className="col">
                             <h4>License Details</h4>
                             <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
                             <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
                             <p><strong>License Class: </strong>{licenseClass}</p>
-                            <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
-                            <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
                             <p><strong>License Endorsements: </strong>{endorsements}</p>
                             <p><strong>License Restrictions: </strong>{restrictions}</p>
+                            <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            { license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"] &&
+                            <React.Fragment>
+                                <LicenseRenewalModal id="renewmodal" handleClose={handleClose} show={show}/>
+                                <Button variant="info" onClick={() => handleShow()}>Renew your License</Button>
+                            </React.Fragment>
+                            }
 
                         </div>
                         <div className="col">
@@ -168,22 +178,22 @@ const LicenseRender = ({ information }) => {
             )
         })
         return (
-            <Card>
-                <Card.Body>
-                    <Tabs defaultActiveKey={licenseTabs[0].eventKey}>
-                        {licenseTabs}
-                    </Tabs>
-                </Card.Body>
-            </Card>
+            <Tabs defaultActiveKey={licenseTabs[0].eventKey}>
+                {licenseTabs}
+            </Tabs>
         )
     }
+
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => { setShow(true) }
+    const handleClose = () => { setShow(false) };
+
     return (
-        <div className="mainblock">
-        <section className="info-render">
+        <section className="info-render main-block">
             <h3 className="display-3">License Information</h3>
             {generateLicenseTabs(licenses)}
         </section>
-        </div>
     );
 }
 

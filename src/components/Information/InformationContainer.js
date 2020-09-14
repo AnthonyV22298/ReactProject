@@ -10,6 +10,7 @@ import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
 
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import NavLink from 'react-bootstrap/NavLink';
 
@@ -60,19 +61,26 @@ const InformationContainer = (props) => {
             case INFO_LICENSE:
                 return (
                     <div className="container info-container">
-                        <InformationSecondaryNav clickFunc={switchViews}/>
-                        {information.licenses ? 
-                            <LicenseRender information={information} />
-                            : createRedirectModal()
-                        }
-                        
+                        <Card>
+                            <Card.Body>
+                                <InformationSecondaryNav clickFunc={switchViews}/>
+                                {information.licenses ? 
+                                    <LicenseRender information={information} />
+                                    : createRedirectModal()
+                                }
+                            </Card.Body>
+                        </Card>
                     </div>
                 );
             case INFO_CITATIONS:
                 return (
                     <div className="container info-container">
-                        <InformationSecondaryNav clickFunc={switchViews}/>
-                        <CitationsRender information={information} />
+                        <Card>
+                            <Card.Body>
+                                <InformationSecondaryNav clickFunc={switchViews}/>
+                                <CitationsRender information={information} />
+                            </Card.Body>
+                        </Card>
                     </div>
                 );
             default:
@@ -119,8 +127,6 @@ InformationContainer.proptypes = {
 
 function mapStateToProps(state) {
     const { informationReducer, loginReducer } = state;
-    console.log("this is state" + state)
-    console.log("this is loginReducer Info" + loginReducer.userInfo)
     return {
        information: informationReducer.information,
        infoView: informationReducer.infoView,

@@ -13,6 +13,7 @@ import LoginPage from './User/Login.js';
 import ProfilePage from './User/Profile.js';
 import PaypalContainer from './Paypal/PaypalContainer.js';
 import VehicleDetailsContainer from './Vehicle/VehicleDetailsContainer.js';
+import InfoDMVContainer from './InfoDMV/InfoDMVContainer.js';
 
 
 export class App extends React.Component{
@@ -31,6 +32,7 @@ export class App extends React.Component{
                     <Route path='/information' component={InformationContainer}/>
                     <Route path='/insurance' component={InsuranceContainer}/>
                     <Route path='/pay' component={PaypalContainer}/>
+                    <Route path='/locations' component={InfoDMVContainer}/>
                 </Switch>
             </div>
         );

@@ -32,8 +32,10 @@ export const getVehicleDetailsURL = () => {
     let vRecordsURL = urlBase1.concat(thisGuid);   
 
     console.log("before apifetch");
-    
-    let apiFetch = adalApiFetch(axios, vRecordsURL, config2)
+    console.log("vrecordsURL = " + vRecordsURL);
+    console.log("config2 = " + config2);
+
+    adalApiFetch(axios, vRecordsURL, config2)
     .then(results => {     
         console.log("inside .then API fetch");              
         let vRecordsArr = [];
@@ -47,41 +49,21 @@ export const getVehicleDetailsURL = () => {
             vRecordsArr.push(results.data.value[i]._dmv_vehiclerecordid_value);                
             urlArray.push(urlBase2.concat(vRecordsArr[i]));   
         }
+                        
+        godURL = urlArray[0];
 
+        console.log("urlArraygodURL = " + godURL);
+        for (let j = 0; j < vRecordsArrLen; j++){	
+            if (j > 0){
+                godURL = godURL.concat("+or+dmv_vehicleid%20eq%20", vRecordsArr[j]);
+            }	                        
+        }
+        console.log("reaches first return");
+        console.log(godURL);
+        VRegCheckAdal(results, vRecordsArrLen, godURL, config1);
         
-        /*    
-        for (let i = 0; i < vRecordsArrLen; i++){
-            console.log(typeof results.data.value[i].dmv_expiration_date);
-            if (results.data.value[i].dmv_expiration_date > today){
-                alert("You have an expired registration!");
-            }   
-        } 
-        */       
-
-        //for (let i = 0; i < 1; i++){
-            //let apiFetch = adalApiFetch(axios, urlArray[i], config1)
-            //.then(results => {                   
-                godURL = urlArray[0];
-
-                console.log("urlArraygodURL = " + godURL);
-                for (let j = 0; j < vRecordsArrLen; j++){	
-                    if (j > 0){
-                        godURL = godURL.concat("+or+dmv_vehicleid%20eq%20", vRecordsArr[j]);
-                    }	                        
-                }
-                console.log("reaches first return");
-                console.log(godURL);
-                VRegCheckAdal(results, vRecordsArrLen, godURL, config1);
-                
-
-                window.value = godURL; //using window value due to this value being within an adal fetch
-                //return "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_vehicles?$select=dmv_color,dmv_make,dmv_model,dmv_vin_number&$filter=dmv_vehicleid%20eq%2047b4a301-4b78-4d60-a6e0-cefc91970b52+or+dmv_vehicleid%20eq%20ee27cd1b-2eac-ea11-a812-000d3a8e4ace+or+dmv_vehicleid%20eq%20e097a0c3-eaaf-ea11-a812-000d3a53014b";      
-                //return godURL;
-            //})
-            //.catch((error) => {
-            //    console.log(error);
-            //});         
-        //}
+        window.value = godURL; //using window value due to this value being within an adal fetch
+        
         return godURL;
     })
     .catch((error) => {
@@ -95,9 +77,9 @@ export const getVehicleDetailsURL = () => {
 }
 
 //let apiFetch = adalApiFetch(axios, godURL, config1)
-function VRegCheckAdal (r, arrayLen, URL, config) {
+export function VRegCheckAdal (arrayLen, URL, config) {
 
-    let apiFetch = adalApiFetch(axios, URL, config)
+    adalApiFetch(axios, URL, config)
     .then(r => {  
 
         var today = new Date();
@@ -111,8 +93,8 @@ function VRegCheckAdal (r, arrayLen, URL, config) {
                 var parsedDate = new Date(tempYear, tempMonth, tempDay);
         
                 if (parsedDate > today && loopflag == 1) {
-                loopflag = 0;
-                alert("You have an expired registration!");
+                    loopflag = 0;
+                    alert("You have an expired registration!");
                 }   
             }
         }
@@ -123,4 +105,4 @@ function VRegCheckAdal (r, arrayLen, URL, config) {
 }
 
 
-export default getVehicleDetailsURL;
+export default VRegCheckAdal;

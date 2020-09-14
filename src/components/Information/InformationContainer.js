@@ -27,8 +27,8 @@ const InformationContainer = (props) => {
 
     useEffect(() => {
         if(!infoView) {
-            actions.switchView(INFO_LICENSE);
-            actions.readLicense(loggedInUserId);
+            //actions.switchView(INFO_LICENSE);
+            //actions.readLicense(loggedInUserId);
         }
     }, []);
 

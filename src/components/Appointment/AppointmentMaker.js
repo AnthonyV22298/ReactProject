@@ -4,10 +4,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from "react-calendar";
 import LocationsDropdown from "./LocationsDropdown"
-import { adalApiFetch } from '../../adalConfig.js';
-import axios from 'axios'
 import SuccessBanner from '../Helper/SuccessBanner';
 import TimeDropdown from './TimeDropdown'
+import TypeDropdown from './TypeDropdown'
 
 class AppointmentMake extends Component {
     constructor(props){
@@ -18,45 +17,18 @@ class AppointmentMake extends Component {
             today: new Date(),
             type: "Driver's Test",
             location: '',
+            time: '',
             items: [],
         }
         this.onChange = this.onChange.bind(this); 
         this.typeChange = this.typeChange.bind(this); 
         this.locationChange = this.locationChange.bind(this);
+        this.timeChange = this.timeChange.bind(this);
     }
 
-    componentDidMount() {
-        this.getItems();
-    }
-
-    getItems() {
-        let config = {
-        method: 'get',
-        'OData-MaxVersion': 4.0,
-        'OData-Version': 4.0,
-        Accept: 'crefc_locations/json',
-        'Content-Type': 'dmv_appointment/json; charset=utf-8',
-        headers: {
-            'Prefer': "odata.include-annotations=*"
-        }
-    }
-        //@OData.Community.Display.V1.FormattedValue
-        adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments?$apply=groupby((dmv_app_type))",config)
-            .then(results => {
-                this.setState({items: results.data.value}),
-                console.log(results.data.value)
-            }
-                )
-    }
-
-    typeChange(newType)
+    typeChange(e)
     {
-        if(newType.target.value === "Permit Exam"){
-            this.setState({ type : 174070000 })
-        }
-        else if(newType.target.value === "Driver's Test"){
-            this.setState({ type : 174070001 })
-        }
+        this.setState({ type : e.target.value })
     }
 
     onChange(newdate)
@@ -65,9 +37,11 @@ class AppointmentMake extends Component {
     }
     
     locationChange(e) {
-        console.log("location changed");
-        console.log(e.target.value);
         this.setState({ location : e.target.value })
+    }
+
+    timeChange(e) {
+        this.setState({ time : e.target.value })
     }
 
     render(){
@@ -77,17 +51,8 @@ class AppointmentMake extends Component {
 
             <div>
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
-                <React.Fragment>
                 <h5>1) Select the appointment type</h5>
-                    <select onChange={this.typeChange}>
-                        <option>Select Type</option>
-                        {this.state.items.map((item) => (
-                        <option key={item.dmv_app_type}>
-                            {item["dmv_app_type@OData.Community.Display.V1.FormattedValue"]}
-                        </option>
-                        ))}
-                    </select>
-                </React.Fragment>
+                    <TypeDropdown onChange={this.typeChange}/>
                 </div>
 
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
@@ -97,7 +62,7 @@ class AppointmentMake extends Component {
 
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
                     <h5>3) Select the time</h5>
-                    <TimeDropdown />
+                    <TimeDropdown onChange={this.timeChange}/>
                 </div>
             </div>
 

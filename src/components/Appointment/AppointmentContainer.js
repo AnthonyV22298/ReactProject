@@ -1,15 +1,17 @@
 "use strict"
 
-import * as appointmentActions from '../actions/appointmentActions';
+
+import * as appointmentActions from '../../actions/appointmentActions';
+import AppointmentRender from './AppointmentRender';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
-import AppointmentMake from './AppointmentMaker';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
+import {Link} from 'react-router-dom';
 
-const AppointmentMakeContainer = (props) => {
+const AppointmentContainer = (props) => {
     const { actions, appointments, requestState } = props;
 
     const {
@@ -26,12 +28,9 @@ const AppointmentMakeContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                
-                <AppointmentMake
+                <AppointmentRender
                     appointments={ appointments }
-                    handleCreate={(data) => {
-                        actions.postAppointments(data)
-                    }}
+                    handleRefresh={() => actions.readAppointments()}
                 />
             </div>
         );
@@ -57,7 +56,7 @@ const AppointmentMakeContainer = (props) => {
     }
 }
 
-AppointmentMakeContainer.propTypes = {
+AppointmentContainer.propTypes = {
     actions: PropTypes.object
 };
 
@@ -79,4 +78,5 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AppointmentMakeContainer);
+)(AppointmentContainer);
+

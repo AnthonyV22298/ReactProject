@@ -1,10 +1,9 @@
-
 import React, { Component } from "react";
 import axios from 'axios'
-import { adalApiFetch } from '../adalConfig.js';
+import { adalApiFetch } from '../../adalConfig.js';
 import PropTypes from 'prop-types';
 
-class DMV_stateDropdown extends Component {
+class TimeDropdown extends Component {
 
 
   constructor(props) {
@@ -19,11 +18,9 @@ class DMV_stateDropdown extends Component {
   _onChangeHandler(e) {
     e.persist();
     var index = e.nativeEvent.target.selectedIndex;
-    //console.log("index = " + index);
     var currlabel = e.nativeEvent.target[index].text;
     this.setState({value: e.target.value, label: currlabel});
     this.props.onChange(e);
-    console.log("label = " + currlabel + ": state = " + e.target.value);
   }
   getOptions() {
     let config = {
@@ -37,9 +34,8 @@ class DMV_stateDropdown extends Component {
       }
     }
     //@OData.Community.Display.V1.FormattedValue
-    adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_states')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
+    adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v8.2/GlobalOptionSetDefinitions(Name='dmv_work_hours')/Microsoft.Dynamics.CRM.OptionSetMetadata",config)
         .then(results => {
-            console.log(results.data.Options);
             this.setState({optionset: results.data.Options});
         },
         function(error) {
@@ -51,7 +47,7 @@ class DMV_stateDropdown extends Component {
 render(){
     return (
             <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
-                <option value = {0} disabled> Choose a U.S. State </option>
+                <option value = {0} disabled> Choose a Time </option>
                 {this.state.optionset.map((Option) => (
                 <option key={Option.Value} value={Option.Value}>
                 {Option.Label.UserLocalizedLabel.Label}
@@ -63,8 +59,9 @@ render(){
 }
 
 
-DMV_stateDropdown.propTypes = {
-  handleChange: PropTypes.func
+TimeDropdown.propTypes = {
+  handleChange: PropTypes.func,
+  onChange: PropTypes.func
 };
 
-export default DMV_stateDropdown;
+export default TimeDropdown;

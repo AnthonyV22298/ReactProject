@@ -2,12 +2,13 @@ import { UPDATE_CONTACT_REQUEST, UPDATE_CONTACT_FAILED, UPDATE_CONTACT_SUCCESS} 
 import axios from 'axios';
 import { adalApiFetch } from '../adalConfig.js';
 
-
 //takes in user input from the profile page
-export const updateContactAttempt = (userInfo, user) => {
+export const updateContactAttempt = (userInfo, user, dmvstate) => {
     //let userToken = localStorage.getItem('guid');
     //let tes = authenticate();
     let guid = user.contactid;
+    console.log("this is the dmv state text inside the update contact function: " + JSON.stringify(dmvstate));
+    //let dmvstate = userInfo.dmv_state;
     console.log(guid)
     //let guid = useSelector(state => state.loginReducer.userInfo.contactid);
 
@@ -29,10 +30,14 @@ export const updateContactAttempt = (userInfo, user) => {
         //query to dynamics based on stored contactid
         //updates the field value of the submitted input
             dispatch(updateContactRequest());
-            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts(" + guid + ")", updateConfig(userInfo))
+            console.log("ASDF");
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/contacts("+guid+")?$select=contactid,dmv_socialsecuritynumber,firstname,dmv_state, dmv_state@OData.Community.Display.V1.FormattedValue,lastname,address1_city,address1_line1,dmv_state,dmv_dateofbirth,address1_postalcode,mobilephone,emailaddress1" , updateConfig(userInfo))
             .then((res) => {
-                console.log("this is res data: " + JSON.stringify(res));
-
+                console.log("this is res data: ");
+                console.log(res);
+                //let temp3 = JSON.parse(res);
+                //console.log(temp3["dmv_state@OData.Community.Display.V1.FormattedValue"]);
+                //console.log("done testing3");
                 const data = {
                     contactid: guid,
                     dmv_socialsecuritynumber: user.dmv_socialsecuritynumber,
@@ -44,11 +49,13 @@ export const updateContactAttempt = (userInfo, user) => {
                     address1_postalcode: userInfo.address1_postalcode,
                     mobilephone: userInfo.mobilephone,
                     dmv_state: userInfo.dmv_state,
+                    dmv_state_text: dmvstate.dmv_state_text,
                     dmv_dateofbirth: user.dmv_dateofbirth
                 };
                 console.log("this is state" + data.dmv_state);
 
                 //update local storage token and current user state
+                localStorage.clear();
                 localStorage.setItem('userInfo', JSON.stringify(data));
                 dispatch(updateContactSuccess(data));
             })
@@ -82,4 +89,3 @@ const updateContactFailed = (error) => {
     error
   };
 };
-

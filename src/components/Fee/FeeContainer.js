@@ -1,13 +1,13 @@
 "use strict"
 
-import * as feeActions from '../actions/feeActions';
+import * as feeActions from '../../actions/feeActions';
 import FeeRender from './FeeRender';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
 
 const FeeContainer = (props) => {
     const { actions, fees, requestState } = props;

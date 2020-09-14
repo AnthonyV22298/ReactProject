@@ -19,6 +19,7 @@ const CitationsRender = ({ information }) => {
     }
     let citationsToDisplay = citations.dmv_driving_history_dmv_citations_driving_history;
     return (
+        <div className="mainblock">
         <div className="row">
             <h3 className="display-3">Citations</h3>
             
@@ -37,6 +38,7 @@ const CitationsRender = ({ information }) => {
                     {citationsToDisplay.map((citation) => createCitationRow(citation))}
                 </tbody>
             </table>
+        </div>
         </div>
     );
 }

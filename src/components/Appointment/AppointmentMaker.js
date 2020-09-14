@@ -4,38 +4,42 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Calendar from "react-calendar";
 import LocationsDropdown from "./LocationsDropdown"
-import { adalApiFetch } from '../adalConfig.js';
+import { adalApiFetch } from '../../adalConfig.js';
 import axios from 'axios'
+import SuccessBanner from '../Helper/SuccessBanner';
+import TimeDropdown from './TimeDropdown'
 
 class AppointmentMake extends Component {
-    constructor(props){ 
+    constructor(props){
         super(props)
-        
+
         this.state = {
             date: new Date(),
             today: new Date(),
             type: "Driver's Test",
+            location: '',
             items: [],
         }
         this.onChange = this.onChange.bind(this); 
-        this.typeChange = this.typeChange.bind(this);   
+        this.typeChange = this.typeChange.bind(this); 
+        this.locationChange = this.locationChange.bind(this);
     }
 
     componentDidMount() {
         this.getItems();
     }
-    
+
     getItems() {
         let config = {
         method: 'get',
         'OData-MaxVersion': 4.0,
         'OData-Version': 4.0,
         Accept: 'crefc_locations/json',
-        'Content-Type': 'dmv_appointment/json; charset=utf-8', 
+        'Content-Type': 'dmv_appointment/json; charset=utf-8',
         headers: {
             'Prefer': "odata.include-annotations=*"
         }
-        }
+    }
         //@OData.Community.Display.V1.FormattedValue
         adalApiFetch(axios,"https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments?$apply=groupby((dmv_app_type))",config)
             .then(results => {
@@ -59,9 +63,15 @@ class AppointmentMake extends Component {
     {
         this.setState({ date : newdate })
     }
+    
+    locationChange(e) {
+        console.log("location changed");
+        console.log(e.target.value);
+        this.setState({ location : e.target.value })
+    }
 
     render(){
-    return ( 
+    return (
         <div className="mainblock" >
             <div  style={{display:"flex", justifyContent:"center"}}>
 
@@ -79,20 +89,25 @@ class AppointmentMake extends Component {
                     </select>
                 </React.Fragment>
                 </div>
-            
+
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
                     <h5>2) Select the location</h5>
-                    <LocationsDropdown />
+                    <LocationsDropdown onChange={this.locationChange} />
+                </div>
+
+                <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
+                    <h5>3) Select the time</h5>
+                    <TimeDropdown />
                 </div>
             </div>
 
             <div style={{ width:"30%", justifyContent: "center", textAlign: "left", paddingLeft: "10px"}}>
-                <h5>3) Select a Date for your appointment</h5>
+                <h5>4) Select a Date for your appointment</h5>
                 <Calendar 
                     onChange={this.onChange} 
                     calendarType={"US"}
                     tileDisabled={({date }) =>
-                    date.getDay()===0 || date.getDay()===6 ||  
+                    date.getDay()===0 || date.getDay()===6 ||
                     (date.getMonth() <= this.state.today.getMonth() &&
                     date.getDate() < this.state.today.getDate() &&
                     date.getFullYear() <= this.state.date.getFullYear()) ||
@@ -102,10 +117,18 @@ class AppointmentMake extends Component {
                     />
                     <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>
-            </div> 
+            </div>
 
             <div style={{justifyContent:"center", paddingBottom:"20px", display:"flex"}}>
-                <button onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+                <button className="button" onClick={() => this.props.handleCreate(this.state)} >Create New Appointment</button>
+            </div>
+
+            <div>
+                {(this.props.postSuccess === true) && (
+                    <SuccessBanner>
+                        Appointment Request Created!
+                    </SuccessBanner>
+                )}
             </div>
 
             <div style={{ paddingTop:"10px" }}>
@@ -151,7 +174,7 @@ class AppointmentMake extends Component {
                         <ul>
                             <li>Letter from commanding officer on official letterhead with an original signature stating that the applicant resides onboard a ship docked in Virginia or in a barracks located in Virginia</li>
                             <li>Orders from the U.S. military assigning the applicant to a military unit with a Virginia address</li>
-                            <li>Leave and Earnings Statement (LES) showing Virginia as the applicant's home of record</li>
+                            <li>Leave and Earnings Statement (LES) showing Virginia as the applicant&apos;s home of record</li>
                         </ul>
 
                         <h4>3) You are required to provide one document as proof of your social security number (SSN) if you have been issued one. Your document must display all nine digits. Select one document that you will bring to DMV.</h4>
@@ -165,8 +188,8 @@ class AppointmentMake extends Component {
                     </div>
                 )},
             </div>
-            
-            
+
+
         </div>
         )
     }
@@ -174,7 +197,8 @@ class AppointmentMake extends Component {
 
 AppointmentMake.propTypes = {
     appointments: PropTypes.array,
-    handleCreate: PropTypes.func
+    handleCreate: PropTypes.func,
+    postSuccess: PropTypes.bool
 };
 
 export default AppointmentMake;

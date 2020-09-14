@@ -1,23 +1,21 @@
 "use strict"
 
-
-import * as appointmentActions from '../actions/appointmentActions';
-import AppointmentRender from './AppointmentRender';
+import * as appointmentActions from '../../actions/appointmentActions';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import LoadingIcon from './LoadingIcon';
-import ErrorBanner from './ErrorBanner';
-import {Link} from 'react-router-dom';
+import LoadingIcon from '../Helper/LoadingIcon';
+import ErrorBanner from '../Helper/ErrorBanner';
+import AppointmentMake from './AppointmentMaker';
 
-const AppointmentContainer = (props) => {
+const AppointmentMakeContainer = (props) => {
     const { actions, appointments, requestState } = props;
 
     const {
         error,
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
-        postAppointmentsSuccess, postAppointmentsFailed, 
+        postAppointmentsSuccess, postAppointmentsFailed,
     } = requestState;
 
 
@@ -28,13 +26,28 @@ const AppointmentContainer = (props) => {
     const renderSuccess = () => {
         return (
             <div className="reactive-margin">
-                <ul>
-                    <li className="list-inline-item"><Link to='/appointments' replace>View Your Appointments</Link></li>
-                    <li className="list-inline-item"><Link to='/CreateAppointment' replace>Create an Appointment</Link></li>
-                </ul>
-                <AppointmentRender
+
+                <AppointmentMake
                     appointments={ appointments }
-                    handleRefresh={() => actions.readAppointments()}
+                    handleCreate={(data) => {
+                        actions.postAppointments(data)
+                    }}
+                    postSuccess={ false }
+                />
+            </div>
+        );
+    }
+
+    const postSuccess = () => {
+        return (
+            <div className="reactive-margin">
+                
+                <AppointmentMake
+                    appointments={ appointments }
+                    handleCreate={(data) => {
+                        actions.postAppointments(data)
+                    }} 
+                    postSuccess={ true }
                 />
             </div>
         );
@@ -48,9 +61,12 @@ const AppointmentContainer = (props) => {
                 Error while loading appointments!
             </ErrorBanner>
         );
-    } else if (appointmentsSuccess || postAppointmentsSuccess) {
+    } else if (appointmentsSuccess) {
         return renderSuccess();
-    } else {
+    } else if(postAppointmentsSuccess){
+        return postSuccess();
+    }
+    else {
         return (
             <ErrorBanner>
                 {error}
@@ -58,9 +74,10 @@ const AppointmentContainer = (props) => {
             </ErrorBanner>
         );
     }
+
 }
 
-AppointmentContainer.propTypes = {
+AppointmentMakeContainer.propTypes = {
     actions: PropTypes.object
 };
 
@@ -82,5 +99,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AppointmentContainer);
-
+)(AppointmentMakeContainer);

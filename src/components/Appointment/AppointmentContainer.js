@@ -18,6 +18,7 @@ const AppointmentContainer = (props) => {
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
         postAppointmentsSuccess, postAppointmentsFailed,
         cancelAppointmentRequest, cancelAppointmentSuccess, cancelAppointmentFailed,
+        updateAppointmentRequest, updateAppointmentSuccess, updateAppointmentFailed,
     } = requestState;
 
 
@@ -32,20 +33,21 @@ const AppointmentContainer = (props) => {
                     appointments={ appointments }
                     handleRefresh={() => actions.readAppointments()}
                     handleCancel={(guid) => actions.cancelAppointment(guid)}
+                    handleUpdate={(data) => actions.updateAppointment(data)}
                 />
             </div>
         );
     }
 
-    if (appointmentsPending || cancelAppointmentRequest) {
+    if (appointmentsPending || cancelAppointmentRequest || updateAppointmentRequest) {
         return <LoadingIcon />;
-    } else if (appointmentsFailed || postAppointmentsFailed || cancelAppointmentFailed) {
+    } else if (appointmentsFailed || postAppointmentsFailed || cancelAppointmentFailed || updateAppointmentFailed) {
         return (
             <ErrorBanner>
                 Error while loading appointments!
             </ErrorBanner>
         );
-    } else if (appointmentsSuccess || postAppointmentsSuccess || cancelAppointmentSuccess) {
+    } else if (appointmentsSuccess || postAppointmentsSuccess || cancelAppointmentSuccess || updateAppointmentSuccess) {
         return renderSuccess();
     } else {
         return (

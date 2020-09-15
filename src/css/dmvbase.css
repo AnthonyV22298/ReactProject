@@ -26,6 +26,16 @@ body {
     margin-top: 1%; 
 }
 
+.dropdown2 {
+    margin-bottom: 3%;
+    width: 390px;
+}
+
+.modalmain {
+    justify-items: center;
+    display: grid;
+}
+
 .button {
     background-color: #4f7288; 
     border: black;

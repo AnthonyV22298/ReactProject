@@ -80,8 +80,6 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
   );
 }
 
-console.log("before proptypes vDetRender.js");
-
 VehicleDetailsRender.propTypes = {
   vehicleDetails: PropTypes.array,
   handleView: PropTypes.func,

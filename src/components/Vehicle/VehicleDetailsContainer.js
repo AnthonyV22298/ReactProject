@@ -23,7 +23,6 @@ const VehicleDetailsContainer = (props) => {
     }, []);
 
     const renderSuccess = () => {
-        console.log("before vDetRender div");
         return (
             <div className="reactive-margin">
                 <VehicleDetailsRender

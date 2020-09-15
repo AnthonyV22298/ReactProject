@@ -66,7 +66,7 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
   return (
     <React.Fragment>
         <div className="mainblock">
-        <h1>VehicleDetails</h1>
+        <h1>My Vehicles</h1>
         <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
         <MDBDataTable
           striped

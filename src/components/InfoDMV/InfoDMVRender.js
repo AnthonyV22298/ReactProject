@@ -66,7 +66,7 @@ const InfoDMVRender = ({ infoDMV, handleRefresh }) => {
     return (
       <React.Fragment>      
         <div className="mainblock">
-        <h1>Testing Locations</h1>
+        <h1>DMV Locations</h1>
         <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
         <MDBDataTable
           striped

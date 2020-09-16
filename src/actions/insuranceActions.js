@@ -35,7 +35,11 @@ export const readInsurance = (contactId) => {
                     res3.data.dmv_policyno = policyNo;
                     console.log(res3.data);
                     dispatch(infoInsuranceSuccessful(res3));
+                }).catch(err => {
+                    dispatch(infoRequestFailure(err));
                 });
+            }).catch(() => {
+                dispatch(infoInsuranceNull());
             });
         }).catch(err => {
             dispatch(infoRequestFailure(err));
@@ -48,7 +52,6 @@ const infoInsuranceSuccessful = (res = {}) => {
     return {
         type: INFO_INSURANCE_SUCCESSFUL,
         data: res.data
-
     }
 }
 
@@ -60,5 +63,11 @@ const infoRequestFailure = (err) => {
     return {
         type: INFO_REQUEST_FAILURE,
         err
+    }
+}
+const infoInsuranceNull = () => {
+    return {
+        type: INFO_INSURANCE_SUCCESSFUL,
+        data: null
     }
 }

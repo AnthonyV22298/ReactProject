@@ -49,16 +49,16 @@ class LocationsDropdown extends Component {
     }
 render(){
     return (
-        <React.Fragment>
-            
-                <select onChange={this._onChangeHandler} value={this.state.value}>
+              <div className="select">
+                <select nameName="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value}>
+                    <option selected disabled>Select a location</option>
                     {this.state.items.map((item) => (
                     <option key={item.crefc_locationid} value={item.crefc_locationid}>
                         {item.crefc_locationname + ": " + item.crefc_addressline1 + ", " + item["crefc_state@OData.Community.Display.V1.FormattedValue"]}
                     </option>
                     ))}
                 </select>
-        </React.Fragment>
+              </div>
         );
     }
 }

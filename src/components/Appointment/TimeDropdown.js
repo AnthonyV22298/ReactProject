@@ -46,14 +46,16 @@ class TimeDropdown extends Component {
     // {Option.Label.LocalizedLabels[0].Label}
 render(){
     return (
-            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
-                <option value = {0} disabled> Choose a Time </option>
+            <div className="select">
+            <select nameName="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
+                <option value = {0} selected disabled> Choose a Time </option>
                 {this.state.optionset.map((Option) => (
                 <option key={Option.Value} value={Option.Value}>
                 {Option.Label.UserLocalizedLabel.Label}
                 </option>
                 ))}
             </select>
+            </div>
         );
     }
 }

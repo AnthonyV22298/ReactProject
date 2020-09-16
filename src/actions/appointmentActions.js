@@ -73,6 +73,7 @@ export const postAppointments = (data) => {
 }
 
 export const updateAppointment = (data) =>{
+    console.log(data)
     console.log("new location: " + data._dmv_appointmentlocation_value)
     let updateConfig = {
         method: 'patch',
@@ -88,13 +89,13 @@ export const updateAppointment = (data) =>{
             "dmv_time" : data.dmv_time,
             "dmv_AppointmentLocation@odata.bind": "/crefc_locations("+data._dmv_appointmentlocation_value+")",
             "dmv_appointment_date": data.dmv_appointment_date,
-            "dmv_approved" : 174070000,
+            "dmv_approved" : 174070000
         }
     }
     
     return dispatch => {
             dispatch(updateAppointmentRequest());
-            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments("+data.dmv_appointmentid+")?$select=_dmv_appointmentlocation_value", updateConfig)
+            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments("+data.dmv_appointmentid+")?$select=dmv_app_type,dmv_time,_dmv_appointmentlocation_value,dmv_appointment_date", updateConfig)
             .then((res) => {
                 dispatch(updateAppointmentSuccess(res));
             })

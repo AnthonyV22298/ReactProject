@@ -25,7 +25,7 @@ const ModalDelete = (props) => {
     <div>
       <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
-        <ModalHeader toggle={toggle}>Are you sure you want to cancel the appointment</ModalHeader>
+        <ModalHeader toggle={toggle} style={{background:"#f0f0f0"}}>Are you sure you want to cancel the appointment</ModalHeader>
         <ModalBody>
             <Button color="primary" className="twobuttons" onClick={() => cancel(guid)}>Yes</Button>
             <Button color="danger" className="twobuttons" onClick={() => handleRefresh()}>No</Button>

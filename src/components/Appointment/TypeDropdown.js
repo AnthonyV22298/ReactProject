@@ -9,7 +9,7 @@ class TypeDropdown extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {optionset: [], value: 100};
+    this.state = {optionset: [], value: 0};
     this._onChangeHandler = this._onChangeHandler.bind(this);
   }
   componentDidMount() {
@@ -47,11 +47,11 @@ class TypeDropdown extends Component {
 render(){
     return (
             <div className="select">
-            <select nameName="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
-                <option selected disabled> Choose a Type </option>
+            <select className="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value}>
+                <option value={0} disabled> Choose a Type </option>
                 {this.state.optionset.map((Option) => (
                 <option key={Option.Value} value={Option.Value}>
-                {Option.Label.UserLocalizedLabel.Label}
+                    {Option.Label.UserLocalizedLabel.Label}
                 </option>
                 ))}
             </select>

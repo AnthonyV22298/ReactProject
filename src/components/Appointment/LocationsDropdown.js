@@ -50,8 +50,8 @@ class LocationsDropdown extends Component {
 render(){
     return (
               <div className="select">
-                <select nameName="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value}>
-                    <option selected disabled>Select a location</option>
+                <select className="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value}>
+                    <option value={0} disabled>Select a Location</option>
                     {this.state.items.map((item) => (
                     <option key={item.crefc_locationid} value={item.crefc_locationid}>
                         {item.crefc_locationname + ": " + item.crefc_addressline1 + ", " + item["crefc_state@OData.Community.Display.V1.FormattedValue"]}

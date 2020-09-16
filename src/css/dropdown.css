@@ -1,3 +1,4 @@
+/* Reset Select */
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -6,7 +7,7 @@ select {
     outline: 0;
     box-shadow: none;
     border: 0 !important;
-    background: white;
+    background: #4f7288;
     background-image: none;
   }
   /* Remove IE arrow */
@@ -20,15 +21,14 @@ select {
     width: 20em;
     height: 3em;
     line-height: 3;
-    background: white;
+    background: #4f7288;
     overflow: hidden;
     border-radius: .25em;
-    border: .01rem solid black;
   }
   select {
     flex: 1;
     padding: 0 .5em;
-    color: black;
+    color: #fff;
     cursor: pointer;
   }
   /* Arrow */
@@ -38,7 +38,7 @@ select {
     top: 0;
     right: 0;
     padding: 0 1em;
-    background: #f0f0f0;
+    background: #34495e;
     cursor: pointer;
     pointer-events: none;
     -webkit-transition: .25s all ease;
@@ -47,10 +47,6 @@ select {
   }
   /* Transition */
   .select:hover::after {
-    color: #ffffff;
-  }
-
-option:disabled {
     color: white;
-}
+  }
   

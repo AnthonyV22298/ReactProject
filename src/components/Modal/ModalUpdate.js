@@ -49,7 +49,7 @@ const ModalUpdate = (props) => {
     <div>
       <Button color="primary" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className} targetfee={targetfee}>
-        <ModalHeader toggle={toggle} style={{background:"#f0f0f0"}}>Update Appointment</ModalHeader>
+        <ModalHeader toggle={toggle} style={{background:"#343a40", color:"white"}}>Update Appointment</ModalHeader>
         <ModalBody>
             <div className="modalmain">
                 <div className="dropdown2">

@@ -41,12 +41,30 @@ const AppointmentContainer = (props) => {
 
     if (appointmentsPending || cancelAppointmentRequest || updateAppointmentRequest) {
         return <LoadingIcon />;
-    } else if (appointmentsFailed || postAppointmentsFailed || cancelAppointmentFailed || updateAppointmentFailed) {
+    } else if (appointmentsFailed) {
         return (
             <ErrorBanner>
                 Error while loading appointments!
             </ErrorBanner>
         );
+    } else if (postAppointmentsFailed){
+        return (
+            <ErrorBanner>
+                Error while uploading appointment!
+            </ErrorBanner>
+        )
+    }else if (cancelAppointmentFailed) {
+        return (
+            <ErrorBanner>
+                Error while canceling appointment!
+            </ErrorBanner>
+        )
+    }else if (updateAppointmentFailed) {
+        return (
+            <ErrorBanner>
+                Error while updating appointment!
+            </ErrorBanner>
+        )
     } else if (appointmentsSuccess || postAppointmentsSuccess || cancelAppointmentSuccess || updateAppointmentSuccess) {
         return renderSuccess();
     } else {

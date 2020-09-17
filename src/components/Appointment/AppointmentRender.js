@@ -132,15 +132,21 @@ const AppointmentRender = ({ appointments, handleRefresh, handleCancel, handleUp
   return (
     <React.Fragment>
       <div className="mainblock">
-      <h1>Appointments</h1>
-      <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
-      <MDBDataTable
-        striped
-        bordered
-        small
-        responsive
-        data={data}
-      />
+      {appointments.length === 0 ? (
+        <h1>
+          You have no appointments scheduled. <a href="#/CreateAppointment">Click here to make an appointment</a>
+        </h1> ) : (
+        <div>
+          <h1>Appointments</h1>
+          <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
+          <MDBDataTable
+            striped
+            bordered
+            small
+            responsive
+            data={data}
+          /> 
+        </div>)}
       </div>
     </React.Fragment>
   );

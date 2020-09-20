@@ -155,6 +155,5 @@ AppointmentRender.propTypes = {
   handleCancel: PropTypes.func
 };
 
-
 export default AppointmentRender;
 

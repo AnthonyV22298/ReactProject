@@ -17,6 +17,8 @@ class AppointmentMake extends Component {
             this.dates.push(this.props.appdates[i].dmv_appointment_date)
         }
 
+        console.log(this.dates)
+
         this.state = {
             date: new Date(),
             today: new Date(),
@@ -93,7 +95,7 @@ class AppointmentMake extends Component {
                     (date.getMonth() < this.state.today.getMonth() &&
                     date.getDate() >= this.state.today.getDate() &&
                     date.getFullYear() <= this.state.date.getFullYear()) ||
-                    this.dates.includes(date)}
+                    date in this.dates}
                     />
                     <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>

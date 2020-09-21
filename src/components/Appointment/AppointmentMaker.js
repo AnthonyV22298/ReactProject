@@ -11,6 +11,11 @@ import TypeDropdown from './TypeDropdown'
 class AppointmentMake extends Component {
     constructor(props){
         super(props)
+        this.dates = []
+
+        for(let i=0; i<this.props.appdates.length; i++){
+            this.dates.push(this.props.appdates[i].dmv_appointment_date)
+        }
 
         this.state = {
             date: new Date(),
@@ -33,6 +38,7 @@ class AppointmentMake extends Component {
 
     onChange(newdate)
     {
+        console.log(this.props.appdates)
         this.setState({ date : newdate })
     }
     
@@ -42,6 +48,14 @@ class AppointmentMake extends Component {
 
     timeChange(e) {
         this.setState({ time : e.target.value })
+    }
+
+    dateBooked(appdates, date){
+        for(let i=0; i<appdates.length; i++){
+            if(date === appdates[i].dmv_appointment.date){
+                return true
+            }
+        }
     }
 
     render(){
@@ -78,7 +92,8 @@ class AppointmentMake extends Component {
                     date.getFullYear() <= this.state.date.getFullYear()) ||
                     (date.getMonth() < this.state.today.getMonth() &&
                     date.getDate() >= this.state.today.getDate() &&
-                    date.getFullYear() <= this.state.date.getFullYear())}
+                    date.getFullYear() <= this.state.date.getFullYear()) ||
+                    this.dates.includes(date)}
                     />
                     <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>
@@ -161,9 +176,9 @@ class AppointmentMake extends Component {
 }
 
 AppointmentMake.propTypes = {
-    appointments: PropTypes.array,
+    appdates: PropTypes.array,
     handleCreate: PropTypes.func,
-    postSuccess: PropTypes.bool
+    postSuccess: PropTypes.bool,
 };
 
 export default AppointmentMake;

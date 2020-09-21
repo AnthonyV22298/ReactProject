@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE, CANCEL_APPOINTMENT_REQUEST, CANCEL_APPOINTMENT_SUCCESS, CANCEL_APPOINTMENT_FAILED, UPDATE_APPOINTMENT_REQUEST, UPDATE_APPOINTMENT_SUCCESS, UPDATE_APPOINTMENT_FAILED} from '../constants/actionTypes';
+import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE, CANCEL_APPOINTMENT_REQUEST, CANCEL_APPOINTMENT_SUCCESS, CANCEL_APPOINTMENT_FAILED, UPDATE_APPOINTMENT_REQUEST, UPDATE_APPOINTMENT_SUCCESS, UPDATE_APPOINTMENT_FAILED, APPDATE_SUCCESFUL, APPDATE_FAILURE, APPDATE_PENDING} from '../constants/actionTypes';
 
 export const readAppointments = () => {
 
@@ -29,6 +29,34 @@ export const readAppointments = () => {
             .catch((error) => {
                 console.log(error);
                 dispatch(appointmentsFailure(error));
+            });
+    };
+}
+
+export const readDates = () => {
+
+    let config = {
+        method: 'get',
+        'OData-MaxVersion': 4.0,
+        'OData-Version': 4.0,
+        Accept: 'dmv_appointment/json',
+        'Content-Type': 'dmv_appointment/json; charset=utf-8',
+        headers: {
+            'Prefer': "odata.include-annotations=*"
+        }
+    };
+
+    return dispatch => {
+        dispatch(appdatesPending());
+        return adalApiFetch(axios, 
+        "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments" +
+        "?$select=dmv_appointment_date", config)
+            .then(res => {
+                dispatch(appdatesSuccess(res));
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(appdatesFailure(error));
             });
     };
 }
@@ -203,5 +231,25 @@ const appointmentsFailure = (error) => {
 const appointmentsPending = () => {
     return {
         type: APPOINTMENTS_PENDING
+    };
+}
+
+const appdatesSuccess = (res) => {
+    return {
+        type: APPDATE_SUCCESFUL,
+        data:  res.data
+    };
+}
+
+const appdatesFailure = (error) => {
+    return {
+        type: APPDATE_FAILURE,
+        error  
+    };
+}
+
+const appdatesPending = () => {
+    return {
+        type: APPDATE_PENDING
     };
 }

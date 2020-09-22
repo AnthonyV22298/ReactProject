@@ -14,10 +14,29 @@ class AppointmentMake extends Component {
         this.dates = []
 
         for(let i=0; i<this.props.appdates.length; i++){
-            this.dates.push(this.props.appdates[i].dmv_appointment_date)
+            let date = this.props.appdates[i].dmv_appointment_date
+            let month = ""
+            let day = ""
+
+            if(date.slice(5,6) === "0"){
+                month = date.slice(6,7)
+            }
+            else{
+                month = date.slice(5,7)
+            }
+            let year = date.slice(0,4)
+
+            if(date.slice(8,9) == "0"){
+                day = date.slice(9,10)
+            }
+            else{
+                day = date.slice(8,10)
+            }
+            this.dates.push(month+"/"+day+"/"+year)
         }
 
         console.log(this.dates)
+        console.log(this.dates.includes("7/1/2020"))
 
         this.state = {
             date: new Date(),
@@ -52,10 +71,13 @@ class AppointmentMake extends Component {
         this.setState({ time : e.target.value })
     }
 
-    dateBooked(appdates, date){
-        for(let i=0; i<appdates.length; i++){
-            if(date === appdates[i].dmv_appointment.date){
-                return true
+    dateBooked(date){
+        if(date != undefined){
+            console.log(date)
+            for(let i=0; i<this.props.appdates.length; i++){
+                if(date === this.props.appdates[i].dmv_appointment.date){
+                    return true
+                }
             }
         }
     }
@@ -95,7 +117,7 @@ class AppointmentMake extends Component {
                     (date.getMonth() < this.state.today.getMonth() &&
                     date.getDate() >= this.state.today.getDate() &&
                     date.getFullYear() <= this.state.date.getFullYear()) ||
-                    date in this.dates}
+                    this.dates.includes(date.toLocaleDateString())}
                     />
                     <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>

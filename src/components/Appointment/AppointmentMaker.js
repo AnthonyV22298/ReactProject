@@ -45,6 +45,12 @@ class AppointmentMake extends Component {
             }
         }
 
+        for(var date in this.dateHash){
+            if(this.dateHash[date].length === 8){
+                this.datesBooked.push(date)
+            }
+        }
+
         console.log(this.dateHash)
 
         this.state = {
@@ -82,17 +88,6 @@ class AppointmentMake extends Component {
 
     timeChange(e) {
         this.setState({ time : e.target.value })
-    }
-
-    dateBooked(date){
-        if(date != undefined){
-            console.log(date)
-            for(let i=0; i<this.props.appdates.length; i++){
-                if(date === this.props.appdates[i].dmv_appointment.date){
-                    return true
-                }
-            }
-        }
     }
 
     render(){

@@ -75,11 +75,7 @@ class AppointmentMake extends Component {
     onChange(newdate)
     {
         this.setState({ date : newdate })
-        this.timeList = this.dateHash[this.state.date.toLocaleDateString()]
-
-        if(this.timeList != undefined && this.timeList.length === 8){
-            this.datesBooked.push(this.state.date.toLocaleDateString())
-        }
+        this.timeList = this.dateHash[newdate.toLocaleDateString()]
     }
     
     locationChange(e) {

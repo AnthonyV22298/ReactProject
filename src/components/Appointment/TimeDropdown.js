@@ -50,10 +50,16 @@ render(){
             <select className="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value}>
                 <option value={0} disabled> Choose a Time </option>
                 {this.state.optionset.map((Option) => (
-                <option key={Option.Value} value={Option.Value}>
-                  {Option.Label.UserLocalizedLabel.Label}
-                </option>
-                ))}
+                  this.props.timeList != undefined && this.props.timeList.includes(Option.Value) ? 
+                    <option key={Option.Value} value={Option.Value} disabled>
+                      {Option.Label.UserLocalizedLabel.Label}
+                    </option> 
+                    : 
+                    <option key={Option.Value} value={Option.Value}>
+                      {Option.Label.UserLocalizedLabel.Label}
+                    </option>
+                    )
+                  )}
             </select>
             </div>
         );
@@ -63,7 +69,8 @@ render(){
 
 TimeDropdown.propTypes = {
   handleChange: PropTypes.func,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  timeList: PropTypes.array
 };
 
 export default TimeDropdown;

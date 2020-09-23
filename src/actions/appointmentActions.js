@@ -50,7 +50,7 @@ export const readDates = () => {
         dispatch(appdatesPending());
         return adalApiFetch(axios, 
         "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments" +
-        "?$select=dmv_appointment_date", config)
+        "?$select=dmv_appointment_date,dmv_time", config)
             .then(res => {
                 dispatch(appdatesSuccess(res));
             })

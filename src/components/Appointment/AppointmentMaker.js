@@ -12,6 +12,9 @@ class AppointmentMake extends Component {
     constructor(props){
         super(props)
         this.dates = []
+        this.datesBooked = []
+        this.dateHash = {}
+        this.timeList = []
 
         for(let i=0; i<this.props.appdates.length; i++){
             let date = this.props.appdates[i].dmv_appointment_date
@@ -33,10 +36,16 @@ class AppointmentMake extends Component {
                 day = date.slice(8,10)
             }
             this.dates.push(month+"/"+day+"/"+year)
+
+            if(this.dateHash[month+"/"+day+"/"+year] == undefined && this.props.appdates[i].dmv_time != null){
+                this.dateHash[month+"/"+day+"/"+year] = [this.props.appdates[i].dmv_time]
+            }
+            else if (this.props.appdates[i].dmv_time != null ){
+                this.dateHash[month+"/"+day+"/"+year].push(this.props.appdates[i].dmv_time)
+            }
         }
 
-        console.log(this.dates)
-        console.log(this.dates.includes("7/1/2020"))
+        console.log(this.dateHash)
 
         this.state = {
             date: new Date(),
@@ -59,8 +68,12 @@ class AppointmentMake extends Component {
 
     onChange(newdate)
     {
-        console.log(this.props.appdates)
         this.setState({ date : newdate })
+        this.timeList = this.dateHash[this.state.date.toLocaleDateString()]
+
+        if(this.timeList != undefined && this.timeList.length === 8){
+            this.datesBooked.push(this.state.date.toLocaleDateString())
+        }
     }
     
     locationChange(e) {
@@ -100,7 +113,7 @@ class AppointmentMake extends Component {
 
                 <div style={{padding:"10px", paddingBottom:"40px", paddingRight:"20px"}}>
                     <h5>3) Select the time</h5>
-                    <TimeDropdown onChange={this.timeChange}/>
+                    <TimeDropdown onChange={this.timeChange} timeList={this.timeList}/>
                 </div>
             </div>
 
@@ -117,7 +130,7 @@ class AppointmentMake extends Component {
                     (date.getMonth() < this.state.today.getMonth() &&
                     date.getDate() >= this.state.today.getDate() &&
                     date.getFullYear() <= this.state.date.getFullYear()) ||
-                    this.dates.includes(date.toLocaleDateString())}
+                    this.datesBooked.includes(date.toLocaleDateString())}
                     />
                     <p style={{ display: "block", paddingTop: "30px", paddingLeft: "40px" }}>{ "Date selected: " + this.state.date.toLocaleDateString() }</p>
             </div>

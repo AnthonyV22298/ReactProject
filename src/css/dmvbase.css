@@ -5,7 +5,7 @@ body {
     background-color: #4f7288;
     color: #ffffff;
 }
-.accordion .card-body,ul,li {
+.accordion .card-body,ul {
     background-color: #eff7fb;
 }
 .activated-license {
@@ -35,11 +35,20 @@ body {
 .center-block {
     margin: 0 auto;
 }
+.footer {
+    background-color: #343a40;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+}
 .info-render{
     background: #eff7fb;
     border-radius: 1rem;
     box-shadow: 0em 1em 2em #000000;
-    margin-top: 1.5em;
+    margin-bottom: 4rem;
+    margin-top: 1.5rem;
 }
 .info-render > .card {
     border: none;
@@ -53,11 +62,17 @@ body {
     font-weight: bold;
     color: #343a40;
 }
-.license-label{
+.license-label {
     display: block;
     font-size: .8em;
     opacity: 0.8;
     text-align: left;
+}
+.list-group {
+    padding-right: 0;
+}
+.list-group-item {
+    background-color: #eff7fb;
 }
 .no-list-bullet {
     list-style-type: none;

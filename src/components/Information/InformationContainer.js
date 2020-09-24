@@ -11,8 +11,10 @@ import ErrorBanner from '../Helper/ErrorBanner';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import NavLink from 'react-bootstrap/NavLink';
+import Row from 'react-bootstrap/Row';
 
 import { INFO_LICENSE, INFO_CITATIONS } from '../../constants/viewNames';
 
@@ -58,7 +60,7 @@ const InformationContainer = (props) => {
         switch(infoView){
             case INFO_LICENSE:
                 return (
-                    <div className="container info-container">
+                    <Container className="info-render">
                         <Card>
                             <Card.Body>
                                 <InformationSecondaryNav clickFunc={switchViews}/>
@@ -68,18 +70,18 @@ const InformationContainer = (props) => {
                                 }
                             </Card.Body>
                         </Card>
-                    </div>
+                    </Container>
                 );
             case INFO_CITATIONS:
                 return (
-                    <div className="container info-container">
-                        <Card>
+                    <Container>
+                        <Card className="info-render">
                             <Card.Body>
                                 <InformationSecondaryNav clickFunc={switchViews}/>
                                 <CitationsRender information={information} />
                             </Card.Body>
                         </Card>
-                    </div>
+                    </Container>
                 );
             default:
                 break;
@@ -88,32 +90,40 @@ const InformationContainer = (props) => {
     }
 
     if (infoPending) {
-        return <LoadingIcon />;
+        return (
+            <Container>
+                <Card className="info-render">
+                    <Card.Body>
+                        <LoadingIcon />
+                    </Card.Body>
+                </Card>
+                
+            </Container>
+        );
     } else if (infoFailed) {
         return (
-            <div>
-                <div className="container info-container">
+            <Container>
+                <Row>
                     <InformationSecondaryNav clickFunc={switchViews}/>
-                </div>
+                </Row>
                 <ErrorBanner>
                     Error while loading contacts!
                 </ErrorBanner>
-
-            </div>
+            </Container>
         );
     } else if (infoSuccessful) {
         return renderSuccess();
     } else {
         return (
-            <div>
-                <div className="container info-container">
+            <Container>
+                <Row>
                     <InformationSecondaryNav clickFunc={switchViews}/>
-                </div>
+                </Row>
                 <ErrorBanner>
                     {error}
                     Invalid state! This message should never appear.
                 </ErrorBanner>
-            </div>
+            </Container>
         );
     }
 }

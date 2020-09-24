@@ -1,31 +1,16 @@
-.activated-license {
-    color: #32CD32;
-}
-.no-list-bullet {
-    list-style-type: none;
-}
-.suspended {
-    color: #ff0033;
-}
-
 body {
     background: #4f7288;
 }
-
-.center-block {
-    margin: 0 auto;
+.accordion .card-header {
+    background-color: #4f7288;
+    color: #ffffff;
 }
-
-.mainblock {
-    justify-content: center;  
-    background:white; 
-    margin:15%; 
-    padding:5%; 
-    box-shadow: 0 1px 1.5rem rgba(0,0,0,.1); 
-    border-radius: 1rem; 
-    margin-top: 1%; 
+.accordion .card-body,ul,li {
+    background-color: #eff7fb;
 }
-
+.activated-license {
+    color: #32CD32;
+}
 .button {
     background-color: #4f7288; 
     border: black;
@@ -41,7 +26,66 @@ body {
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
 }
-
+.button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.card-header-tabs {
+    border-bottom: 1px solid #eee;
+}
+.center-block {
+    margin: 0 auto;
+}
+.info-render{
+    background: #eff7fb;
+    border-radius: 1rem;
+    box-shadow: 0em 1em 2em #000000;
+    margin-top: 1.5em;
+}
+.info-render > .card {
+    border: none;
+    background: #eff7fb;
+}
+.license-detail-block {
+    background-color: #A9A9A9;
+    border: 3px solid #eff7fb;
+    height: 5em;
+    line-height: -3em;
+    font-weight: bold;
+    color: #343a40;
+}
+.license-label{
+    display: block;
+    font-size: .8em;
+    opacity: 0.8;
+    text-align: left;
+}
+.no-list-bullet {
+    list-style-type: none;
+}
+.mainblock {
+    justify-content: center;  
+    background:white; 
+    margin:15%; 
+    padding:5%; 
+    box-shadow: 0 1px 1.5rem rgba(0,0,0,.1); 
+    border-radius: 1rem; 
+    margin-top: 1%; 
+}
+.nav-tabs > .nav-link {
+    border-bottom: 1px solid #eee;
+    box-shadow: 1px 1px 5px #4f7288 inset;
+}
+.nav-tabs > .nav-link.active {
+    background-color: #eff7fb;
+    border-bottom: none;
+    box-shadow: none;
+}
+.suspended {
+    color: #ff0033;
+}
+.tab-padding {
+    padding: 1em;
+}
 .twobuttons {
     width: 210px;
     padding-left: 30px;
@@ -49,10 +93,12 @@ body {
     margin-top: 3%;
 }
 
-.button:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-}
 
-.tab-padding {
-    padding: 1em;
-}
+
+
+
+
+
+
+
+

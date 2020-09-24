@@ -6,12 +6,15 @@ import LicenseRenewalModal from './LicenseRenewalModal';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
 const LicenseRender = ({ information }) => {
     console.log(information);
     const { licenses } = information;
+
     const generateEndorsementGlossary = (endorsementStr) => {
         let endorsementArr;
         let userEndorsementsJSX = [];
@@ -134,45 +137,81 @@ const LicenseRender = ({ information }) => {
             license["dmv_licenserestrictions@OData.Community.Display.V1.FormattedValue"].replace(/;+/g, ',') : null;
             licenseTabs.push(
                 <Tab className="tab-padding" eventKey={license.dmv_name}  key={license.dmv_name} title={license.dmv_name}>
-                    <div className="row">
-                        <div className="col">
+                    <Row>
+                        <Col>
                             <h4>License Details</h4>
-                            <p><strong>License #: </strong>{license.dmv_name} {isSuspendedText}</p>
-                            <p><strong>License Holder: </strong>{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
-                            <p><strong>License Class: </strong>{licenseClass}</p>
-                            <p><strong>License Endorsements: </strong>{endorsements}</p>
-                            <p><strong>License Restrictions: </strong>{restrictions}</p>
-                            <p><strong>Issue Date: </strong>{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
-                            <p><strong>Expiration Date: </strong>{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            <div className="license-detail-block">
+                                <label className="license-label">License #: </label>
+                                <p className="colInfo">{license.dmv_name} {isSuspendedText}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">License Holder: </label>
+                                <p className="colInfo">{license["_dmv_testholdingcontact_value@OData.Community.Display.V1.FormattedValue"]}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">License Class: </label>
+                                <p className="colInfo">{licenseClass}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">License Endorsements: </label>
+                                <p className="colInfo">{endorsements ? endorsements : 'None'}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">License Restrictions: </label>
+                                <p className="colInfo">{restrictions ? restrictions : 'None'}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">Issue Date: </label>
+                                <p className="colInfo">{license["dmv_licenseissuedate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">Expiration Date: </label>
+                                <p className="colInfo">{license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"]}</p>
+                            </div>
+
                             { license["dmv_licenseexpdate@OData.Community.Display.V1.FormattedValue"] &&
                             <React.Fragment>
                                 <LicenseRenewalModal id="renewmodal" handleClose={handleClose} show={show}/>
                                 <Button variant="info" onClick={() => handleShow()}>Renew your License</Button>
                             </React.Fragment>
                             }
-
-                        </div>
-                        <div className="col">
+                        </Col>
+                        <Col>
                             <h4>Driver Details</h4>
-                            <p><strong>Height (in.): </strong>{license.dmv_licenseheight}</p>
-                            <p><strong>Weight (lbs.): </strong>{license.dmv_licenseweight}</p>
-                            <p><strong>Eye Color: </strong>{license.dmv_licenseeye}</p>
-                            <p><strong>Hair Color: </strong>{license.dmv_licensehair}</p>
-                            <p><strong>Issuing State: </strong>{license["dmv_usstates@OData.Community.Display.V1.FormattedValue"]}</p>
-                        </div>
-                    </div>
-                    <section className="row">
-                        <div className="col">
+                            <div className="license-detail-block">
+                                <label className="license-label">Height (in.): </label>
+                                <p className="colInfo">{license.dmv_licenseheight}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">Weight (lbs.):</label>
+                                <p className="colInfo">{license.dmv_licenseweight}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">Eye Color: </label>
+                                <p className="colInfo">{license.dmv_licenseeye}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">Hair Color: </label>
+                                <p className="colInfo">{license.dmv_licensehair}</p>
+                            </div>
+                            <div className="license-detail-block">
+                                <label className="license-label">Issuing State: </label>
+                                <p className="colInfo">{license["dmv_usstates@OData.Community.Display.V1.FormattedValue"]}</p>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <h3>License Endorsement Glossary</h3>
                             { generateEndorsementGlossary(endorsements) }
-                        </div>
-                    </section>
-                    <section className="row">
-                        <div className="col">
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <h3>License Restriction Glossary</h3>
                             { generateRestrictionGLossary(restrictions) }
-                        </div>
-                    </section>
+                        </Col>
+                    </Row>
                     
                 </Tab>
             )
@@ -199,8 +238,8 @@ const LicenseRender = ({ information }) => {
     const handleClose = () => { setShow(false) };
 
     return (
-        <section className="info-render main-block">
-            <h3 className="display-3">License Information</h3>
+        <section className="main-block text-center">
+            <h4 className="display-4">License Information</h4>
             {generateLicenseTabs(licenses)}
         </section>
     );

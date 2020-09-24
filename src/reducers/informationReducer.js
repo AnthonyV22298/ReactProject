@@ -35,7 +35,7 @@ export default function informationReducer(state= {}, action) {
         case INFO_CITATIONS_SUCCESSFUL:
             return {...state,
                 information: {...state.information,
-                    citations: action.data
+                    drivingHistory: action.data
                 },
                 requestState: {
                     infoPending: false,

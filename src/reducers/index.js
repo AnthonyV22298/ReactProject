@@ -9,9 +9,7 @@ import paypalReducer from './paypalReducer';
 import insuranceReducer from './insuranceReducer';
 import modalReducer from './modalReducer';
 import vehicleDetailsReducer from './vehicleDetailsReducer';
-
-
-
+import infoDMVReducer from './infoDMVReducer';
 
 const rootReducer = combineReducers({
   bookReducer,
@@ -24,11 +22,7 @@ const rootReducer = combineReducers({
   insuranceReducer,
   modalReducer,
   vehicleDetailsReducer,
+  infoDMVReducer,
 });
-
-
-
-
-
 
 export default rootReducer;

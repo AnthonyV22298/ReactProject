@@ -27,5 +27,4 @@ runWithAdal(authContext, () => {
       </HashRouter>
     </Provider>
   ), document.getElementById('app'));
-
 }, DO_NOT_LOGIN);

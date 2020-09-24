@@ -9,7 +9,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
-import {Link} from 'react-router-dom';
+
+
 
 const AppointmentContainer = (props) => {
     const { actions, appointments, requestState } = props;
@@ -17,7 +18,8 @@ const AppointmentContainer = (props) => {
     const {
         error,
         appointmentsPending, appointmentsFailed, appointmentsSuccess,
-        postAppointmentsSuccess, postAppointmentsFailed, 
+        postAppointmentsSuccess, postAppointmentsFailed,
+        cancelAppointmentRequest, cancelAppointmentSuccess, cancelAppointmentFailed,
     } = requestState;
 
 
@@ -26,25 +28,30 @@ const AppointmentContainer = (props) => {
     }, []);
 
     const renderSuccess = () => {
-        return (
+        if(appointments.length == 0) {
+            alert('No Appointments Found :(');
+        }
+        return (    
             <div className="reactive-margin">
                 <AppointmentRender
                     appointments={ appointments }
                     handleRefresh={() => actions.readAppointments()}
+                    handleCancel={(guid) => actions.cancelAppointment(guid)}
                 />
             </div>
         );
+
     }
 
-    if (appointmentsPending) {
+    if (appointmentsPending || cancelAppointmentRequest) {
         return <LoadingIcon />;
-    } else if (appointmentsFailed || postAppointmentsFailed) {
+    } else if (appointmentsFailed || postAppointmentsFailed || cancelAppointmentFailed) {
         return (
             <ErrorBanner>
                 Error while loading appointments!
             </ErrorBanner>
         );
-    } else if (appointmentsSuccess || postAppointmentsSuccess) {
+    } else if (appointmentsSuccess || postAppointmentsSuccess || cancelAppointmentSuccess) {
         return renderSuccess();
     } else {
         return (
@@ -68,7 +75,7 @@ function mapStateToProps(state) {
         appointmentReducer.requestState)
     }
 }
-
+ 
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(appointmentActions, dispatch)

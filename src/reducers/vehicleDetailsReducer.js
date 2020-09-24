@@ -1,11 +1,6 @@
 import { VEHICLEDETAILS_SUCCESSFUL, VEHICLEDETAILS_PENDING, VEHICLEDETAILS_FAILURE } from '../constants/actionTypes';
 
 export default function vehicleDetailsReducer(state = {}, action) {
-  /*
-  if (typeof this.vehicleDetails === 'undefined'){
-    return null 
-  }
-  */
 
   switch (action.type) {
     case VEHICLEDETAILS_SUCCESSFUL:

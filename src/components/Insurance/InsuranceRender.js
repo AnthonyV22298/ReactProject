@@ -8,6 +8,14 @@ const InsuranceRender = (information) => {
     const { insurance } = information;
     if(insurance === undefined) {
         return ( <h3> ERROR - NO PROVIDER</h3>)
+    } else if(insurance === null) {
+        return (
+            <section className="info-render">                
+                <div className="mainblock"> 
+                <h4 className="display-3">No Insurance Found :(</h4>
+                </div>
+            </section>
+        )
     } else {
         return (
             <div className="mainblock">

@@ -20,7 +20,7 @@ const InsuranceRender = (information) => {
         return (
             <div className="mainblock">
                 <h3 className="display-3">Insurance Information</h3>
-                    <div className="row">
+                <div className="row">
                     <div className="col">
                     <h2> {insurance["dmv_policyno"]} </h2>
                         <p><strong>Provider Name: </strong>{insurance["dmv_providername"]} </p>

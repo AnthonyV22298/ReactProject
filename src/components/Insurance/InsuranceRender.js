@@ -18,22 +18,20 @@ const InsuranceRender = (information) => {
         )
     } else {
         return (
-            <section className="info-render">                
-                <div className="mainblock">
-                    <h3 className="display-3">Insurance Information</h3>
-                        <div className="row">
-                        <div className="col">
-                        <h2> {insurance["dmv_policyno"]} </h2>
-                            <p><strong>Provider Name: </strong>{insurance["dmv_providername"]} </p>
-                            <p><strong>State: </strong>{insurance["dmv_state@OData.Community.Display.V1.FormattedValue"]} </p>
-                            <p><strong>Street: </strong>{insurance["dmv_street"]} </p>
-                            <p><strong>City: </strong>{insurance["dmv_city"]} </p>
-                            <p><strong>Zip Code: </strong>{insurance["dmv_zip_code"]} </p>
-                            <p><strong>Description: </strong>{insurance["dmv_description"]} </p>
-                        </div>
+            <div className="mainblock">
+                <h3 className="display-3">Insurance Information</h3>
+                    <div className="row">
+                    <div className="col">
+                    <h2> {insurance["dmv_policyno"]} </h2>
+                        <p><strong>Provider Name: </strong>{insurance["dmv_providername"]} </p>
+                        <p><strong>State: </strong>{insurance["dmv_state@OData.Community.Display.V1.FormattedValue"]} </p>
+                        <p><strong>Street: </strong>{insurance["dmv_street"]} </p>
+                        <p><strong>City: </strong>{insurance["dmv_city"]} </p>
+                        <p><strong>Zip Code: </strong>{insurance["dmv_zip_code"]} </p>
+                        <p><strong>Description: </strong>{insurance["dmv_description"]} </p>
                     </div>
                 </div>
-            </section>
+            </div>
         );
     }
 }

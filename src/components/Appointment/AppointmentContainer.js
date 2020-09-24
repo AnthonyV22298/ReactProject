@@ -10,6 +10,8 @@ import { bindActionCreators } from 'redux';
 import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
 
+
+
 const AppointmentContainer = (props) => {
     const { actions, appointments, requestState } = props;
 
@@ -26,7 +28,10 @@ const AppointmentContainer = (props) => {
     }, []);
 
     const renderSuccess = () => {
-        return (
+        if(appointments.length == 0) {
+            alert('No Appointments Found :(');
+        }
+        return (    
             <div className="reactive-margin">
                 <AppointmentRender
                     appointments={ appointments }
@@ -35,6 +40,7 @@ const AppointmentContainer = (props) => {
                 />
             </div>
         );
+
     }
 
     if (appointmentsPending || cancelAppointmentRequest) {
@@ -69,7 +75,7 @@ function mapStateToProps(state) {
         appointmentReducer.requestState)
     }
 }
-
+ 
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(appointmentActions, dispatch)

@@ -125,9 +125,8 @@ const AppointmentRender = ({ appointments, handleRefresh, handleCancel}) => {
     return appointments.map(obj => {
 
       // Deep Clone object to avoid adding to it while mapping over it during map
-      let newObj = JSON.parse(JSON.stringify(obj))
+      let newObj = JSON.parse(JSON.stringify(obj));
       newObj.dmv_appointment_date = formatDate(newObj);
-      console.log(newObj.dmv_appointment_date)
       newObj["view"] = (
         <Button command="View" name={obj.firstname} entity="dmv_appointment"
           initialValues={{ ...obj }}>View</Button>
@@ -208,7 +207,6 @@ AppointmentRender.propTypes = {
   handleRefresh: PropTypes.func,
   handleCancel: PropTypes.func
 };
-
 
 export default AppointmentRender;
 

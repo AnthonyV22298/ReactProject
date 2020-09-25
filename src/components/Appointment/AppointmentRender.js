@@ -41,7 +41,6 @@ function parseMonth(string) {
 }
 
 function formatDate(obj) {
-  console.log(obj.dmv_appointment_date);
   const concat = (accumulator, currentValue) => accumulator + currentValue;
   //2020-09-14T04:00:00Z
   let array = Array.from(obj.dmv_appointment_date);
@@ -64,22 +63,21 @@ function formatDate(obj) {
   return(month + " " + parseInt(array.slice(8,10).reduce(concat)) + ", " + array.slice(0,4).reduce(concat) + " " + time);
 }
 
-const AppointmentRender = ({ appointments, handleRefresh, handleCancel}) => {
+const AppointmentRender = ({ appointments, handleRefresh, handleCancel, handleUpdate}) => {
 
   function getTableBodyContent() {
     return appointments.map(obj => {
 
       // Deep Clone object to avoid adding to it while mapping over it during map
       let newObj = JSON.parse(JSON.stringify(obj))
-      newObj.dmv_appointment_date = formatDate(newObj);
-      console.log(newObj.dmv_appointment_date)
+      newObj.dmv_app_date = formatDate(newObj);
 
       newObj["view"] = (
         <Button command="View" name={obj.firstname} entity="dmv_appointment"
           initialValues={{ ...obj }}>View</Button>
       );
       newObj.update = <div>
-        <ModalUpdate buttonLabel="Update" handleRefresh={handleRefresh}/>
+        <ModalUpdate buttonLabel="Update" handleRefresh={handleRefresh} handleUpdate={handleUpdate} appointment={newObj}/>
         </div>
 
       newObj.cancel = <div>
@@ -98,7 +96,7 @@ const AppointmentRender = ({ appointments, handleRefresh, handleCancel}) => {
       },
       {
         label: 'Date',
-        field: 'dmv_appointment_date',
+        field: 'dmv_app_date',
         sort: 'asc'
       },
       {
@@ -134,15 +132,21 @@ const AppointmentRender = ({ appointments, handleRefresh, handleCancel}) => {
   return (
     <React.Fragment>
       <div className="mainblock">
-      <h1>Appointments</h1>
-      <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
-      <MDBDataTable
-        striped
-        bordered
-        small
-        responsive
-        data={data}
-      />
+      {appointments.length === 0 ? (
+        <h1>
+          You have no appointments scheduled. <a href="#/CreateAppointment">Click here to make an appointment</a>
+        </h1> ) : (
+        <div>
+          <h1>Appointments</h1>
+          <Button onClick={() => handleRefresh()}>Refresh Data</Button>{' '}
+          <MDBDataTable
+            striped
+            bordered
+            small
+            responsive
+            data={data}
+          /> 
+        </div>)}
       </div>
     </React.Fragment>
   );
@@ -152,7 +156,8 @@ AppointmentRender.propTypes = {
   appointments: PropTypes.array,
   handleView: PropTypes.func,
   handleRefresh: PropTypes.func,
-  handleCancel: PropTypes.func
+  handleCancel: PropTypes.func,
+  handleUpdate: PropTypes.func,
 };
 
 

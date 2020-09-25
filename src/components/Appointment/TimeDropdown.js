@@ -9,7 +9,7 @@ class TimeDropdown extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {optionset: [], value: 100};
+    this.state = {optionset: [], value: 0};
     this._onChangeHandler = this._onChangeHandler.bind(this);
   }
   componentDidMount() {
@@ -46,14 +46,22 @@ class TimeDropdown extends Component {
     // {Option.Label.LocalizedLabels[0].Label}
 render(){
     return (
-            <select onChange={this._onChangeHandler} value={this.state.value} defaultValue={0}>
-                <option value = {0} disabled> Choose a Time </option>
+            <div className="select">
+            <select className="slct" id="slct" onChange={this._onChangeHandler} value={this.state.value}>
+                <option value={0} disabled> Choose a Time </option>
                 {this.state.optionset.map((Option) => (
-                <option key={Option.Value} value={Option.Value}>
-                {Option.Label.UserLocalizedLabel.Label}
-                </option>
-                ))}
+                  this.props.timeList != undefined && this.props.timeList.includes(Option.Value) ? 
+                    <option key={Option.Value} value={Option.Value} disabled>
+                      {Option.Label.UserLocalizedLabel.Label}
+                    </option> 
+                    : 
+                    <option key={Option.Value} value={Option.Value}>
+                      {Option.Label.UserLocalizedLabel.Label}
+                    </option>
+                    )
+                  )}
             </select>
+            </div>
         );
     }
 }
@@ -61,7 +69,8 @@ render(){
 
 TimeDropdown.propTypes = {
   handleChange: PropTypes.func,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  timeList: PropTypes.array
 };
 
 export default TimeDropdown;

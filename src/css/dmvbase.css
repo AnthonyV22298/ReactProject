@@ -11,6 +11,7 @@ body {
 .activated-license {
     color: #32CD32;
 }
+
 .button {
     background-color: #4f7288; 
     border: black;
@@ -34,6 +35,9 @@ body {
 }
 .center-block {
     margin: 0 auto;
+}
+.dropdown2 {
+    margin-bottom: 3%;
 }
 .footer {
     background-color: #343a40;
@@ -85,6 +89,10 @@ body {
     box-shadow: 0 1px 1.5rem rgba(0,0,0,.1); 
     border-radius: 1rem; 
     margin-top: 1%; 
+}
+.modalmain {
+    justify-items: center;
+    display: grid;
 }
 .nav-tabs > .nav-link {
     border-bottom: 1px solid #eee;

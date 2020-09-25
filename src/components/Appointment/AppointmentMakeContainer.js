@@ -10,17 +10,17 @@ import ErrorBanner from '../Helper/ErrorBanner';
 import AppointmentMake from './AppointmentMaker';
 
 const AppointmentMakeContainer = (props) => {
-    const { actions, appointments, requestState } = props;
+    const { actions, appdates, requestState } = props;
 
     const {
         error,
-        appointmentsPending, appointmentsFailed, appointmentsSuccess,
+        appdatesPending, appdatesFailed, appdatesSuccess,
         postAppointmentsSuccess, postAppointmentsFailed,
     } = requestState;
 
 
     useEffect(() => {
-        actions.readAppointments();
+        actions.readDates();
     }, []);
 
     const renderSuccess = () => {
@@ -28,7 +28,7 @@ const AppointmentMakeContainer = (props) => {
             <div className="reactive-margin">
 
                 <AppointmentMake
-                    appointments={ appointments }
+                    appdates={ appdates }
                     handleCreate={(data) => {
                         actions.postAppointments(data)
                     }}
@@ -43,7 +43,7 @@ const AppointmentMakeContainer = (props) => {
             <div className="reactive-margin">
                 
                 <AppointmentMake
-                    appointments={ appointments }
+                    appdates={ appdates }
                     handleCreate={(data) => {
                         actions.postAppointments(data)
                     }} 
@@ -53,15 +53,15 @@ const AppointmentMakeContainer = (props) => {
         );
     }
 
-    if (appointmentsPending) {
+    if (appdatesPending) {
         return <LoadingIcon />;
-    } else if (appointmentsFailed || postAppointmentsFailed) {
+    } else if (appdatesFailed || postAppointmentsFailed) {
         return (
             <ErrorBanner>
                 Error while loading appointments!
             </ErrorBanner>
         );
-    } else if (appointmentsSuccess) {
+    } else if (appdatesSuccess) {
         return renderSuccess();
     } else if(postAppointmentsSuccess){
         return postSuccess();
@@ -84,7 +84,7 @@ AppointmentMakeContainer.propTypes = {
 function mapStateToProps(state) {
     const { appointmentReducer } = state;
     return {
-       appointments: state.appointmentReducer.appointments,
+       appdates: state.appointmentReducer.appdates,
        requestState: Object.assign({},
         appointmentReducer.requestState)
     }

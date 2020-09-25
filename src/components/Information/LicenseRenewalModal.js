@@ -30,7 +30,7 @@ const LicenseRenewalModal = ({ show, handleClose }) => {
 
 LicenseRenewalModal.propTypes = {
     show: PropTypes.bool,
-    handleClose: PropTypes.function
+    handleClose: PropTypes.func,
 } 
 
 export default LicenseRenewalModal;

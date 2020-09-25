@@ -7,6 +7,7 @@ import Home from './Home.js';
 import AppointmentMakeContainer from './Appointment/AppointmentMakeContainer';
 import AppointmentContainer from './Appointment/AppointmentContainer';
 import FeeContainer from './Fee/FeeContainer';
+import Footer from './Footer';
 import InformationContainer from './Information/InformationContainer';
 import InsuranceContainer from './Insurance/InsuranceContainer';
 import LoginPage from './User/Login.js';
@@ -34,6 +35,7 @@ export class App extends React.Component{
                     <Route path='/pay' component={PaypalContainer}/>
                     <Route path='/locations' component={InfoDMVContainer}/>
                 </Switch>
+                <Footer />
             </div>
         );
     }

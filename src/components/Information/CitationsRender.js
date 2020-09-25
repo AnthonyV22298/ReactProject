@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 
 const CitationsRender = ({ information }) => {
-    const { citations } = information;
-    console.log(citations)
+    const { drivingHistory } = information;
+    console.log(drivingHistory)
 
     const createCitationRow = (citation) => {
         return (
@@ -19,29 +21,34 @@ const CitationsRender = ({ information }) => {
                 </tr>
         );
     }
-    let citationsToDisplay = citations.dmv_driving_history_dmv_citations_driving_history;
+    let citationsToDisplay = drivingHistory.dmv_driving_history_dmv_citations_driving_history;
     return (
-        <section className="info-render main-block">
-            <div className="row">
-                <h3 className="display-3">Citations</h3>
-            </div>
-            <div className="row">
-                <Table striped bordered className="col">
-                    <thead className="thead-dark">
-                        <tr key={0}>
-                            <th scope="col" key={1}>Citation #</th>
-                            <th scope="col" key={2}>Ticket Type</th>
-                            <th scope="col" key={3}>Date Received</th>
-                            <th scope="col" key={4}>Points</th>
-                            <th scope="col" key={5}>Court</th>
-                            <th scope="col" key={6}>County</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {citationsToDisplay.map((citation) => createCitationRow(citation))}
-                    </tbody>
-                </Table>
-            </div>
+        <section className="main-block text-center">
+            <h4 className="display-4">Citations</h4>
+            <Row>
+                { citationsToDisplay.length > 0 ?
+                <Col>
+                    <Table striped bordered>
+                        <thead className="thead-dark">
+                            <tr key={0}>
+                                <th scope="col" key={1}>Citation #</th>
+                                <th scope="col" key={2}>Ticket Type</th>
+                                <th scope="col" key={3}>Date Received</th>
+                                <th scope="col" key={4}>Points</th>
+                                <th scope="col" key={5}>Court</th>
+                                <th scope="col" key={6}>County</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {citationsToDisplay.map((citation) => createCitationRow(citation))}
+                        </tbody>
+                    </Table>
+                </Col>
+                :<Col>
+                    <p className="lead">Congratulations! You do not have any citations in your history. We hope you continue to keep our roadways safe for everyone!</p>
+                </Col>
+                }   
+            </Row>
         </section>
         
     );

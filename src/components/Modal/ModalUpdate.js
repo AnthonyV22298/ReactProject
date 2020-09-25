@@ -41,8 +41,7 @@ const ModalUpdate = (props) => {
   }
 
   function update(appointment){
-      handleUpdate(appointment)
-      handleRefresh()
+      handleUpdate(appointment).then(()=>handleRefresh())
   }
 
   return (

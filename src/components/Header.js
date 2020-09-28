@@ -23,7 +23,12 @@ const Header = () => {
                     
                         <NavLink href="#/">Home</NavLink>
                         <NavLink href="#/information">My Info</NavLink>
-                        <NavLink href="#/vehicles">My Vehicles</NavLink>
+
+                        <NavDropdown title="Vehicles" id="collasible-nav-dropdown">
+                            <NavDropdown.Item href="#/vehicles">View Vehicles</NavDropdown.Item>
+                            <NavDropdown.Item href="#/RegisterVehicle">Register Vehicles</NavDropdown.Item>
+                        </NavDropdown>
+
                         <NavLink href="#/profile">Profile Page</NavLink>
                         <NavLink href="#/insurance">Insurance</NavLink>
                         

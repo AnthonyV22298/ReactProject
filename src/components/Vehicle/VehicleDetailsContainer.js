@@ -29,6 +29,8 @@ const VehicleDetailsContainer = (props) => {
                 <VehicleDetailsRender
                     vehicleDetails={vehicleDetails}
                     handleRefresh={() => actions.readVehicleDetails()}
+                    handleCancel={(guid) => actions.cancelAppointment(guid)}
+                    handleUpdate={(data) => actions.updateAppointment(data)}
                 />
             </div>
         );

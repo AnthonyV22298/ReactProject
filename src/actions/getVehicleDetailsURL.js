@@ -28,7 +28,7 @@ export const getVehicleDetailsURL = () => {
     let thisGuid = JSON.parse(localStorage.getItem('userInfo')).contactid;
     let urlBase1 = "https://sstack4.crm.dynamics.com/api/data/v9.1/" + 
                     "dmv_contacthasvehicles?$select=_dmv_vehiclerecordid_value&$" +
-                    "filter=_dmv_contactrecordid_value%20eq%20";
+                    "filter=_dmv_contactrecordid_value%20eq%20 and dmv_isactive ne 174070001";
     let vRecordsURL = urlBase1.concat(thisGuid);   
 
     console.log("before apifetch");

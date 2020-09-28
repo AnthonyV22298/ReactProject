@@ -4,8 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
+import ModalVehicleUpdate from '../Modal/ModalVehicleUpdate';
+import ModalVehicleDelete from '../Modal/ModalVehicleDelete';
 
-const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
+const VehicleDetailsRender = ({ vehicleDetails, handleRefresh, handleCancel, handleUpdate }) => {
   console.log(localStorage);
   function getTableBodyContent() {
     return vehicleDetails.map(obj => {
@@ -17,6 +19,13 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
         <Button command="View" name={obj.dmv_vin_number} entity="dmv_vehicles"
           initialValues={{ ...obj }}>View</Button>
       );
+      newObj.update = <div>
+        <ModalVehicleUpdate buttonLabel="Update" handleRefresh={handleRefresh} handleUpdate={handleUpdate} appointment={newObj}/>
+        </div>
+
+      newObj.cancel = <div>
+        <ModalVehicleDelete buttonLabel="Delete" handleCancel={handleCancel} handleRefresh={handleRefresh} guid={newObj.dmv_appointmentid}/>
+        </div>
       return newObj;
     });
 
@@ -57,6 +66,16 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh }) => {
         label: 'Registration Expiration Date',
         field: 'dmv_expiration_date',
         sort: 'asc'
+      },
+      {
+        label: 'Update',
+        field: 'update',
+        sort: 'asc'
+      },
+      {
+        label: 'Cancel',
+        field: 'cancel',
+        sort: 'asc'
       },	  
     ],
     rows:
@@ -85,7 +104,9 @@ console.log("before proptypes vDetRender.js");
 VehicleDetailsRender.propTypes = {
   vehicleDetails: PropTypes.array,
   handleView: PropTypes.func,
-  handleRefresh: PropTypes.func
+  handleRefresh: PropTypes.func,
+  handleCancel: PropTypes.func,
+  handleUpdate: PropTypes.func,
 };
 
 export default VehicleDetailsRender;

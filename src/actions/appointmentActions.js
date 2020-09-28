@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { adalApiFetch } from '../adalConfig.js';
 
-import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE, CANCEL_APPOINTMENT_REQUEST, CANCEL_APPOINTMENT_SUCCESS, CANCEL_APPOINTMENT_FAILED, UPDATE_APPOINTMENT_REQUEST, UPDATE_APPOINTMENT_SUCCESS, UPDATE_APPOINTMENT_FAILED, APPDATE_SUCCESFUL, APPDATE_FAILURE, APPDATE_PENDING} from '../constants/actionTypes';
+import { APPOINTMENTS_SUCCESFUL, APPOINTMENTS_FAILURE, APPOINTMENTS_PENDING, POST_APPOINTMENTS_SUCCESFUL, POST_APPOINTMENTS_FAILURE, CANCEL_APPOINTMENT_REQUEST, CANCEL_APPOINTMENT_SUCCESS, CANCEL_APPOINTMENT_FAILED} from '../constants/actionTypes';
 
 export const readAppointments = () => {
 
@@ -29,34 +29,6 @@ export const readAppointments = () => {
             .catch((error) => {
                 console.log(error);
                 dispatch(appointmentsFailure(error));
-            });
-    };
-}
-
-export const readDates = () => {
-
-    let config = {
-        method: 'get',
-        'OData-MaxVersion': 4.0,
-        'OData-Version': 4.0,
-        Accept: 'dmv_appointment/json',
-        'Content-Type': 'dmv_appointment/json; charset=utf-8',
-        headers: {
-            'Prefer': "odata.include-annotations=*"
-        }
-    };
-
-    return dispatch => {
-        dispatch(appdatesPending());
-        return adalApiFetch(axios, 
-        "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments" +
-        "?$select=dmv_appointment_date,dmv_time", config)
-            .then(res => {
-                dispatch(appdatesSuccess(res));
-            })
-            .catch((error) => {
-                console.log(error);
-                dispatch(appdatesFailure(error));
             });
     };
 }
@@ -100,40 +72,6 @@ export const postAppointments = (data) => {
     };
 }
 
-export const updateAppointment = (data) =>{
-    console.log(data)
-    console.log("new location: " + data._dmv_appointmentlocation_value)
-    let updateConfig = {
-        method: 'patch',
-        'OData-MaxVersion': 4.0,
-        'OData-Version': 4.0,
-        Accept: 'application/json',
-        'Content-Type': 'application/json; charset=utf-8',
-        headers: {
-            'Prefer': "odata.include-annotations=*"
-        },
-        data: {
-            "dmv_app_type" : data.dmv_app_type,
-            "dmv_time" : data.dmv_time,
-            "dmv_AppointmentLocation@odata.bind": "/crefc_locations("+data._dmv_appointmentlocation_value+")",
-            "dmv_appointment_date": data.dmv_appointment_date,
-            "dmv_approved" : 174070000
-        }
-    }
-    
-    return dispatch => {
-            dispatch(updateAppointmentRequest());
-            return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments("+data.dmv_appointmentid+")?$select=dmv_app_type,dmv_time,_dmv_appointmentlocation_value,dmv_appointment_date", updateConfig)
-            .then((res) => {
-                dispatch(updateAppointmentSuccess(res));
-            })
-            .catch((error) => {
-                console.log(error);
-                dispatch(updateAppointmentFailed(error));
-            });
-        }
-}
-
 export const cancelAppointment = (guid) =>{
     let cancelConfig = {
         method: 'patch',
@@ -170,26 +108,6 @@ const postAppointmentsSuccess = (res) => {
 const postAppointmentsFailure = (error) => {
     return {
         type: POST_APPOINTMENTS_FAILURE,
-        error  
-    };
-}
-
-const updateAppointmentRequest = () => {
-    return {
-        type: UPDATE_APPOINTMENT_REQUEST,
-    };
-}
-
-const updateAppointmentSuccess = (res) => {
-    return {
-        type: UPDATE_APPOINTMENT_SUCCESS,
-        data:  res.data
-    };
-}
-
-const updateAppointmentFailed = (error) => {
-    return {
-        type: UPDATE_APPOINTMENT_FAILED,
         error  
     };
 }
@@ -231,25 +149,5 @@ const appointmentsFailure = (error) => {
 const appointmentsPending = () => {
     return {
         type: APPOINTMENTS_PENDING
-    };
-}
-
-const appdatesSuccess = (res) => {
-    return {
-        type: APPDATE_SUCCESFUL,
-        data:  res.data
-    };
-}
-
-const appdatesFailure = (error) => {
-    return {
-        type: APPDATE_FAILURE,
-        error  
-    };
-}
-
-const appdatesPending = () => {
-    return {
-        type: APPDATE_PENDING
     };
 }

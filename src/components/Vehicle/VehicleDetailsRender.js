@@ -14,6 +14,7 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh, handleCancel, han
 
       // Deep Clone object to avoid adding to it while mapping over it during map
       let newObj = JSON.parse(JSON.stringify(obj))
+      console.log(newObj)
 
       newObj["view"] = (
         <Button command="View" name={obj.dmv_vin_number} entity="dmv_vehicles"
@@ -24,7 +25,7 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh, handleCancel, han
         </div>
 
       newObj.cancel = <div>
-        <ModalVehicleDelete buttonLabel="Delete" handleCancel={handleCancel} handleRefresh={handleRefresh} guid={newObj.dmv_appointmentid}/>
+        <ModalVehicleDelete buttonLabel="Delete" handleCancel={handleCancel} handleRefresh={handleRefresh} guid={newObj.dmv_vehicleid}/>
         </div>
       return newObj;
     });

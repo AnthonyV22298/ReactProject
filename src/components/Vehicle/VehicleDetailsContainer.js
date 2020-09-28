@@ -15,6 +15,7 @@ const VehicleDetailsContainer = (props) => {
     const {
         error,
         vehicleDetailsPending, vehicleDetailsFailed, vehicleDetailsSuccess,
+        deleteVehicleRequest, deleteVehicleSuccess, deleteVehicleFailed,
     } = requestState;
 
 
@@ -29,7 +30,7 @@ const VehicleDetailsContainer = (props) => {
                 <VehicleDetailsRender
                     vehicleDetails={vehicleDetails}
                     handleRefresh={() => actions.readVehicleDetails()}
-                    handleCancel={(guid) => actions.cancelAppointment(guid)}
+                    handleCancel={(guid) => actions.deleteVehicle(guid)}
                     handleUpdate={(data) => actions.updateAppointment(data)}
                 />
             </div>

@@ -14,7 +14,7 @@ import LoginPage from './User/Login.js';
 import ProfilePage from './User/Profile.js';
 import PaypalContainer from './Paypal/PaypalContainer.js';
 import VehicleDetailsContainer from './Vehicle/VehicleDetailsContainer.js';
-import VehicleRegister from './Vehicle/VehicleRegister.js';
+import VehicleMakeContainer from './Vehicle/VehicleMakeContainer.js';
 import InfoDMVContainer from './InfoDMV/InfoDMVContainer.js';
 
 
@@ -28,7 +28,7 @@ export class App extends React.Component{
                     <Route path='/login' component={LoginPage}/>
                     <Route path='/profile'component={ProfilePage}/>
                     <Route path='/vehicles' component={VehicleDetailsContainer}/>
-                    <Route path='/RegisterVehicle' component={VehicleRegister}/>
+                    <Route path='/RegisterVehicle' component={VehicleMakeContainer}/>
                     <Route path='/appointments' component={AppointmentContainer}/>
                     <Route path='/CreateAppointment' component={AppointmentMakeContainer}/>
                     <Route path='/fees' component={FeeContainer}/>

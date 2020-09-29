@@ -1,10 +1,11 @@
 "use strict"
 
-import * as vehicleDetailsActions from '../../actions/appointmentActions';
+import * as vehicleDetailsActions from '../../actions/vehicleDetailsActions';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import LoadingIcon from '../Helper/LoadingIcon';
 import ErrorBanner from '../Helper/ErrorBanner';
 import VehicleRegister from './VehicleRegister';
 
@@ -51,7 +52,7 @@ const VehicleMakeContainer = (props) => {
     }
 
     if(vehicleDetailsPending){
-        renderSuccess()
+        return <LoadingIcon />;
     } else if (postVehicleFailed) {
         return (
             <ErrorBanner>
@@ -64,7 +65,9 @@ const VehicleMakeContainer = (props) => {
                 Error while registering vehicle!
             </ErrorBanner>
         );
-    } else if(postVehicleSuccess || vehicleDetailsSuccess){
+    } else if(vehicleDetailsSuccess){
+        return renderSuccess();
+    } else if(postVehicleSuccess){
         return postSuccess();
     }
     else {

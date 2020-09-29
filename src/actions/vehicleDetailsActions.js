@@ -111,6 +111,7 @@ export const updateVehicle = (data) =>{
 
 export const postVehicle = (data) => {
     //let guid = JSON.parse(localStorage.getItem('userInfo')).contactid;
+    console.log("NEW VEHICLE POST: ")
     console.log(data)
     let config = {
         method: 'post',

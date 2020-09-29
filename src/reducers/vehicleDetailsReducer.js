@@ -1,4 +1,4 @@
-import { VEHICLEDETAILS_SUCCESSFUL, VEHICLEDETAILS_PENDING, VEHICLEDETAILS_FAILURE, DELETE_VEHICLE_REQUEST, DELETE_VEHICLE_SUCCESS, DELETE_VEHICLE_FAILED, UPDATE_VEHICLE_REQUEST, UPDATE_VEHICLE_SUCCESS, UPDATE_VEHICLE_FAILED  } from '../constants/actionTypes';
+import { VEHICLEDETAILS_SUCCESSFUL, VEHICLEDETAILS_PENDING, VEHICLEDETAILS_FAILURE, DELETE_VEHICLE_REQUEST, DELETE_VEHICLE_SUCCESS, DELETE_VEHICLE_FAILED, UPDATE_VEHICLE_REQUEST, UPDATE_VEHICLE_SUCCESS, UPDATE_VEHICLE_FAILED, POST_VEHICLE_SUCCESFUL, POST_VEHICLE_FAILURE  } from '../constants/actionTypes';
 
 export default function vehicleDetailsReducer(state = {}, action) {
 
@@ -12,6 +12,13 @@ export default function vehicleDetailsReducer(state = {}, action) {
     case VEHICLEDETAILS_FAILURE: 
       console.log("VDETFAIL"); 
       return {...state, requestState: {vehicleDetailsSuccess: false, vehicleDetailsPending: false, vehicleDetailsFailed: true, error: action.error} };
+    case POST_VEHICLE_SUCCESFUL: {
+      let newVehicles = [...state.vehicleDetails];
+      newVehicles.push(action.data);
+      return {...state, vehicleDetails: newVehicles, requestState: {postVehicleSuccess: true,  postVehicleFailed: false, error: null} };
+    }
+    case POST_VEHICLE_FAILURE:
+      return {...state, requestState: {postVehicleSuccess: false, postVehicleFailed: true, error: action.error} };
     case UPDATE_VEHICLE_REQUEST:
       return {...state, updating: true};
     case UPDATE_VEHICLE_SUCCESS:

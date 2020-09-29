@@ -110,7 +110,7 @@ export const updateVehicle = (data) =>{
 }
 
 export const postVehicle = (data) => {
-    let guid = JSON.parse(localStorage.getItem('userInfo')).contactid;
+    //let guid = JSON.parse(localStorage.getItem('userInfo')).contactid;
     console.log(data)
     let config = {
         method: 'post',
@@ -122,16 +122,16 @@ export const postVehicle = (data) => {
             'Prefer' : 'return=representation'
         },
         data: {
-            "dmv_make": data.dmv_make,
-            "dmv_model": data.dmv_model,
-            "dmv_color": data.dmv_color,
-            "dmv_year": data.dmv_year,
+            "dmv_make": data.make,
+            "dmv_model": data.model,
+            "dmv_color": data.color,
+            "dmv_year": data.year,
         }
     };
     
     return dispatch => {
         // using contact GUID 03879a5c-3aaf-ea11-a812-000d3a8e4ace (Contact "A Test")
-        return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_appointments", config)
+        return adalApiFetch(axios, "https://sstack4.crm.dynamics.com/api/data/v9.1/dmv_vehicles", config)
             .then(res => {
                 dispatch(postVehicleSuccess(res));
             })

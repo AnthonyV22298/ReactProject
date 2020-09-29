@@ -15,7 +15,7 @@ const ModalVehicleDelete = (props) => {
   const [modal, setModal] = useState(false);
 
   function cancel(guid) {
-      handleCancel(guid).then(()=>handleRefresh())
+    handleCancel(guid).then(()=>handleRefresh())
   }
 
   const toggle = () => setModal(!modal);

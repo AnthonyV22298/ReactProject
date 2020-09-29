@@ -21,7 +21,7 @@ const VehicleDetailsRender = ({ vehicleDetails, handleRefresh, handleCancel, han
           initialValues={{ ...obj }}>View</Button>
       );
       newObj.update = <div>
-        <ModalVehicleUpdate buttonLabel="Update" handleRefresh={handleRefresh} handleUpdate={handleUpdate} appointment={newObj}/>
+        <ModalVehicleUpdate buttonLabel="Update" handleRefresh={handleRefresh} handleUpdate={handleUpdate} vehicle={newObj}/>
         </div>
 
       newObj.cancel = <div>

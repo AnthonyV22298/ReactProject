@@ -16,6 +16,7 @@ const VehicleDetailsContainer = (props) => {
         error,
         vehicleDetailsPending, vehicleDetailsFailed, vehicleDetailsSuccess,
         deleteVehicleRequest, deleteVehicleSuccess, deleteVehicleFailed,
+        updateVehicleRequest, updateVehicleSuccess, updateVehicleFailed,
     } = requestState;
 
 
@@ -31,13 +32,13 @@ const VehicleDetailsContainer = (props) => {
                     vehicleDetails={vehicleDetails}
                     handleRefresh={() => actions.readVehicleDetails()}
                     handleCancel={(guid) => actions.deleteVehicle(guid)}
-                    handleUpdate={(data) => actions.updateAppointment(data)}
+                    handleUpdate={(data) => actions.updateVehicle(data)}
                 />
             </div>
         );
     }
 
-    if (vehicleDetailsPending) {
+    if (vehicleDetailsPending || deleteVehicleRequest || updateVehicleRequest) {
         return <LoadingIcon />;
     } else if (vehicleDetailsFailed) {
         return (
@@ -45,7 +46,19 @@ const VehicleDetailsContainer = (props) => {
                 Error while loading vehicleDetails!
             </ErrorBanner>
         );
-    } else if (vehicleDetailsSuccess) {
+    } else if (deleteVehicleFailed) {
+        return (
+             <ErrorBanner>
+                Error while unregistering vehicle!
+            </ErrorBanner>
+        );
+    } else if (updateVehicleFailed) {
+        return (
+             <ErrorBanner>
+                Error while updating vehicle!
+            </ErrorBanner>
+        );
+    } else if (vehicleDetailsSuccess || deleteVehicleSuccess || updateVehicleSuccess) {
         return renderSuccess();
     } else {
         return (

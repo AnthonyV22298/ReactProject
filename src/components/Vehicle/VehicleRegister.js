@@ -64,7 +64,7 @@ class VehicleRegister extends Component {
             <div>
                 {(this.props.postSuccess === true) && (
                     <SuccessBanner>
-                        Appointment Request Created!
+                        Vehicle Registered!
                     </SuccessBanner>
                 )}
             </div>
